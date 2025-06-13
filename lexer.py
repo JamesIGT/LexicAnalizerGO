@@ -1,5 +1,5 @@
 import ply.lex as lex
-
+# APORTE HECHO POR JARED GONZALEZ
 # Lista de tokens
 tokens = [
     'VARIABLE',
@@ -109,6 +109,8 @@ def t_newline(t):
 def t_error(t):
     print(f"Caracter ilegal '{t.value[0]}' en línea {t.lexer.lineno}")
     t.lexer.skip(1)
+
+# FIN DEL APORTE DE JARED GONZALEZ
 
 # Construcción del lexer
 lexer = lex.lex()
