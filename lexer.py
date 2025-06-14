@@ -146,7 +146,7 @@ if __name__ == "__main__":
         print(tok)
         
 #Prueba con el codigo del algorithm2.go proporcionado
- # INICIO DEL APORTE DE [TU NOMBRE / USUARIO GIT]
+ # VALERIA GUTIERREZ
     with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
         data = f.read()
     lexer.input(data)
