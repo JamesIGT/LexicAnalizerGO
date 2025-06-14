@@ -41,6 +41,28 @@ reserved = {
 
 tokens += list(reserved.values())
 
+#INICIO DEL APORTE DE VALERIA GUTIERREZ
+reserved.update({
+    'switch': 'SWITCH',
+    'case': 'CASE',
+    'default': 'DEFAULT',
+    'break': 'BREAK',
+    'continue': 'CONTINUE',
+    'map': 'MAP',
+    'float64': 'FLOAT64_TYPE',
+    'var': 'VAR',
+})
+
+tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR']
+
+t_INCREMENT = r'\+\+'
+t_DECREMENT = r'--'
+t_AND       = r'&&'
+t_OR        = r'\|\|'
+
+#FIN DEL APORTE DE VALERIA GUTIERREZ
+
+
 # Reglas de expresiones regulares para tokens simples
 t_PLUS       = r'\+'
 t_MINUS      = r'-'
@@ -124,6 +146,14 @@ lexer = lex.lex()
 # Prueba con el código Go proporcionado
 if __name__ == "__main__":
     with open("algorithms/algorithm1.go", "r", encoding="utf-8") as f:
+        data = f.read()
+    lexer.input(data)
+    for tok in lexer:
+        print(tok)
+        
+#Prueba con el codigo del algorithm2.go proporcionado
+ # VALERIA GUTIERREZ
+    with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
         data = f.read()
     lexer.input(data)
     for tok in lexer:
