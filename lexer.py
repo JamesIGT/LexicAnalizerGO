@@ -12,7 +12,7 @@ tokens = [
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA', 'DOT',
     'AMPER',
-    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 'ID'
+    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 
 ]
 
 # Palabras clave de Go
@@ -59,6 +59,19 @@ t_AND       = r'&&'
 t_OR        = r'\|\|'
 
 #FIN DEL APORTE DE VALERIA GUTIERREZ
+
+#INICIO DEL APORTE DE DIEGO ALAY
+reserved.update({
+    'strings': 'STRINGS',
+    'tolower': 'TOLOWER',
+    'char': 'CHAR',
+    'containsRune': 'CONTAINSRUNE',
+    'unicode': 'UNICODE',
+    'isletter': 'ISLETTER',
+    'isdigit': 'ISDIGIT',
+    'runes': 'RUNES',
+})
+#FIN DEL APORTE DE DIEGO ALAY
 tokens += list(reserved.values())
 
 # Reglas de expresiones regulares para tokens simples
@@ -87,10 +100,7 @@ t_DOT        = r'\.'
 t_AMPER      = r'\&'
 
 # Regla para identificar identificadores y palabras clave
-def t_ID(t):  #Aporte hecho por Diego Alay
-    r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reserved.get(t.value, 'ID')
-    return t
+
 
 # Ignorar espacios y tabulaciones
 t_ignore = ' \t'
@@ -142,6 +152,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Prueba con el codigo del algorithm1.go proporcionado
+# DIEGO ALAY
 if __name__ == "__main__":
     with open("algorithms/algorithm1.go", "r", encoding="utf-8") as f:
         data = f.read()
