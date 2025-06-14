@@ -39,8 +39,6 @@ reserved = {
     'Println': 'PRINTLN',
 }
 
-tokens += list(reserved.values())
-
 #INICIO DEL APORTE DE VALERIA GUTIERREZ
 reserved.update({
     'switch': 'SWITCH',
@@ -61,7 +59,7 @@ t_AND       = r'&&'
 t_OR        = r'\|\|'
 
 #FIN DEL APORTE DE VALERIA GUTIERREZ
-
+tokens += list(reserved.values())
 
 # Reglas de expresiones regulares para tokens simples
 t_PLUS       = r'\+'
@@ -143,18 +141,28 @@ def t_error(t):
 # Construcción del lexer
 lexer = lex.lex()
 
-# Prueba con el código Go proporcionado
+# Prueba con el codigo del algorithm1.go proporcionado
 if __name__ == "__main__":
     with open("algorithms/algorithm1.go", "r", encoding="utf-8") as f:
         data = f.read()
     lexer.input(data)
     for tok in lexer:
         print(tok)
-        
-#Prueba con el codigo del algorithm2.go proporcionado
- # VALERIA GUTIERREZ
-    with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
-        data = f.read()
-    lexer.input(data)
-    for tok in lexer:
-        print(tok)
+
+
+# Prueba con el codigo del algorithm2.go proporcionado
+# VALERIA GUTIERREZ
+# with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
+#     data = f.read()
+# lexer.input(data)
+# for tok in lexer:
+#     print(tok)
+
+# Prueba con el codigo del algorithm3.go proporcionado
+# JARED GONZALEZ
+# with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
+#     data = f.read()
+# lexer.input(data)
+# for tok in lexer:
+#     print(tok)
+
