@@ -12,7 +12,7 @@ tokens = [
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA', 'DOT',
     'AMPER',
-    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE',
+    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 'ID'
 ]
 
 # Palabras clave de Go
@@ -66,6 +66,12 @@ t_COMMA      = r','
 t_DOT        = r'\.'
 t_AMPER      = r'\&'
 
+# Regla para identificar identificadores y palabras clave
+def t_ID(t):  #Aporte hecho por Diego Alay
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, 'ID')
+    return t
+
 # Ignorar espacios y tabulaciones
 t_ignore = ' \t'
 
@@ -117,7 +123,7 @@ lexer = lex.lex()
 
 # Prueba con el código Go proporcionado
 if __name__ == "__main__":
-    with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
+    with open("algorithms/algorithm1.go", "r", encoding="utf-8") as f:
         data = f.read()
     lexer.input(data)
     for tok in lexer:
