@@ -1,0 +1,7 @@
+Regla: string_list
+Regla: string_list
+Regla: string_list
+Regla: import_list
+Regla: import_section
+[ERROR] Línea 10: Error de sintaxis cerca de 'analizarTexto'
+✅ Análisis sintáctico completado correctamente.

@@ -1,0 +1,21 @@
+Regla: string_list
+Regla: string_list
+Regla: string_list
+Regla: import_list
+Regla: import_section
+Regla: tipo
+Regla: parámetro
+Regla: lista de parámetros
+Regla: tipo
+Regla: lista de tipos
+Regla: tipo
+Regla: lista de tipos
+Regla: tipo
+Regla: lista de tipos
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+[ERROR] Línea 11: Error de sintaxis cerca de '(' (tipo: LPAREN)
+✅ Análisis sintáctico completado correctamente.

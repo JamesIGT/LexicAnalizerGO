@@ -2,6 +2,7 @@ import ply.lex as lex
 import os
 import logging
 from datetime import datetime
+import re
 
 
 # usuario_git = "jamesigt"  # Cambia esto por tu usuario de GitHub
@@ -24,7 +25,7 @@ from datetime import datetime
 # APORTE HECHO POR JARED GONZALEZ
 # Lista de tokens
 tokens = [
-    'VARIABLE',
+    'VARIABLE', 'ASSIGN_SHORT',
     'NUMBER',
     'STRING',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD',
@@ -34,7 +35,7 @@ tokens = [
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA', 'DOT',
     'AMPER',
-    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 
+    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 
 ]
 
 # Palabras clave de Go
@@ -56,7 +57,6 @@ reserved = {
     'bool': 'BOOL_TYPE',
     'return': 'RETURN',
     'append': 'APPEND',
-    'len': 'LENGTH',
     'Printf': 'PRINTF',
     'Println': 'PRINTLN',
 }
@@ -73,25 +73,25 @@ reserved.update({
     'var': 'VAR',
 })
 
-tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR']
+tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'TIMES_ASSIGN', 'DIVIDE_ASSIGN',]
 
 t_INCREMENT = r'\+\+'
 t_DECREMENT = r'--'
 t_AND       = r'&&'
 t_OR        = r'\|\|'
+t_PLUS_ASSIGN    = r'\+='
+t_MINUS_ASSIGN   = r'-='
+t_TIMES_ASSIGN   = r'\*='
+t_DIVIDE_ASSIGN  = r'/='
 
 #FIN DEL APORTE DE VALERIA GUTIERREZ
 
 #INICIO DEL APORTE DE DIEGO ALAY
 reserved.update({
-    'strings': 'STRINGS',
     'tolower': 'TOLOWER',
-    'char': 'CHAR',
-    'containsRune': 'CONTAINSRUNE',
-    'unicode': 'UNICODE',
+    'containsRune': 'CONTAINSRUNE', 
     'isletter': 'ISLETTER',
     'isdigit': 'ISDIGIT',
-    'runes': 'RUNES',
 })
 #FIN DEL APORTE DE DIEGO ALAY
 tokens += list(reserved.values())
@@ -102,6 +102,7 @@ t_MINUS      = r'-'
 t_TIMES      = r'\*'
 t_DIVIDE     = r'/'
 t_MOD        = r'%'
+t_ASSIGN_SHORT = r':='
 t_ASSIGN     = r'='
 t_EQ         = r'=='
 t_NE         = r'!='
@@ -120,6 +121,8 @@ t_COLON      = r':'
 t_COMMA      = r','
 t_DOT        = r'\.'
 t_AMPER      = r'\&'
+
+
 
 # Regla para identificar identificadores y palabras clave
 
@@ -144,14 +147,13 @@ def t_STRING(t):
 
 # Números (enteros)
 def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
+    r'\d+(\.\d+)?'
+    if '.' in t.value:
+        t.value = float(t.value)
+    else:
+        t.value = int(t.value)
     return t
 
-def t_FUNCNAME(t):
-    r'func\s+([a-zA-Z_][a-zA-Z0-9_]*)'
-    t.value = t.value.split()[1]  # Extraer solo el nombre de la función
-    return t
 
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -191,7 +193,7 @@ if __name__ == "__main__":
         print(mensaje)
         logging.info(mensaje)
 
-    print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
+    #print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
 
 
 # Prueba con el codigo del algorithm2.go proporcionado

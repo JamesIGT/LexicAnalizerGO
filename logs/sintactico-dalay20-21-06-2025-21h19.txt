@@ -1,0 +1,26 @@
+Regla: string_list
+Regla: import_list
+Regla: import_section
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: declaración de tipo struct
+Regla: function_list
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: declaración de tipo struct
+Regla: function_list
+Regla: tipo
+Regla: parámetro
+Regla: lista de parámetros
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: variable_list
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+✅ Análisis sintáctico completado correctamente.

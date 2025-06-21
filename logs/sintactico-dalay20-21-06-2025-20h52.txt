@@ -1,0 +1,2 @@
+Regla: string_list
+✅ Análisis sintáctico completado correctamente.

@@ -1,0 +1,22 @@
+Regla: string_list
+Regla: import_list
+Regla: import_section
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: declaración de tipo struct
+Regla: function_list
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: argument_list
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: argument_list
+Regla: function_call → variable/PRINTLN LPAREN argument_list? RPAREN
+✅ Análisis sintáctico completado correctamente.

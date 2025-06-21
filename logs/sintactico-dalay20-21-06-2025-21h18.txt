@@ -1,0 +1,78 @@
+Regla: string_list
+Regla: import_list
+Regla: import_section
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: declaración de tipo struct
+Regla: function_list
+Regla: tipo
+Regla: campo de struct o vacío
+Regla: lista de campos de struct
+Regla: declaración de tipo struct
+Regla: function_list
+Regla: tipo
+Regla: parámetro
+Regla: lista de parámetros
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: argument_list
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: argument_list
+Regla: function_call → variable/APPEND/PRINTLN LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal/relacional
+Regla: assignment → variable ASSIGN expression (; opcional)
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: block → LBRACE statement_list RBRACE
+Regla: función con receptor (método de struct y puntero)
+Regla: function_list
+Regla: tipo
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: variable_list
+Regla: expresión aritmética/literal/relacional
+Regla: expression_list
+Regla: short declaration múltiple → variable_list := expression_list ;
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: acceso a variable y por índice
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: conversión de tipo simple → tipo(expr)
+Regla: expresión aritmética/literal/relacional
+Regla: assignment compuesto (+=, -=, *=, /=)
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: block → LBRACE statement_list RBRACE
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable y por índice
+Regla: expresión aritmética/literal/relacional
+Regla: expression_list
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: block → LBRACE statement_list RBRACE
+Regla: función con receptor (método de struct y puntero)
+Regla: function_list
+✅ Análisis sintáctico completado correctamente.

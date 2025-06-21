@@ -1,0 +1,154 @@
+Regla: string_list
+Regla: string_list
+Regla: string_list
+Regla: import_list
+Regla: import_section
+Regla: tipo
+Regla: parámetro
+Regla: lista de parámetros
+Regla: tipo
+Regla: lista de tipos
+Regla: tipo
+Regla: lista de tipos
+Regla: tipo
+Regla: lista de tipos
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: assignment → variable ASSIGN expression (; opcional)
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: variable_list
+Regla: variable_list
+Regla: variable_list
+Regla: expresión aritmética/literal
+Regla: expresión aritmética/literal
+Regla: expresión aritmética/literal
+Regla: expression_list
+Regla: expression_list
+Regla: expression_list
+Regla: short declaration múltiple → variable_list := expression_list ;
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: incremento/decremento
+Regla: statement_list → statement_list statement | ε
+Regla: case o default
+Regla: lista de casos
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: incremento/decremento
+Regla: statement_list → statement_list statement | ε
+Regla: case o default
+Regla: lista de casos
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: incremento/decremento
+Regla: statement_list → statement_list statement | ε
+Regla: case o default
+Regla: lista de casos
+Regla: switch
+Regla: statement_list → statement_list statement | ε
+Regla: block → LBRACE statement_list RBRACE
+Regla: for range
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: expression_list
+Regla: expression_list
+Regla: expression_list
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: block → LBRACE statement_list RBRACE
+Regla: function con parámetros y retorno → FUNC analizarTexto (...)
+Regla: function_list
+Regla: tipo
+Regla: parámetro
+Regla: lista de parámetros
+Regla: tipo
+Regla: tipo de retorno
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: variable_list
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: expression_list
+Regla: short declaration múltiple → variable_list := expression_list ;
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: variable_list
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: conversión de tipo → []tipo(expr)
+Regla: expression_list
+Regla: short declaration múltiple → variable_list := expression_list ;
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+Regla: acceso a variable
+Regla: variable_list
+Regla: acceso a variable
+Regla: acceso a variable
+Regla: expresión aritmética/literal
+Regla: argument_list
+Regla: function_call → variable LPAREN argument_list? RPAREN
+Regla: expresión aritmética/literal
+Regla: expression_list
+Regla: short declaration múltiple → variable_list := expression_list ;
+Regla: statement
+Regla: statement_list → statement_list statement | ε
+✅ Análisis sintáctico completado correctamente.

@@ -1,0 +1,2 @@
+[ERROR] Línea 3: Error de sintaxis cerca de '('
+✅ Análisis sintáctico completado correctamente.
