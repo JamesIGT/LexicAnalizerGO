@@ -1,0 +1,3 @@
+[ERROR SINTÁCTICO] Línea 1: token inesperado 'package'
+[ERROR SINTÁCTICO] Línea 27: token inesperado '}'
+✅ Análisis sintáctico completado correctamente.
