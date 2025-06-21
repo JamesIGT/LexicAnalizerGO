@@ -1,4 +1,26 @@
 import ply.lex as lex
+import os
+import logging
+from datetime import datetime
+
+
+usuario_git = "vnguti"  
+
+os.makedirs("logs", exist_ok=True)
+
+now = datetime.now()
+nombre_log = f"lexico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
+ruta_log = os.path.join("logs", nombre_log)
+
+# Configurar logger
+logging.basicConfig(
+    filename=ruta_log,
+    filemode='w',
+    format='%(message)s',
+    level=logging.INFO,
+    encoding='utf-8'
+)
+
 # APORTE HECHO POR JARED GONZALEZ
 # Lista de tokens
 tokens = [
@@ -143,8 +165,10 @@ def t_newline(t):
 
 # Manejo de errores
 def t_error(t):
-    print(f"Caracter ilegal '{t.value[0]}' en línea {t.lexer.lineno}")
-    t.lexer.skip(1)
+    mensaje = f"[ERROR] Línea {t.lineno}: Caracter ilegal '{t.value[0]}'"
+    print(mensaje)           # Imprime en consola
+    logging.info(mensaje)    # Escribe en el log
+    t.lexer.skip(1)     
 
 # FIN DEL APORTE DE JARED GONZALEZ
 
@@ -154,26 +178,27 @@ lexer = lex.lex()
 # Prueba con el codigo del algorithm1.go proporcionado
 # DIEGO ALAY
 if __name__ == "__main__":
-    with open("algorithms/algorithm1.go", "r", encoding="utf-8") as f:
+    with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
         data = f.read()
+
     lexer.input(data)
-    for tok in lexer:
-        print(tok)
+
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        mensaje = f"[TOKEN] Línea {tok.lineno}: Tipo={tok.type}, Valor={tok.value}"
+        print(mensaje)
+        logging.info(mensaje)
+
+    print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
 
 
 # Prueba con el codigo del algorithm2.go proporcionado
 # VALERIA GUTIERREZ
 # with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
-#     data = f.read()
-# lexer.input(data)
-# for tok in lexer:
-#     print(tok)
 
 # Prueba con el codigo del algorithm3.go proporcionado
 # JARED GONZALEZ
 # with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
-#     data = f.read()
-# lexer.input(data)
-# for tok in lexer:
-#     print(tok)
 
