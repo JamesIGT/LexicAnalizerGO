@@ -3,42 +3,18 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     AMPER
-    AND
-    APPEND
     BREAK
-    CASE
     CHAR
-    COLON
     CONTAINSRUNE
     CONTINUE
-    DEFAULT
-    DIVIDE
-    DOT
-    EQ
-    FALSE
     FUNCNAME
-    GE
-    GT
     ISDIGIT
     ISLETTER
-    LE
     LENGTH
-    LT
     MAP
-    MINUS
-    MOD
-    NE
-    NUMBER
-    OR
-    PLUS
-    PRINTF
-    PRINTLN
     RUNES
     STRINGS
-    STRUCT
     TOLOWER
-    TRUE
-    TYPE
     UNICODE
 
 Grammar
@@ -112,96 +88,167 @@ Rule 65    for_loop -> FOR VARIABLE ASSIGN_SHORT expression SEMICOLON expression
 Rule 66    for_loop -> FOR variable_list ASSIGN_SHORT RANGE variable block
 Rule 67    increment_statement -> variable INCREMENT
 Rule 68    increment_statement -> variable DECREMENT
+Rule 69    function_call -> variable LPAREN argument_list RPAREN
+Rule 70    function_call -> variable LPAREN RPAREN
+Rule 71    function_call -> APPEND LPAREN argument_list RPAREN
+Rule 72    function_call -> APPEND LPAREN RPAREN
+Rule 73    function_call -> variable DOT APPEND LPAREN argument_list RPAREN
+Rule 74    function_call -> variable DOT APPEND LPAREN RPAREN
+Rule 75    function_call -> PRINTLN LPAREN argument_list RPAREN
+Rule 76    function_call -> PRINTLN LPAREN RPAREN
+Rule 77    function_call -> variable DOT PRINTLN LPAREN argument_list RPAREN
+Rule 78    function_call -> variable DOT PRINTLN LPAREN RPAREN
+Rule 79    function_call -> PRINTF LPAREN argument_list RPAREN
+Rule 80    function_call -> PRINTF LPAREN RPAREN
+Rule 81    function_call -> variable DOT PRINTF LPAREN argument_list RPAREN
+Rule 82    function_call -> variable DOT PRINTF LPAREN RPAREN
+Rule 83    argument_list -> expression
+Rule 84    argument_list -> argument_list COMMA expression
+Rule 85    expression -> expression PLUS expression
+Rule 86    expression -> expression MINUS expression
+Rule 87    expression -> expression TIMES expression
+Rule 88    expression -> expression DIVIDE expression
+Rule 89    expression -> expression MOD expression
+Rule 90    expression -> expression LT expression
+Rule 91    expression -> expression LE expression
+Rule 92    expression -> expression GT expression
+Rule 93    expression -> expression GE expression
+Rule 94    expression -> expression EQ expression
+Rule 95    expression -> expression NE expression
+Rule 96    expression -> expression AND expression
+Rule 97    expression -> expression OR expression
+Rule 98    expression -> LPAREN expression RPAREN
+Rule 99    expression -> NUMBER
+Rule 100   expression -> variable
+Rule 101   expression -> function_call
+Rule 102   expression -> STRING
+Rule 103   expression -> TRUE
+Rule 104   expression -> FALSE
+Rule 105   empty -> <empty>
+Rule 106   case_list -> case_list case
+Rule 107   case_list -> case
+Rule 108   case -> CASE expression COLON statement_list
+Rule 109   case -> DEFAULT COLON statement_list
+Rule 110   variable -> VARIABLE
+Rule 111   variable -> variable DOT VARIABLE
+Rule 112   variable -> variable LBRACKET expression RBRACKET
+Rule 113   short_declaration -> variable_list ASSIGN_SHORT expression_list
+Rule 114   short_declaration -> variable_list ASSIGN_SHORT expression_list SEMICOLON
+Rule 115   variable_list -> variable
+Rule 116   variable_list -> variable COMMA variable_list
+Rule 117   expression_list -> expression
+Rule 118   expression_list -> expression COMMA expression_list
+Rule 119   expression -> LBRACKET RBRACKET variable LPAREN expression RPAREN
+Rule 120   expression -> FLOAT64_TYPE LPAREN expression RPAREN
+Rule 121   expression -> INT_TYPE LPAREN expression RPAREN
+Rule 122   expression -> STRING_TYPE LPAREN expression RPAREN
+Rule 123   expression -> BOOL_TYPE LPAREN expression RPAREN
+Rule 124   expression -> VARIABLE LPAREN expression RPAREN
+Rule 125   type_declaration -> TYPE VARIABLE STRUCT LBRACE struct_fields RBRACE
+Rule 126   struct_fields -> struct_fields struct_field
+Rule 127   struct_fields -> struct_field
+Rule 128   struct_fields -> empty
+Rule 129   struct_field -> VARIABLE type
+Rule 130   struct_field -> empty
+Rule 131   expression -> VARIABLE LBRACE field_list RBRACE
+Rule 132   field_list -> field_list COMMA field
+Rule 133   field_list -> field
+Rule 134   field_list -> empty
+Rule 135   field -> VARIABLE COLON expression
 
 Terminals, with rules where they appear
 
 AMPER                : 
-AND                  : 
-APPEND               : 
+AND                  : 96
+APPEND               : 71 72 73 74
 ASSIGN               : 53 54 55 56 64
-BOOL_TYPE            : 32
+BOOL_TYPE            : 32 123
 BREAK                : 
-CASE                 : 
+CASE                 : 108
 CHAR                 : 
-COLON                : 
-COMMA                : 21 28 47
+COLON                : 108 109 135
+COMMA                : 21 28 47 84 116 118 132
 CONTAINSRUNE         : 
 CONTINUE             : 
 DECREMENT            : 49 68
-DEFAULT              : 
-DIVIDE               : 
-DOT                  : 
+DEFAULT              : 109
+DIVIDE               : 88
+DOT                  : 73 74 77 78 81 82 111
 ELSE                 : 62
-EQ                   : 
-FALSE                : 
-FLOAT64_TYPE         : 33
+EQ                   : 94
+FALSE                : 104
+FLOAT64_TYPE         : 33 120
 FOR                  : 47 64 65 66
 FUNC                 : 16 17 18 19 20
 FUNCNAME             : 
-GE                   : 
-GT                   : 
+GE                   : 93
+GT                   : 92
 IF                   : 61
 IMPORT               : 5
 INCREMENT            : 48 67
-INT_TYPE             : 31
+INT_TYPE             : 31 121
 ISDIGIT              : 
 ISLETTER             : 
-LBRACE               : 36 50 51
-LBRACKET             : 35
-LE                   : 
+LBRACE               : 36 50 51 125 131
+LBRACKET             : 35 112 119
+LE                   : 91
 LENGTH               : 
-LPAREN               : 8 16 17 17 18 18 19 19 20 20 26
-LT                   : 
+LPAREN               : 8 16 17 17 18 18 19 19 20 20 26 69 70 71 72 73 74 75 76 77 78 79 80 81 82 98 119 120 121 122 123 124
+LT                   : 90
 MAIN                 : 1 2
 MAP                  : 
-MINUS                : 
-MOD                  : 
-NE                   : 
-NUMBER               : 
-OR                   : 
+MINUS                : 86
+MOD                  : 89
+NE                   : 95
+NUMBER               : 99
+OR                   : 97
 PACKAGE              : 1 2 3 4
-PLUS                 : 
-PRINTF               : 
-PRINTLN              : 
+PLUS                 : 85
+PRINTF               : 79 80 81 82
+PRINTLN              : 75 76 77 78
 RANGE                : 47 66
-RBRACE               : 36 50 51
-RBRACKET             : 35
+RBRACE               : 36 50 51 125 131
+RBRACKET             : 35 112 119
 RETURN               : 45 46
-RPAREN               : 8 16 17 17 18 18 19 19 20 20 26
+RPAREN               : 8 16 17 17 18 18 19 19 20 20 26 69 70 71 72 73 74 75 76 77 78 79 80 81 82 98 119 120 121 122 123 124
 RUNES                : 
-SEMICOLON            : 44 46 54 56 64 64 65 65
-STRING               : 7 9 10
+SEMICOLON            : 44 46 54 56 64 64 65 65 114
+STRING               : 7 9 10 102
 STRINGS              : 
-STRING_TYPE          : 30
-STRUCT               : 
+STRING_TYPE          : 30 122
+STRUCT               : 125
 SWITCH               : 50 51
-TIMES                : 19 20
+TIMES                : 19 20 87
 TOLOWER              : 
-TRUE                 : 
-TYPE                 : 
+TRUE                 : 103
+TYPE                 : 125
 UNICODE              : 
 VAR                  : 53 54
-VARIABLE             : 3 4 16 17 17 17 18 18 18 19 19 19 20 20 20 24 34 35 47 47 53 54 64 65
+VARIABLE             : 3 4 16 17 17 17 18 18 18 19 19 19 20 20 20 24 34 35 47 47 53 54 64 65 110 111 124 125 129 131 135
 error                : 
 
 Nonterminals, with rules where they appear
 
-ASSIGN_SHORT         : 47 65 66
+ASSIGN_SHORT         : 47 65 66 113 114
 DIVIDE_ASSIGN        : 60
 MINUS_ASSIGN         : 58
 PLUS_ASSIGN          : 57
 TIMES_ASSIGN         : 59
+argument_list        : 69 71 73 75 77 79 81 84
 assignment           : 40 64
 block                : 16 17 18 19 20 47 61 62 64 65 66
-case_list            : 50 51
+case                 : 106 107
+case_list            : 50 51 106
 declaration          : 39
 else_clause          : 61
-empty                : 2 4 6 15 23 27 38 63
-expression           : 51 53 54 55 56 57 58 59 60 61 64 64 65 65
-expression_list      : 45 46
+empty                : 2 4 6 15 23 27 38 63 128 130 134
+expression           : 51 53 54 55 56 57 58 59 60 61 64 64 65 65 83 84 85 85 86 86 87 87 88 88 89 89 90 90 91 91 92 92 93 93 94 94 95 95 96 96 97 97 98 108 112 117 118 119 120 121 122 123 124 135
+expression_list      : 45 46 113 114 118
+field                : 132 133
+field_list           : 131 132
 for_loop             : 43
 function             : 11 12
-function_call        : 44
+function_call        : 44 101
 function_list        : 1 3 11 13
 if_statement         : 42
 import_list          : 5
@@ -213,11 +260,13 @@ program              : 0
 return_type          : 16 17 18 19 20
 short_declaration    : 41
 statement            : 37
-statement_list       : 36 37
+statement_list       : 36 37 108 109
 string_list          : 8 9
-type                 : 24 25 28 29
+struct_field         : 126 127
+struct_fields        : 125 126
+type                 : 24 25 28 29 129
 type_declaration     : 13 14 52
 type_list            : 26 28
-variable             : 47 48 49 55 56 57 58 59 60 66 67 68
-variable_list        : 66
+variable             : 47 48 49 55 56 57 58 59 60 66 67 68 69 70 73 74 77 78 81 82 100 111 112 115 116 119
+variable_list        : 66 113 114 116
 
