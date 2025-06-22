@@ -1,0 +1,2 @@
+[ERROR] Línea 10: Error de sintaxis en 'analizarTexto'
+✅ Análisis sintáctico completado correctamente.

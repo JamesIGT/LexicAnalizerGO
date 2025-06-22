@@ -1,0 +1,8 @@
+[ERROR] Línea 1: Error de sintaxis en 'package'
+[FIELD] Campo Descripcion de tipo string.
+[FIELD] Campo Completada de tipo bool.
+[TYPE STRUCT] Tarea es una estructura válida.
+[TYPE] Slice de tipo Tarea.
+[FIELD] Campo Lista de tipo []Tarea.
+[TYPE STRUCT] GestorDeTareas es una estructura válida.
+[ERROR] Línea 13: Error de sintaxis en '('

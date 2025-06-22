@@ -1,0 +1,16 @@
+Regla: import_list
+Regla: imports → IMPORT (...)
+Regla: tipo
+Campo: Nombre None
+Regla: struct_fields
+Regla: tipo
+Campo: Precio None
+Regla: struct_fields
+Regla: tipo
+Campo: Cantidad None
+Regla: struct_fields
+Regla: struct
+Regla: declaration
+Regla: declarations
+[ERROR SINTÁCTICO] Línea 14: token inesperado '['
+✅ Análisis sintáctico completado correctamente.

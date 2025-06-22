@@ -1,0 +1,2 @@
+[ERROR] Línea 7: Error de sintaxis en 'bool'
+✅ Análisis sintáctico completado correctamente.

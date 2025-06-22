@@ -1,0 +1,4 @@
+Estructura Tarea definida con campos: [('Descripcion', 'string'), ('Completada', 'bool')]
+Estructura GestorDeTareas definida con campos: [('Lista', '[]Tarea')]
+Programa válido: estructura general correcta.
+✅ Análisis sintáctico completado correctamente.

@@ -1,0 +1,4 @@
+Estructura Producto definida con campos: [('Nombre', 'string'), ('Precio', 'float64'), ('Cantidad', 'int')]
+Estructura Carrito definida con campos: [('Items', '[]Producto')]
+Programa válido: estructura general correcta.
+✅ Análisis sintáctico completado correctamente.

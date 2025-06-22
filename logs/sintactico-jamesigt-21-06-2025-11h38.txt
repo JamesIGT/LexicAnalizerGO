@@ -1,0 +1,4 @@
+Estructura Producto definida con campos: [('Nombre', 'string'), ('Precio', 'float64'), ('Cantidad', 'int')]
+Estructura Carrito definida con campos: [('Items', '[]Producto')]
+[ERROR] Línea 18: Error de sintaxis en '='
+✅ Análisis sintáctico completado correctamente.

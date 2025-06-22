@@ -1,0 +1,3 @@
+Estructura Tarea definida con campos: [('Descripcion', 'string'), ('Completada', 'bool')]
+[ERROR] Línea 12: Error de sintaxis en 'Lista'
+✅ Análisis sintáctico completado correctamente.
