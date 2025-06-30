@@ -4,8 +4,7 @@ import os
 import logging
 from datetime import datetime
 
-# usuario_git = "dalay"
-usuario_git="vnguti"
+usuario_git = "dalay"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
 nombre_log = f"semantico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
@@ -22,8 +21,6 @@ logging.basicConfig(
 # Inicio Diego Alay
 # Diccionario para variables declaradas
 symbol_table = {}
-struct_table = {}
-method_table = {}
 
 # Función para registrar una variable
 def declare_variable(name, var_type):
@@ -395,70 +392,7 @@ def p_error(p):
 
 
 
-def analizar_structs():
-    struct_table['Producto'] = {
-        'Nombre': 'string',
-        'Precio': 'float64',
-        'Cantidad': 'int'
-    }
-    struct_table['Carrito'] = {
-        'Items': '[]Producto'
-    }
-    logging.info("[INFO] Struct 'Producto' definido con campos válidos: string, float64, int")
-    logging.info("[INFO] Struct 'Carrito' definido correctamente con campo Items de tipo slice de Producto")
 
-def analizar_metodos():
-    method_table['Carrito.Agregar'] = ['Producto']
-    method_table['Carrito.Total'] = []
-    logging.info("[INFO] Método 'Agregar' definido en 'Carrito' con parámetro tipo Producto")
-    logging.info("[INFO] Método 'Total' en 'Carrito' retorna tipo float64, tipos compatibles en multiplicación y suma")
-
-def analizar_main():
-    symbol_table['carrito'] = {'type': 'Carrito', 'value': None}
-    logging.info("[INFO] Variable 'carrito' declarada como struct Carrito")
-
-    llamadas = [
-        ('Producto', ["\"Manzanas\"", 0.5, 4]),
-        ('Producto', ["\"Pan\"", 1.25, 2]),
-        ('Producto', ["\"Leche\"", 0.9, 1])
-    ]
-
-    for args in llamadas:
-        if args[0] == 'Producto':
-            campos = struct_table['Producto']
-            tipos = ['string', 'float64', 'int']
-            for i, valor in enumerate(args[1]):
-                esperado = tipos[i]
-                logging.info(f"[INFO] Argumento '{valor}' coincide con tipo esperado '{esperado}' en llamada a Producto")
-            logging.info("[INFO] Llamada a 'Agregar' con argumentos compatibles con struct Producto")
-
-    logging.info("[INFO] for-range sobre 'carrito.Items' correcto, accediendo a campos de Producto")
-    logging.info("[INFO] Uso de fmt.Printf con formato y argumentos válidos")
-    logging.info("[INFO] Llamada a 'carrito.Total()' válida, retorno esperado float64")
-
-# Construir el parser
-def p_program(p):
-    '''program : statement
-               | statement program'''
-    pass
-
-
-
-# Ejecutar análisis
-if __name__ == "__main__":
-    try:
-        with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
-            data = f.read()
-        analizar_structs()
-        analizar_metodos()
-        analizar_main()
-        result = parser.parse(data)
-        if result is None:
-            logging.info("✅ Análisis semántico completado correctamente.")
-            print(f"\n✅ Análisis semántico completado. Log guardado en: {ruta_log}")
-    except Exception as e:
-        logging.error(f"[ERROR GENERAL] {str(e)}")
-        print(f"[ERROR] {str(e)}")
 
 # Construir el parser
 parser = yacc.yacc()
