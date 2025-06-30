@@ -79,14 +79,21 @@ def p_declaration(p):
     '''declaration : VAR VARIABLE type
                    | VAR VARIABLE type ASIG expression'''
     #Diego Alay
-    name = p[2]
+    var_name = p[2]
     var_type = p[3]
 
-    declare_variable(name, var_type)
+    if var_name in symbol_table:
+        print(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+    else:
+        symbol_table[var_name] = {'type': var_type, 'value': None}
+        print(f"[INFO] Variable '{var_name}' declarada con tipo '{var_type}'")
 
     if len(p) == 6:
         expr_value, expr_type = p[5]
-        assign_variable(name, expr_value, expr_type)
+        if expr_type != var_type:
+            print(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{var_type}' pero se asigna '{expr_type}'")
+        else:
+            symbol_table[var_name]['value'] = expr_value
     pass
 
 #*****************
@@ -115,6 +122,18 @@ def p_expression_variable(p):
 def p_assignment(p):
     '''assignment : VARIABLE ASSIGN expression
                   | VARIABLE ASIG expression'''
+    # Diego Alay
+    var_name = p[1]
+    expr_value, expr_type = p[3]
+
+    if var_name not in symbol_table:
+        print(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
+    else:
+        expected_type = symbol_table[var_name]['type']
+        if expr_type != expected_type:
+            print(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
+        else:
+            symbol_table[var_name]['value'] = expr_value
     pass
 
 # Imprimir en consola
@@ -169,12 +188,38 @@ def p_expression(p):
                   | expression GT expression
                   | expression LE expression
                   | expression GE expression'''
+    
+    # Diego Alay
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        left_value, left_type = p[1]
+        right_value, right_type = p[3]
+
+        if left_type != right_type:
+            print(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
+            p[0] = (None, "error")
+        else:
+            result_type = 'bool' if p[2] in ('==', '!=', '<', '>', '<=', '>=', '&&', '||') else left_type
+            p[0] = (None, result_type)
     pass
 
 def p_term(p):
     '''term : factor
             | term TIMES factor
             | term DIVIDE factor'''
+    # Diego Alay
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        left_value, left_type = p[1]
+        right_value, right_type = p[3]
+        
+        if left_type != right_type:
+            print(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
+            p[0] = (None, "error")
+        else:
+            p[0] = (None, left_type)
     pass
 
 def p_factor(p):
@@ -185,6 +230,20 @@ def p_factor(p):
               | LPAREN expression RPAREN
               | make_expr
               | struct_instance'''
+    # Diego Alay
+    if isinstance(p[1], int):
+        p[0] = (p[1], 'int')
+    elif isinstance(p[1], float):
+        p[0] = (p[1], 'float64')
+    elif isinstance(p[1], str):
+        if p[1] in symbol_table:
+            var_type = symbol_table[p[1]]['type']
+            var_value = symbol_table[p[1]]['value']
+            p[0] = (var_value, var_type)
+        else:
+            p[0] = (p[1], 'string')
+    elif len(p) == 4:  # Para casos como ( expression )
+        p[0] = p[2]
     pass
 
 # Tipos básicos de Go
