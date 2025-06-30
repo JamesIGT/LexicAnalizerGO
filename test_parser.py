@@ -1,7 +1,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
-import lexer  # Tu lexer
-import parser  # Tu parser, cambia el nombre si lo guardaste diferente
+import lexer  
+import parser  
 
 # Crear lexer y parser
 lexer = lex.lex(module=lexer)
