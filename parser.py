@@ -4,10 +4,10 @@ import os
 import logging
 from datetime import datetime
 
-usuario_git = "vnguti"
+usuario_git = "dalay"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
-nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
+nombre_log = f"semantico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
 ruta_log = os.path.join("logs", nombre_log)
 
 logging.basicConfig(
@@ -18,289 +18,333 @@ logging.basicConfig(
     encoding='utf-8'
 )
 
-# === REGLAS SINTÁCTICAS INICIALES ===
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'TIMES', 'DIVIDE', 'MOD'),
-    ('right', 'ASSIGN'),
-)
+# Inicio Diego Alay
+# Diccionario para variables declaradas
+symbol_table = {}
 
+# Función para registrar una variable
+def declare_variable(name, var_type):
+    if name in symbol_table:
+        raise Exception(f"[SEMANTIC ERROR] Variable '{name}' redeclarada.")
+    symbol_table[name] = {'type': var_type, 'value': None}
+
+
+# Función para asignar valor a variable
+def assign_variable(name, value, value_type):
+    if name not in symbol_table:
+        raise Exception(f"[SEMANTIC ERROR] Variable '{name}' no declarada.")
+    expected_type = symbol_table[name]['type']
+    
+    if expected_type != value_type:
+        raise Exception(f"[SEMANTIC ERROR] Tipo incompatible en asignación a '{name}'. Esperado: {expected_type}, Recibido: {value_type}")
+    
+    symbol_table[name]['value'] = value
+
+
+
+
+# Reglas gramaticales
+
+# Programa = varias sentencias
 def p_program(p):
-    '''program : PACKAGE MAIN import_section function_list
-               | PACKAGE MAIN import_section empty
-               | PACKAGE VARIABLE import_section function_list
-               | PACKAGE VARIABLE import_section empty'''
-    logging.info("Regla: program")
+    '''program : statement
+               | statement program'''
+    pass
 
-def p_import_section(p):
-    '''import_section : IMPORT import_list
-                      | empty'''
-    logging.info("Regla: import_section")
-
-def p_import_list(p):
-    '''import_list : STRING
-                   | LPAREN string_list RPAREN'''
-    logging.info("Regla: import_list")
-
-def p_string_list(p):
-    '''string_list : string_list STRING
-                   | STRING'''
-    logging.info("Regla: string_list")
-
-def p_function_list(p):
-    '''function_list : function_list function
-                     | function
-                     | function_list type_declaration
-                     | type_declaration
-                     | empty'''
-    logging.info("Regla: function_list")
-
-def p_function(p):
-    '''function : FUNC VARIABLE LPAREN param_list RPAREN return_type block'''
-    logging.info(f"Regla: function con parámetros y retorno → FUNC {p[2]} (...)")
-
-def p_function_with_receiver(p):
-    '''function : FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN return_type block
-                | FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN return_type block
-                | FUNC LPAREN VARIABLE TIMES VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN return_type block
-                | FUNC LPAREN VARIABLE TIMES VARIABLE RPAREN VARIABLE LPAREN RPAREN return_type block'''
-    logging.info("Regla: función con receptor (método de struct y puntero)")
-
-def p_param_list(p):
-    '''param_list : param_list COMMA param
-                  | param
-                  | empty'''
-    logging.info("Regla: lista de parámetros")
-
-def p_param(p):
-    '''param : VARIABLE type'''
-    logging.info("Regla: parámetro")
-
-def p_return_type(p):
-    '''return_type : type
-                   | LPAREN type_list RPAREN
-                   | empty'''
-    logging.info("Regla: tipo de retorno")
-
-def p_type_list(p):
-    '''type_list : type_list COMMA type
-                 | type'''
-    logging.info("Regla: lista de tipos")
-
-def p_type(p):
-    '''type : STRING_TYPE
-            | INT_TYPE
-            | BOOL_TYPE
-            | FLOAT64_TYPE
-            | VARIABLE
-            | LBRACKET RBRACKET VARIABLE'''
-    logging.info("Regla: tipo")
-
-def p_block(p):
-    '''block : LBRACE statement_list RBRACE'''
-    logging.info("Regla: block → LBRACE statement_list RBRACE")
-
-def p_statement_list(p):
-    '''statement_list : statement_list statement
-                      | empty'''
-    logging.info("Regla: statement_list → statement_list statement | ε")
-
+# Sentencias posibles
 def p_statement(p):
     '''statement : declaration
                  | assignment
-                 | short_declaration
-                 | if_statement
-                 | for_loop
-                 | function_call SEMICOLON
-                 | RETURN expression_list
-                 | RETURN expression_list SEMICOLON
-                 | FOR VARIABLE COMMA VARIABLE ASSIGN_SHORT RANGE variable block
-                 | variable INCREMENT
-                 | variable DECREMENT
-                 | SWITCH LBRACE case_list RBRACE
-                 | SWITCH expression LBRACE case_list RBRACE
-                 | type_declaration'''
-    logging.info("Regla: statement")
-
-def p_declaration(p):
-    '''declaration : VAR VARIABLE ASSIGN expression
-                   | VAR VARIABLE ASSIGN expression SEMICOLON'''
-    logging.info("Regla: declaración")
-
-def p_assignment(p):
-    '''assignment : variable ASSIGN expression
-                 | variable ASSIGN expression SEMICOLON'''
-    logging.info("Regla: assignment")
-
-def p_assignment_compound(p):
-    '''assignment : variable PLUS_ASSIGN expression
-                 | variable MINUS_ASSIGN expression
-                 | variable TIMES_ASSIGN expression
-                 | variable DIVIDE_ASSIGN expression'''
-    logging.info("Regla: assignment compuesto")
-
-def p_if_statement(p):
-    '''if_statement : IF expression block else_clause'''
-    logging.info("Regla: if")
-
-def p_else_clause(p):
-    '''else_clause : ELSE block
-                   | empty'''
-    logging.info("Regla: else")
-
-def p_for_loop(p):
-    '''for_loop : FOR VARIABLE ASSIGN expression SEMICOLON expression SEMICOLON assignment block
-                | FOR VARIABLE ASSIGN_SHORT expression SEMICOLON expression SEMICOLON increment_statement block
-                | FOR variable_list ASSIGN_SHORT RANGE variable block'''
-    logging.info("Regla: for")
-
-def p_increment_statement(p):
-    '''increment_statement : variable INCREMENT
-                           | variable DECREMENT'''
-    logging.info("Regla: incremento/decremento")
-
-def p_function_call(p):
-    '''function_call : variable LPAREN argument_list RPAREN
-                     | variable LPAREN RPAREN
-                     | APPEND LPAREN argument_list RPAREN
-                     | APPEND LPAREN RPAREN
-                     | variable DOT APPEND LPAREN argument_list RPAREN
-                     | variable DOT APPEND LPAREN RPAREN
-                     | PRINTLN LPAREN argument_list RPAREN
-                     | PRINTLN LPAREN RPAREN
-                     | variable DOT PRINTLN LPAREN argument_list RPAREN
-                     | variable DOT PRINTLN LPAREN RPAREN
-                     | PRINTF LPAREN argument_list RPAREN
-                     | PRINTF LPAREN RPAREN
-                     | variable DOT PRINTF LPAREN argument_list RPAREN
-                     | variable DOT PRINTF LPAREN RPAREN'''
-    logging.info("Regla: llamada a función")
-
-def p_argument_list(p):
-    '''argument_list : expression
-                     | argument_list COMMA expression'''
-    logging.info("Regla: argumentos")
-
-def p_expression(p):
-    '''expression : expression PLUS expression
-                  | expression MINUS expression
-                  | expression TIMES expression
-                  | expression DIVIDE expression
-                  | expression MOD expression
-                  | expression LT expression
-                  | expression LE expression
-                  | expression GT expression
-                  | expression GE expression
-                  | expression EQ expression
-                  | expression NE expression
-                  | expression AND expression
-                  | expression OR expression
-                  | LPAREN expression RPAREN
-                  | NUMBER
-                  | variable
-                  | function_call
-                  | STRING
-                  | TRUE
-                  | FALSE'''
-    logging.info("Regla: expresión")
-
-def p_expression_type_cast(p):
-    '''expression : LBRACKET RBRACKET variable LPAREN expression RPAREN'''
-    logging.info("Regla: conversión tipo → []tipo(expr)")
-
-def p_expression_type_cast_simple(p):
-    '''expression : FLOAT64_TYPE LPAREN expression RPAREN
-                  | INT_TYPE LPAREN expression RPAREN
-                  | STRING_TYPE LPAREN expression RPAREN
-                  | BOOL_TYPE LPAREN expression RPAREN
-                  | VARIABLE LPAREN expression RPAREN'''
-    logging.info("Regla: conversión simple → tipo(expr)")
-
-def p_type_declaration(p):
-    '''type_declaration : TYPE VARIABLE STRUCT LBRACE struct_fields RBRACE'''
-    logging.info("Regla: struct")
-
-def p_struct_fields(p):
-    '''struct_fields : struct_fields struct_field
-                     | struct_field
-                     | empty'''
-    logging.info("Regla: campos struct")
-
-def p_struct_field(p):
-    '''struct_field : VARIABLE type
-                    | empty'''
-    logging.info("Regla: campo de struct")
-
-def p_expression_struct_literal(p):
-    '''expression : VARIABLE LBRACE field_list RBRACE'''
-    logging.info("Regla: struct literal")
-
-def p_field_list(p):
-    '''field_list : field_list COMMA field
-                  | field
-                  | empty'''
-    logging.info("Regla: lista de campos")
-
-def p_field(p):
-    '''field : VARIABLE COLON expression'''
-    logging.info("Regla: campo literal")
-
-def p_variable(p):
-    '''variable : VARIABLE
-                | variable DOT VARIABLE
-                | variable LBRACKET expression RBRACKET'''
-    logging.info("Regla: variable")
-
-def p_short_declaration(p):
-    '''short_declaration : variable_list ASSIGN_SHORT expression_list
-                         | variable_list ASSIGN_SHORT expression_list SEMICOLON'''
-    logging.info("Regla: declaración corta")
-
-def p_variable_list(p):
-    '''variable_list : variable
-                     | variable COMMA variable_list'''
-    logging.info("Regla: lista de variables")
-
-def p_expression_list(p):
-    '''expression_list : expression
-                       | expression COMMA expression_list'''
-    logging.info("Regla: lista de expresiones")
-
-def p_case_list(p):
-    '''case_list : case_list case
-                 | case'''
-    logging.info("Regla: lista de casos")
-
-def p_case(p):
-    '''case : CASE expression COLON statement_list
-            | DEFAULT COLON statement_list'''
-    logging.info("Regla: case/default")
-
-def p_empty(p):
-    '''empty :'''
+                 | print_stmt
+                 | input_stmt
+                 | struct_method
+                 | func_def
+                 | func_call
+                 | if_stmt
+                 | for_stmt
+                 | struct_def
+                 | switch_stmt
+                 | map_declaration
+                 | array_declaration
+                 | slice_declaration
+                 | make_stmt
+                 | new_stmt
+                 | break_stmt
+                 | increment_stmt'''
     pass
 
+
+# Declaración de variable 
+def p_declaration(p):
+    '''declaration : VAR VARIABLE type
+                   | VAR VARIABLE type ASIG expression'''
+    #Diego Alay
+    name = p[2]
+    var_type = p[3]
+
+    declare_variable(name, var_type)
+
+    if len(p) == 6:
+        expr_value, expr_type = p[5]
+        assign_variable(name, expr_value, expr_type)
+    pass
+
+#*****************
+
+# Expresiones (retornan valor y tipo)
+def p_expression_number(p):
+    '''expression : NUMBER'''
+    p[0] = (p[1], 'int')
+
+def p_expression_float(p):
+    '''expression : FLOAT'''
+    p[0] = (p[1], 'float64')
+
+def p_expression_variable(p):
+    '''expression : VARIABLE'''
+    name = p[1]
+    if name not in symbol_table:
+        raise Exception(f"[SEMANTIC ERROR] Variable '{name}' usada sin declarar.")
+    
+    value = symbol_table[name]['value']
+    var_type = symbol_table[name]['type']
+    p[0] = (value, var_type)
+#***********************
+
+# Asignación de valor
+def p_assignment(p):
+    '''assignment : VARIABLE ASSIGN expression
+                  | VARIABLE ASIG expression'''
+    pass
+
+# Imprimir en consola
+def p_print_stmt(p):
+    '''print_stmt : FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN
+                  | FMT DOT PRINTLN LPAREN expression RPAREN'''
+    pass
+
+# Leer desde teclado
+def p_input_stmt(p):
+    '''input_stmt : FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN'''
+    pass
+
+# Función
+def p_func_def(p):
+    '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
+                | FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    pass
+
+# Llamada a función
+def p_func_call(p):
+    '''func_call : VARIABLE LPAREN arg_list RPAREN
+                 | VARIABLE LPAREN RPAREN'''
+    pass
+
+# Lista de parámetros
+def p_param_list(p):
+    '''param_list : param
+                  | param COMMA param_list'''
+    pass
+
+def p_param(p):
+    '''param : VARIABLE type'''
+    pass
+
+# Lista de argumentos
+def p_arg_list(p):
+    '''arg_list : expression
+                | expression COMMA arg_list'''
+    pass
+
+# Expresiones (con aritmética, booleanos y comparaciones)
+def p_expression(p):
+    '''expression : term
+                  | expression PLUS term
+                  | expression MINUS term
+                  | expression AND expression
+                  | expression OR expression
+                  | expression EQ expression
+                  | expression NE expression
+                  | expression LT expression
+                  | expression GT expression
+                  | expression LE expression
+                  | expression GE expression'''
+    pass
+
+def p_term(p):
+    '''term : factor
+            | term TIMES factor
+            | term DIVIDE factor'''
+    pass
+
+def p_factor(p):
+    '''factor : NUMBER
+              | FLOAT
+              | STRING
+              | VARIABLE
+              | LPAREN expression RPAREN
+              | make_expr
+              | struct_instance'''
+    pass
+
+# Tipos básicos de Go
+def p_type(p):
+    '''type : INT_TYPE
+            | FLOAT64_TYPE
+            | STRING_TYPE
+            | BOOL_TYPE'''
+    pass
+
+# IF - ELSE
+def p_if_stmt(p):
+    '''if_stmt : IF expression block
+               | IF expression block ELSE block'''
+    pass
+
+# FOR Loop (Go tiene varias formas, empezamos con la básica tipo while)
+def p_for_stmt(p):
+    '''for_stmt : FOR expression block
+                | FOR assignment SEMICOLON expression SEMICOLON for_update block'''
+    pass
+
+def p_for_update(p):
+    '''for_update : assignment
+                  | increment_stmt'''
+    pass
+
+# Bloque de instrucciones
+def p_block(p):
+    '''block : LBRACE program RBRACE'''
+    pass
+
+#Metodo asociado al struct
+def p_struct_method(p):
+    '''struct_method : FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
+                     | FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    pass
+
+# Definir la estructura (struct)
+def p_struct_def(p):
+    '''struct_def : TYPE VARIABLE STRUCT LBRACE struct_fields RBRACE'''
+    pass
+
+# Campos del struct
+def p_struct_fields(p):
+    '''struct_fields : struct_field
+                     | struct_field struct_fields'''
+    pass
+
+# Campos internos del struct (sus propiedades)
+def p_struct_field(p):
+    '''struct_field : VARIABLE type
+                    | type'''
+    pass
+
+# Instancia de un struct
+def p_struct_instance(p):
+    '''struct_instance : VARIABLE LBRACE struct_fields_values RBRACE'''
+
+# Lista de valores al instanciar el struct
+def p_struct_fields_values(p):
+    '''struct_fields_values : field_value
+                            | field_value COMMA struct_fields_values'''
+
+# Asignar valor a cada propiedad al instanciar
+def p_field_value(p):
+    '''field_value : VARIABLE COLON expression'''
+
+# SWITCH
+def p_switch_stmt(p):
+    '''switch_stmt : SWITCH expression LBRACE case_list RBRACE
+                   | SWITCH LBRACE case_list RBRACE'''
+    pass
+
+def p_case_list(p):
+    '''case_list : case_clause
+                 | case_clause case_list'''
+    pass
+
+def p_case_clause(p):
+    '''case_clause : CASE expression COLON program
+                   | DEFAULT COLON program'''
+    pass
+
+# MAP
+def p_map_declaration(p):
+    '''map_declaration : VAR VARIABLE MAP LBRACKET type RBRACKET type
+                       | VARIABLE ASIG MAP LBRACKET type RBRACKET type'''
+    pass
+
+# MAKE
+def p_make_stmt(p):
+    '''make_stmt : VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN
+                 | VARIABLE ASIG MAKE LPAREN LBRACKET RBRACKET type RPAREN'''
+    pass
+
+def p_make_expr(p):
+    '''make_expr : MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN
+                 | MAKE LPAREN LBRACKET RBRACKET type RPAREN'''
+    pass
+
+# ARRAY
+def p_array_declaration(p):
+    '''array_declaration : VAR VARIABLE LBRACKET NUMBER RBRACKET type
+                         | VARIABLE ASIG LBRACKET NUMBER RBRACKET type LBRACE array_values RBRACE'''
+    pass
+
+def p_array_values(p):
+    '''array_values : expression
+                    | expression COMMA array_values'''
+    pass
+
+# SLICE
+def p_slice_declaration(p):
+    '''slice_declaration : VAR VARIABLE LBRACKET RBRACKET type
+                         | VARIABLE ASIG LBRACKET RBRACKET type LBRACE slice_values RBRACE'''
+    pass
+
+def p_slice_values(p):
+    '''slice_values : expression
+                    | expression COMMA slice_values'''
+    pass
+
+# NEW: instancia de struct
+def p_new_stmt(p):
+    '''new_stmt : VARIABLE ASIG NEW LPAREN VARIABLE RPAREN'''
+    pass
+
+# BREAK
+def p_break_stmt(p):
+    '''break_stmt : BREAK'''
+    pass
+
+# Incrementadores ++ --
+def p_increment_stmt(p):
+    '''increment_stmt : VARIABLE INCREMENT
+                      | VARIABLE DECREMENT'''
+    pass
+
+# Manejo de errores
 def p_error(p):
     if p:
-        print(f"[ERROR] Línea {p.lineno}: Error de sintaxis cerca de '{p.value}' (tipo: {p.type})")
-        with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
-            lines = f.readlines()
-            if p.lineno <= len(lines):
-                print(f"Línea {p.lineno}: {lines[p.lineno-1].strip()}")
+        print(f"[SYNTAX ERROR] Unexpected token '{p.value}' at line {p.lineno}")
     else:
-        print("Error de sintaxis al final del archivo")
+        print("[SYNTAX ERROR] Unexpected end of input")
 
+
+# Construir el parser
 parser = yacc.yacc()
 
 
 if __name__ == "__main__":
     try:
-        with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
+        with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
             data = f.read()
         result = parser.parse(data)
         if result is None:
-            logging.info("✅ Análisis sintáctico completado correctamente.")
-            print(f"\n✅ Análisis sintáctico completado. Log guardado en: {ruta_log}")
+            logging.info("✅ Análisis semántico completado correctamente.")
+            print(f"\n✅ Análisis semántico completado. Log guardado en: {ruta_log}")
     except Exception as e:
         logging.error(f"[ERROR GENERAL] {str(e)}")
         print(f"[ERROR] {str(e)}")
+

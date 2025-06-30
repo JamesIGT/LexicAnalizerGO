@@ -12,7 +12,7 @@ from datetime import datetime
 # nombre_log = f"lexico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
 # ruta_log = os.path.join("logs", nombre_log)
 
-# # Configurar logger
+# Configurar logger
 # logging.basicConfig(
 #     filename=ruta_log,
 #     filemode='w',
@@ -34,64 +34,72 @@ tokens = [
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA', 'DOT',
     'AMPER',
-    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 
+    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 'FLOAT', 
 ]
 
 # Palabras clave de Go
 reserved = {
-    'main' : 'MAIN',
     'package': 'PACKAGE',
     'import': 'IMPORT',
     'func': 'FUNC',
     'type': 'TYPE',
+    'true': 'TRUE',
+    'false': 'FALSE',
+    'return': 'RETURN',
+    #estructura de datos
     'struct': 'STRUCT',
+    'range': 'RANGE',
+    #estructura de control
     'if': 'IF',
     'else': 'ELSE',
     'for': 'FOR',
-    'range': 'RANGE',
-    'true': 'TRUE',
-    'false': 'FALSE',
+    #tipos de datos
     'string': 'STRING_TYPE',
     'int': 'INT_TYPE',
     'bool': 'BOOL_TYPE',
-    'return': 'RETURN',
-    'append': 'APPEND',
-    'len': 'LENGTH',
+    #libreria
     'Printf': 'PRINTF',
     'Println': 'PRINTLN',
+    'Print': 'PRINT',
+
 }
 
 #INICIO DEL APORTE DE VALERIA GUTIERREZ
 reserved.update({
+    'var': 'VAR',
+    #estructura de control
     'switch': 'SWITCH',
     'case': 'CASE',
     'default': 'DEFAULT',
     'break': 'BREAK',
-    'continue': 'CONTINUE',
+    #estructura de datos
     'map': 'MAP',
+    # tipos de datos
     'float64': 'FLOAT64_TYPE',
-    'var': 'VAR',
+
 })
 
-tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR']
+tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR', "ASIG",]
 
 t_INCREMENT = r'\+\+'
 t_DECREMENT = r'--'
 t_AND       = r'&&'
 t_OR        = r'\|\|'
+t_ASIG = r':='
 
 #FIN DEL APORTE DE VALERIA GUTIERREZ
 
 #INICIO DEL APORTE DE DIEGO ALAY
 reserved.update({
-    'strings': 'STRINGS',
-    'tolower': 'TOLOWER',
-    'char': 'CHAR',
-    'containsRune': 'CONTAINSRUNE',
-    'unicode': 'UNICODE',
-    'isletter': 'ISLETTER',
-    'isdigit': 'ISDIGIT',
-    'runes': 'RUNES',
+    #tipo de dato
+    'uint':'UINT',
+    #liberia
+    'fmt': 'FMT',
+    'Scanln': 'SCANLN',
+    'make': 'MAKE',
+    #estructura de datos
+    'new': 'NEW',
+
 })
 #FIN DEL APORTE DE DIEGO ALAY
 tokens += list(reserved.values())
@@ -102,7 +110,7 @@ t_MINUS      = r'-'
 t_TIMES      = r'\*'
 t_DIVIDE     = r'/'
 t_MOD        = r'%'
-t_ASSIGN     = r'='
+t_ASSIGN     = r'\='
 t_EQ         = r'=='
 t_NE         = r'!='
 t_LT         = r'<'
@@ -142,6 +150,11 @@ def t_STRING(t):
     r'"([^\\"]|\\.)*"'
     return t
 
+def t_FLOAT(t):
+    r'[0-9]*\.[0-9]+'
+    t.value = float(t.value)
+    return t
+    
 # Números (enteros)
 def t_NUMBER(t):
     r'\d+'
@@ -174,6 +187,7 @@ def t_error(t):
 
 # Construcción del lexer
 lexer = lex.lex()
+# Fin de expresiones regulares
 
 # Prueba con el codigo del algorithm1.go proporcionado
 # DIEGO ALAY
@@ -192,13 +206,4 @@ if __name__ == "__main__":
         logging.info(mensaje)
 
     print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
-
-
-# Prueba con el codigo del algorithm2.go proporcionado
-# VALERIA GUTIERREZ
-# with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
-
-# Prueba con el codigo del algorithm3.go proporcionado
-# JARED GONZALEZ
-# with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
 

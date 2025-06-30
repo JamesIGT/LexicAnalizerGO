@@ -1,0 +1,12 @@
+[ERROR] Línea 17: Caracter ilegal '''
+[ERROR] Línea 17: Caracter ilegal '''
+[ERROR] Línea 18: Caracter ilegal '''
+[ERROR] Línea 18: Caracter ilegal '''
+[ERROR] Línea 21: Caracter ilegal '''
+[ERROR] Línea 21: Caracter ilegal '''
+[ERROR] Línea 21: Caracter ilegal '''
+[ERROR] Línea 27: Caracter ilegal '''
+[ERROR] Línea 27: Caracter ilegal '''
+[ERROR] Línea 27: Caracter ilegal '''
+[ERROR] Línea 32: Caracter ilegal '#'
+✅ Análisis sintáctico completado correctamente.
