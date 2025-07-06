@@ -1,10 +1,13 @@
 package main
 
-
+func iniciar() {
+fmt.Println("Iniciando programa...")
+}
 
 var resultado float64 = 5.0 / 2     // Este lo detecta si implementas bien los FLOAT
 var suma = 3 + "texto"              // Ya detectas error de tipos
 var edad int = "veinticinco"        // Detectas error
+
 // type Persona struct {
 // 	Nombre string
 // 	Edad   int

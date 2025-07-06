@@ -4,10 +4,10 @@ import os
 import logging
 from datetime import datetime
 
-usuario_git = "dalay"
+usuario_git = "jamesigt"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
-nombre_log = f"semantico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
+nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
 ruta_log = os.path.join("logs", nombre_log)
 
 logging.basicConfig(
@@ -59,6 +59,7 @@ def p_statement(p):
                  | input_stmt
                  | struct_method
                  | func_def
+                 | func_no_params
                  | func_call
                  | if_stmt
                  | for_stmt
@@ -152,6 +153,13 @@ def p_func_def(p):
     '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
                 | FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
     pass
+
+#Jared Gonzalez
+# Funcion sin parametros
+def p_func_def_no_params(p):
+    '''func_no_params : FUNC VARIABLE LPAREN RPAREN block'''
+    pass
+
 
 # Llamada a función
 def p_func_call(p):
