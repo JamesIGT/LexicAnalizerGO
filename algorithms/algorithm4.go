@@ -3,6 +3,7 @@ package main
 func iniciar() {
 fmt.Println("Iniciando programa...")
 }
+m := map[string]int{"uno": 1, "dos": 2}
 
 var resultado float64 = 5.0 / 2     // Este lo detecta si implementas bien los FLOAT
 var suma = 3 + "texto"              // Ya detectas error de tipos

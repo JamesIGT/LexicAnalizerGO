@@ -66,6 +66,7 @@ def p_statement(p):
                  | struct_def
                  | switch_stmt
                  | map_declaration
+                 | map_declaration_values
                  | array_declaration
                  | slice_declaration
                  | make_stmt
@@ -336,6 +337,7 @@ def p_case_clause(p):
                    | DEFAULT COLON program'''
     pass
 
+# Jared Gonzalez
 # MAP
 def p_map_declaration(p):
     '''map_declaration : VAR VARIABLE MAP LBRACKET type RBRACKET type
@@ -351,6 +353,21 @@ def p_make_stmt(p):
 def p_make_expr(p):
     '''make_expr : MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN
                  | MAKE LPAREN LBRACKET RBRACKET type RPAREN'''
+    pass
+
+# MAP CON VALORES
+
+def p_map_literal_declaration(p):
+    '''map_declaration_values : VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_kv_pairs RBRACE'''
+    pass
+
+def p_map_kv_pairs(p):
+    '''map_kv_pairs : map_kv_pair
+                    | map_kv_pair COMMA map_kv_pairs'''
+    pass
+
+def p_map_kv_pair(p):
+    '''map_kv_pair : STRING COLON expression'''
     pass
 
 # ARRAY
