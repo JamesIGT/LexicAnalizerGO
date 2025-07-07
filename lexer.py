@@ -40,6 +40,7 @@ tokens = [
 # Palabras clave de Go
 reserved = {
     'package': 'PACKAGE',
+    'main': 'MAIN',
     'import': 'IMPORT',
     'continue': 'CONTINUE',
     'func': 'FUNC',
@@ -193,7 +194,7 @@ lexer = lex.lex()
 # Prueba con el codigo del algorithm1.go proporcionado
 # DIEGO ALAY
 if __name__ == "__main__":
-    with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
+    with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
         data = f.read()
 
     lexer.input(data)

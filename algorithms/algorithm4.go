@@ -1,22 +1,24 @@
-func main() {
-    var i int = 0
+package main
+import ("fmt")
+func
+
 func obtenerNombre() string {
     return 123
 }
-}
-// type Persona struct {
-// 	Nombre string
-// 	Edad   int
-// }
 
-// func (p Persona) Saludar() string {
-// 	return "Hola " + p.Nombre
-// }
+ type Persona struct {
+ 	Nombre string
+ 	Edad   int
+ }
 
-// func main() {
+ func (p Persona) Saludar() string {
+ 	return "Hola " + p.Nombre
+ }
+
+ func main () {
 // 	Declaraciones
-// 	var edad int
-// 	edad = 25
+ 	var edad int
+ 	edad = 25
 
 // 	var altura float64 = 1.75
 // 	nombre := "Luis"

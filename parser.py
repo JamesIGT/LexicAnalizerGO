@@ -55,7 +55,19 @@ def declare_function(name, return_type):
 
 # Reglas gramaticales
 
+
 # Programa = varias sentencias
+# Detectar 'package main'
+def p_start(p):
+    '''start : PACKAGE MAIN import_stmt program'''
+    pass
+
+
+def p_import_function(p):
+    '''import_stmt : IMPORT LPAREN STRING RPAREN
+                    | IMPORT STRING'''
+    pass
+
 def p_program(p):
     '''program : statement
                | statement program'''
@@ -461,7 +473,7 @@ def p_error(p):
 
 
 # Construir el parser
-parser = yacc.yacc()
+parser = yacc.yacc(start='start')
 
 
 if __name__ == "__main__":
