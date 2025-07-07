@@ -41,6 +41,7 @@ tokens = [
 reserved = {
     'package': 'PACKAGE',
     'import': 'IMPORT',
+    'continue': 'CONTINUE',
     'func': 'FUNC',
     'type': 'TYPE',
     'true': 'TRUE',

@@ -40,6 +40,16 @@ def assign_variable(name, value, value_type):
     
     symbol_table[name]['value'] = value
 
+# Inicio Jared Gonzalez
+# Pila para controlar el contexto (por ejemplo, si estamos dentro de un bucle)
+context_stack = []
+
+# Tabla para almacenar funciones declaradas
+function_table = {}
+def declare_function(name, return_type):
+    if name in function_table:
+        raise Exception(f"[SEMANTIC ERROR] Función '{name}' redeclarada.")
+    function_table[name] = {'return_type': return_type, 'has_return': False}
 
 
 
@@ -57,6 +67,7 @@ def p_statement(p):
                  | assignment
                  | print_stmt
                  | input_stmt
+                 | continue_stmt
                  | struct_method
                  | func_def
                  | func_no_params
@@ -72,7 +83,8 @@ def p_statement(p):
                  | make_stmt
                  | new_stmt
                  | break_stmt
-                 | increment_stmt'''
+                 | increment_stmt
+                 | return_stmt'''
     pass
 
 
@@ -153,7 +165,26 @@ def p_input_stmt(p):
 def p_func_def(p):
     '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
                 | FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    func_name = p[2]
+    return_type = p[6] if len(p) == 10 else p[5]
+    declare_function(func_name, return_type)
     pass
+
+# Retorno de la funcion
+def p_return_stmt(p):
+    '''return_stmt : RETURN expression'''
+
+    # Obtenemos la función actual (última registrada)
+    current_function = list(function_table.keys())[-1]
+    expected_type = function_table[current_function]['return_type']
+
+    expr_value, expr_type = p[2]
+    function_table[current_function]['has_return'] = True
+
+    if expr_type != expected_type:
+        print(
+            f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
+
 
 #Jared Gonzalez
 # Funcion sin parametros
@@ -273,6 +304,14 @@ def p_if_stmt(p):
 def p_for_stmt(p):
     '''for_stmt : FOR expression block
                 | FOR assignment SEMICOLON expression SEMICOLON for_update block'''
+    context_stack.append("loop") # Estamos dentro de un bucle for
+    context_stack.pop() #
+    pass
+
+def p_continue_stmt(p):
+    '''continue_stmt : CONTINUE'''
+    if "loop" not in context_stack:
+        print("[SEMANTIC ERROR] 'continue' fuera de un bucle.")
     pass
 
 def p_for_update(p):
@@ -400,6 +439,8 @@ def p_new_stmt(p):
 # BREAK
 def p_break_stmt(p):
     '''break_stmt : BREAK'''
+    if "loop" not in context_stack:
+        print("[SEMANTIC ERROR] 'break' fuera de un bucle.")
     pass
 
 # Incrementadores ++ --

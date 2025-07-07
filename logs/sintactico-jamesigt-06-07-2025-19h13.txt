@@ -1,0 +1,1 @@
+[ERROR GENERAL] [SEMANTIC ERROR] Variable 'i' usada sin declarar.
