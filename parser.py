@@ -4,7 +4,7 @@ import os
 import logging
 from datetime import datetime
 
-usuario_git = "jamesigt"
+usuario_git = "dalay"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
 nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
@@ -17,6 +17,9 @@ logging.basicConfig(
     level=logging.INFO,
     encoding='utf-8'
 )
+def report_error(mensaje):
+    print(mensaje)
+    logging.error(mensaje)
 
 # Inicio Diego Alay
 # Diccionario para variables declaradas
@@ -109,15 +112,15 @@ def p_declaration(p):
     var_type = p[3]
 
     if var_name in symbol_table:
-        print(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
     else:
         symbol_table[var_name] = {'type': var_type, 'value': None}
-        print(f"[INFO] Variable '{var_name}' declarada con tipo '{var_type}'")
+        report_error(f"[INFO] Variable '{var_name}' declarada con tipo '{var_type}'")
 
     if len(p) == 6:
         expr_value, expr_type = p[5]
         if expr_type != var_type:
-            print(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{var_type}' pero se asigna '{expr_type}'")
+            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{var_type}' pero se asigna '{expr_type}'")
         else:
             symbol_table[var_name]['value'] = expr_value
     pass
@@ -153,11 +156,11 @@ def p_assignment(p):
     expr_value, expr_type = p[3]
 
     if var_name not in symbol_table:
-        print(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
     else:
         expected_type = symbol_table[var_name]['type']
         if expr_type != expected_type:
-            print(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
+            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
         else:
             symbol_table[var_name]['value'] = expr_value
     pass
@@ -194,8 +197,7 @@ def p_return_stmt(p):
     function_table[current_function]['has_return'] = True
 
     if expr_type != expected_type:
-        print(
-            f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
+        report_error(f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
 
 
 #Jared Gonzalez
@@ -249,7 +251,7 @@ def p_expression(p):
         right_value, right_type = p[3]
 
         if left_type != right_type:
-            print(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
+            report_error(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
             p[0] = (None, "error")
         else:
             result_type = 'bool' if p[2] in ('==', '!=', '<', '>', '<=', '>=', '&&', '||') else left_type
@@ -268,7 +270,7 @@ def p_term(p):
         right_value, right_type = p[3]
         
         if left_type != right_type:
-            print(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
+            report_error(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
             p[0] = (None, "error")
         else:
             p[0] = (None, left_type)
@@ -323,7 +325,7 @@ def p_for_stmt(p):
 def p_continue_stmt(p):
     '''continue_stmt : CONTINUE'''
     if "loop" not in context_stack:
-        print("[SEMANTIC ERROR] 'continue' fuera de un bucle.")
+        report_error("[SEMANTIC ERROR] 'continue' fuera de un bucle.")
     pass
 
 def p_for_update(p):
@@ -452,7 +454,7 @@ def p_new_stmt(p):
 def p_break_stmt(p):
     '''break_stmt : BREAK'''
     if "loop" not in context_stack:
-        print("[SEMANTIC ERROR] 'break' fuera de un bucle.")
+        report_error("[SEMANTIC ERROR] 'break' fuera de un bucle.")
     pass
 
 # Incrementadores ++ --
@@ -464,9 +466,9 @@ def p_increment_stmt(p):
 # Manejo de errores
 def p_error(p):
     if p:
-        print(f"[SYNTAX ERROR] Unexpected token '{p.value}' at line {p.lineno}")
+        report_error(f"[SYNTAX ERROR] Unexpected token '{p.value}' at line {p.lineno}")
     else:
-        print("[SYNTAX ERROR] Unexpected end of input")
+        report_error("[SYNTAX ERROR] Unexpected end of input")
 
 
 

@@ -5,6 +5,7 @@ Unused terminals:
     FALSE
     FUNCNAME
     MOD
+    NOT
     PRINT
     RANGE
     TRUE
@@ -177,6 +178,7 @@ MINUS                : 51
 MOD                  : 
 NE                   : 55
 NEW                  : 117
+NOT                  : 
 NUMBER               : 30 63 109 110
 OR                   : 53
 PACKAGE              : 1
