@@ -49,10 +49,10 @@ context_stack = []
 
 # Tabla para almacenar funciones declaradas
 function_table = {}
-def declare_function(name, return_type):
+def declare_function(name, return_type, params=None):
     if name in function_table:
         raise Exception(f"[SEMANTIC ERROR] Función '{name}' redeclarada.")
-    function_table[name] = {'return_type': return_type, 'has_return': False}
+    function_table[name] = {'return_type': return_type, 'params': params or [], 'has_return': False}
 
 
 
@@ -94,26 +94,28 @@ def p_statement(p):
                  | map_declaration
                  | map_declaration_values
                  | array_declaration
+                 | array_literal
                  | slice_declaration
                  | make_stmt
                  | new_stmt
                  | break_stmt
                  | increment_stmt
                  | return_stmt'''
-    pass
+    p[0] = p[1]
 
 
 # Declaración de variable 
 def p_declaration(p):
-    '''declaration : VAR VARIABLE type
-                   | VAR VARIABLE type ASIG expression'''
+    '''declaration : VAR VARIABLE type 
+                   | VAR VARIABLE type ASIG expression
+                   | VAR VARIABLE type ASSIGN expression'''
     #Diego Alay
     var_name = p[2]
     var_type = p[3]
 
     if var_name in symbol_table:
         report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
-    else:
+    else: # Declaración básica
         symbol_table[var_name] = {'type': var_type, 'value': None}
         report_error(f"[INFO] Variable '{var_name}' declarada con tipo '{var_type}'")
 
@@ -180,10 +182,18 @@ def p_input_stmt(p):
 def p_func_def(p):
     '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
                 | FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    
     func_name = p[2]
-    return_type = p[6] if len(p) == 10 else p[5]
-    declare_function(func_name, return_type)
-    pass
+
+    if len(p) == 10:
+        params = p[4]  # lista de (nombre, tipo)
+        return_type = p[6]
+    else:
+        params = []
+        return_type = p[5]
+
+    param_types = [ptype for _, ptype in params]
+    declare_function(func_name, return_type, param_types)
 
 # Retorno de la funcion
 def p_return_stmt(p):
@@ -211,23 +221,65 @@ def p_func_def_no_params(p):
 def p_func_call(p):
     '''func_call : VARIABLE LPAREN arg_list RPAREN
                  | VARIABLE LPAREN RPAREN'''
-    pass
+    
+    func_name = p[1]
+
+    if func_name not in function_table:
+        report_error(f"[SEMANTIC ERROR] Función '{func_name}' no declarada.")
+        p[0] = (None, 'error')
+        return
+
+    func_info = function_table[func_name]
+    expected_params = func_info.get('params', [])  # Lista de tipos o nombres (depende cómo definiste)
+    
+    if len(p) == 5:  # Sin argumentos
+        if len(expected_params) != 0:
+            report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero no se proporcionaron.")
+        p[0] = (None, func_info['return_type'])
+    else:
+        args = p[3]  # Lista de (valor, tipo) de argumentos
+        if len(args) != len(expected_params):
+            report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero se recibieron {len(args)}.")
+            p[0] = (None, 'error')
+            return
+
+        # Verificar tipos de cada argumento
+        for i, ((_, arg_type), expected_type) in enumerate(zip(args, expected_params)):
+            if arg_type != expected_type:
+                report_error(f"[SEMANTIC ERROR] Argumento {i+1} de '{func_name}' tiene tipo '{arg_type}', se esperaba '{expected_type}'.")
+
+        p[0] = (None, func_info['return_type'])
 
 # Lista de parámetros
 def p_param_list(p):
     '''param_list : param
                   | param COMMA param_list'''
-    pass
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
 
-def p_param(p):
+def p_param(p):  
     '''param : VARIABLE type'''
-    pass
+    var_name = p[1]
+    var_type = p[2]
+    p[0] = (var_name, var_type)
+
+    if var_name in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Parámetro '{var_name}' ya fue declarado.")
+    else:
+        symbol_table[var_name] = {'type': var_type, 'value': None}
 
 # Lista de argumentos
 def p_arg_list(p):
     '''arg_list : expression
                 | expression COMMA arg_list'''
-    pass
+    if len(p) == 2:
+        # Solo un argumento
+        p[0] = [p[1]]
+    else:
+        # Lista de argumentos acumulada
+        p[0] = [p[1]] + p[3]
 
 # Expresiones (con aritmética, booleanos y comparaciones)
 def p_expression(p):
@@ -250,13 +302,20 @@ def p_expression(p):
         left_value, left_type = p[1]
         right_value, right_type = p[3]
 
+        op = p[2]
+
         if left_type != right_type:
-            report_error(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
-            p[0] = (None, "error")
-        else:
-            result_type = 'bool' if p[2] in ('==', '!=', '<', '>', '<=', '>=', '&&', '||') else left_type
-            p[0] = (None, result_type)
-    pass
+            # Excepción especial para concatenar strings
+            if op == '+' and left_type == 'string' and right_type == 'string':
+                p[0] = (None, 'string')
+                return
+            else:
+                report_error(f"[SEMANTIC ERROR] Operación entre tipos incompatibles: {left_type} y {right_type}")
+                p[0] = (None, "error")
+                return
+
+        result_type = 'bool' if op in ('==', '!=', '<', '>', '<=', '>=', '&&', '||') else left_type
+        p[0] = (None, result_type)
 
 def p_term(p):
     '''term : factor
@@ -306,13 +365,17 @@ def p_type(p):
             | FLOAT64_TYPE
             | STRING_TYPE
             | BOOL_TYPE'''
-    pass
+    p[0] = p[1]  # ← esto es lo que le da el valor real al tipo
 
 # IF - ELSE
 def p_if_stmt(p):
     '''if_stmt : IF expression block
                | IF expression block ELSE block'''
-    pass
+    
+    condition_value, condition_type = p[2]
+
+    if condition_type != 'bool':
+        report_error(f"[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió '{condition_type}'")
 
 # FOR Loop (Go tiene varias formas, empezamos con la básica tipo while)
 def p_for_stmt(p):
@@ -426,13 +489,54 @@ def p_map_kv_pair(p):
 # ARRAY
 def p_array_declaration(p):
     '''array_declaration : VAR VARIABLE LBRACKET NUMBER RBRACKET type
-                         | VARIABLE ASIG LBRACKET NUMBER RBRACKET type LBRACE array_values RBRACE'''
-    pass
+                         | VAR VARIABLE ASSIGN array_literal'''
+
+    if len(p) == 7:  # var numeros [3]int
+        var_name = p[2]
+        array_size = p[4]
+        element_type = p[6]
+
+        if var_name in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        else:
+            symbol_table[var_name] = {'type': f'array[{array_size}]{element_type}', 'value': None}
+            report_error(f"[INFO] Array '{var_name}' declarado con tipo y tamaño correctamente.")
+
+    elif len(p) == 5:  # var numeros = [3]int{...}
+        var_name = p[2]
+        array_value, array_type = p[4]
+
+        if var_name in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        else:
+            symbol_table[var_name] = {'type': array_type, 'value': array_value}
+            report_error(f"[INFO] Array '{var_name}' declarado e inicializado correctamente.")
+
+def p_array_literal(p):
+    '''array_literal : LBRACKET NUMBER RBRACKET type LBRACE array_values RBRACE'''
+    array_size = p[2]
+    element_type = p[4]
+    values = p[6]
+
+    if len(values) != array_size:
+        report_error(f"[SEMANTIC ERROR] Se esperaban {array_size} elementos, pero se proporcionaron {len(values)}.")
+    else:
+        for i, (val, val_type) in enumerate(values):
+            if val_type != element_type:
+                report_error(f"[SEMANTIC ERROR] Elemento {i} debe ser de tipo '{element_type}', pero se recibió '{val_type}'.")
+
+    p[0] = (values, f'array[{array_size}]{element_type}')
+
 
 def p_array_values(p):
     '''array_values : expression
                     | expression COMMA array_values'''
-    pass
+    if len(p) == 2:
+        # Solo un elemento
+        p[0] = [p[1]]
+    else:
+        # Elemento + lista de elementos
+        p[0] = [p[1]] + p[3]
 
 # SLICE
 def p_slice_declaration(p):

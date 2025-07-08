@@ -1,0 +1,1 @@
+[ERROR GENERAL] name 'report_info' is not defined

@@ -1,0 +1,3 @@
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[INFO] Variable 'resultado' declarada con tipo 'int'
+✅ Análisis semántico completado correctamente.

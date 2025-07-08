@@ -1,0 +1,6 @@
+[INFO] Variable 'nombre' declarada con tipo 'None'
+[SEMANTIC ERROR] Asignación incompatible: 'nombre' es 'None' pero se asigna 'string'
+[INFO] Variable 'resultado' declarada con tipo 'None'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'None' pero se asigna 'int'
+[SYNTAX ERROR] Unexpected token '}' at line 27
+✅ Análisis semántico completado correctamente.

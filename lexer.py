@@ -34,7 +34,7 @@ tokens = [
     'LBRACKET', 'RBRACKET',
     'SEMICOLON', 'COLON', 'COMMA', 'DOT',
     'AMPER',
-    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FUNCNAME', 'FLOAT', 
+    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE', 'FLOAT', 
 ]
 
 # Palabras clave de Go
@@ -164,10 +164,10 @@ def t_NUMBER(t):
     t.value = int(t.value)
     return t
 
-def t_FUNCNAME(t):
-    r'func\s+([a-zA-Z_][a-zA-Z0-9_]*)'
-    t.value = t.value.split()[1]  # Extraer solo el nombre de la función
-    return t
+# def t_FUNCNAME(t):
+#     r'func\s+([a-zA-Z_][a-zA-Z0-9_]*)'
+#     t.value = t.value.split()[1]  # Extraer solo el nombre de la función
+#     return t
 
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'

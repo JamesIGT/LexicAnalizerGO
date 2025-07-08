@@ -1,0 +1,4 @@
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[INFO] Variable 'resultado' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token '}' at line 27
+✅ Análisis semántico completado correctamente.
