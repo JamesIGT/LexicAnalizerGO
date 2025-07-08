@@ -186,13 +186,15 @@ def p_func_def(p):
     func_name = p[2]
 
     if len(p) == 10:
-        params = p[4]  # lista de (nombre, tipo)
+        # Con parámetros
+        params = p[4]
         return_type = p[6]
     else:
+        # Sin parámetros
         params = []
         return_type = p[5]
 
-    param_types = [ptype for _, ptype in params]
+    param_types = [ptype for _, ptype in params]  # Extrae solo los tipos
     declare_function(func_name, return_type, param_types)
 
 # Retorno de la funcion
