@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 
 
-# usuario_git = "jamesigt"  # Cambia esto por tu usuario de GitHub
+# usuario_git = "dalay"  # Cambia esto por tu usuario de GitHub
 
 # os.makedirs("logs", exist_ok=True)
 
@@ -12,7 +12,7 @@ from datetime import datetime
 # nombre_log = f"lexico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
 # ruta_log = os.path.join("logs", nombre_log)
 
-# Configurar logger
+# #Configurar logger
 # logging.basicConfig(
 #     filename=ruta_log,
 #     filemode='w',
@@ -81,13 +81,14 @@ reserved.update({
 
 })
 
-tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR', "ASIG",]
+tokens += ['INCREMENT', 'DECREMENT', 'AND', 'OR', 'NOT', "ASIG",]
 
 t_INCREMENT = r'\+\+'
 t_DECREMENT = r'--'
 t_AND       = r'&&'
 t_OR        = r'\|\|'
 t_ASIG = r':='
+t_NOT = r'!'
 
 #FIN DEL APORTE DE VALERIA GUTIERREZ
 
@@ -116,8 +117,8 @@ t_ASSIGN     = r'\='
 t_EQ         = r'=='
 t_NE         = r'!='
 t_LT         = r'<'
-t_GT         = r'>'
 t_LE         = r'<='
+t_GT         = r'\^'
 t_GE         = r'>='
 t_LPAREN     = r'\('
 t_RPAREN     = r'\)'
@@ -193,19 +194,19 @@ lexer = lex.lex()
 
 # Prueba con el codigo del algorithm1.go proporcionado
 # DIEGO ALAY
-if __name__ == "__main__":
-    with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
-        data = f.read()
+# if __name__ == "__main__":
+#     with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
+#         data = f.read()
 
-    lexer.input(data)
+#     lexer.input(data)
 
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        mensaje = f"[TOKEN] Línea {tok.lineno}: Tipo={tok.type}, Valor={tok.value}"
-        print(mensaje)
-        logging.info(mensaje)
+#     while True:
+#         tok = lexer.token()
+#         if not tok:
+#             break
+#         mensaje = f"[TOKEN] Línea {tok.lineno}: Tipo={tok.type}, Valor={tok.value}"
+#         print(mensaje)
+#         logging.info(mensaje)
 
-    print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
+#     print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
 
