@@ -1,0 +1,2 @@
+[SYNTAX ERROR] Unexpected token ':=' at line 12
+✅ Análisis semántico completado correctamente.

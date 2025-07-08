@@ -1,0 +1,11 @@
+[SEMANTIC ERROR] Operación entre tipos incompatibles: float64 y int
+[INFO] Variable 'resultado' declarada con tipo 'float64'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'float64' pero se asigna 'error'
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[INFO] Variable 'cantidad' declarada con tipo 'int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y string
+[INFO] Variable 'suma' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'suma' es 'int' pero se asigna 'error'
+[INFO] Variable 'edad' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'edad' es 'int' pero se asigna 'string'
+✅ Análisis semántico completado correctamente.

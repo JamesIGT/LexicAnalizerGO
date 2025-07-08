@@ -1,0 +1,7 @@
+[SEMANTIC ERROR] Operación entre tipos incompatibles: float64 y int
+[INFO] Variable 'resultado' declarada con tipo 'float64'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'float64' pero se asigna 'error'
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[SEMANTIC ERROR] Variable 'resultado' redeclarada.
+[SYNTAX ERROR] Unexpected token '=' at line 25
+✅ Análisis semántico completado correctamente.
