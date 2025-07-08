@@ -1,0 +1,10 @@
+[INFO] Array 'numeros' declarado con tipo y tamaño correctamente.
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+[SEMANTIC ERROR] Se esperaban 2 elementos, pero se proporcionaron 3.
+[SEMANTIC ERROR] Variable 'numeros' redeclarada.
+[SEMANTIC ERROR] Elemento 1 debe ser de tipo 'int', pero se recibió 'string'.
+[INFO] Array 'mezclado' declarado e inicializado correctamente.
+[INFO] Array 'temperaturas' declarado con tipo y tamaño correctamente.
+[SYNTAX ERROR] Unexpected token '[' at line 22
+✅ Análisis semántico completado correctamente.
