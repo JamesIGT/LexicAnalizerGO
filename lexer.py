@@ -193,19 +193,19 @@ lexer = lex.lex()
 
 # Prueba con el codigo del algorithm1.go proporcionado
 # DIEGO ALAY
-# if __name__ == "__main__":
-#     with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
-#         data = f.read()
+if __name__ == "__main__":
+    with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
+        data = f.read()
 
-#     lexer.input(data)
+    lexer.input(data)
 
-#     while True:
-#         tok = lexer.token()
-#         if not tok:
-#             break
-#         mensaje = f"[TOKEN] Línea {tok.lineno}: Tipo={tok.type}, Valor={tok.value}"
-#         print(mensaje)
-#         logging.info(mensaje)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        mensaje = f"[TOKEN] Línea {tok.lineno}: Tipo={tok.type}, Valor={tok.value}"
+        print(mensaje)
+        logging.info(mensaje)
 
-#     print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
+    print(f"\n✅ Análisis completado. Log guardado en: {ruta_log}")
 

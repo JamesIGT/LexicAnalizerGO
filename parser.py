@@ -177,7 +177,8 @@ def p_assignment(p):
 # Imprimir en consola
 def p_print_stmt(p):
     '''print_stmt : FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN
-                  | FMT DOT PRINTLN LPAREN expression RPAREN'''
+                  | FMT DOT PRINTLN LPAREN expression RPAREN
+                  | FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE RPAREN'''
     if p[3] == 'Printf':
         string_literal = p[5]
         expr_value, expr_type = p[7]
@@ -521,7 +522,17 @@ def p_case_clause(p):
 # MAP
 def p_map_declaration(p):
     '''map_declaration : VAR VARIABLE MAP LBRACKET type RBRACKET type
-                       | VARIABLE ASIG MAP LBRACKET type RBRACKET type'''
+                       | VARIABLE ASIG MAP LBRACKET type RBRACKET type
+                       | VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE  map_params RBRACE'''
+    pass
+
+def p_map_params(p):
+    '''map_params : map_param
+                    | map_param COMMA map_params'''
+    pass
+
+def p_map_param(p):
+    '''map_param : STRING COLON factor'''
     pass
 
 # MAKE
@@ -654,7 +665,7 @@ parser = yacc.yacc(start='start')
 
 if __name__ == "__main__":
     try:
-        with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
+        with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
             data = f.read()
         result = parser.parse(data)
         if result is None:

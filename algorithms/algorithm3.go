@@ -1,41 +1,38 @@
 package main
-import (
-	"fmt"
-)
-type Tarea struct {
-	Descripcion string
-	Completada  bool
-}
-type GestorDeTareas struct {
-	Lista []Tarea
+
+import "fmt"
+
+
+func obtenerDatos() {
+    datos := map[string]int {
+        "edad": 25,
+        "anio": 2025
+    }
+    return datos
 }
 
-func (g *GestorDeTareas) Agregar(descripcion string) {
-	t := Tarea{Descripcion: descripcion, Completada: false}
-	g.Lista = append(g.Lista, t)
+func imprimirNumeros() {
+    for i := 0; i < 10; i++ {
+        if i == 3 {
+            continue
+        }
+        if i == 7 {
+            break
+        }
+        fmt.Println(i)
+    }
 }
-func (g *GestorDeTareas) Completar(indice int) {
-        if indice >= 0 && indice < len(g.Lista) {
-		g.Lista[indice].Completada = true
-	}
+
+func obtenerSaludo() string {
+    return "Hola!"
 }
-func (g *GestorDeTareas) Mostrar() {
-	for i, t := range g.Lista {
-		estado := "✗"
-		if t.Completada {
-			estado = "✓"
-		}
-		fmt.Printf("%d. [%s] %s\n", i, estado, t.Descripcion)
-	}
-}
-// Esto es un comentario
 
 func main() {
-	gestor := GestorDeTareas{}
-	gestor.Agregar("Estudiar Go")
-	gestor.Agregar("Hacer ejercicio")
-	gestor.Agregar("Leer un libro")
-	gestor.Completar(1)
-	fmt.Println("Lista de tareas:")
-	gestor.Mostrar()
+    datos := obtenerDatos()
+    fmt.Println("Datos:", datos)
+
+    saludo := obtenerSaludo()
+    fmt.Println(saludo)
+
+    imprimirNumeros()
 }
