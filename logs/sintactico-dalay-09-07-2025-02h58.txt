@@ -1,0 +1,2 @@
+[INFO] Variable 'Edad' declarada con tipo 'int'
+[ERROR GENERAL] [SEMANTIC ERROR] Variable 'edad' usada sin declarar.

@@ -1,0 +1,7 @@
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[INFO] Variable 'P_esso' declarada con tipo 'float64'
+[INFO] Variable 'P0ESSO' declarada con tipo 'float64'
+[INFO] Variable '_pesso' declarada con tipo 'float64'
+[INFO] Variable 'activo' declarada con tipo 'bool'
+[INFO] Array 'edades' declarado e inicializado correctamente.
+✅ Análisis semántico completado correctamente.
