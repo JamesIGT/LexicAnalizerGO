@@ -1,0 +1,23 @@
+[INFO] Array 'numeros' declarado con tipo y tamaño correctamente.
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+[SEMANTIC ERROR] Se esperaban 2 elementos, pero se proporcionaron 3.
+[INFO] Array 'numerosarray' declarado e inicializado correctamente.
+[SEMANTIC ERROR] Elemento 1 debe ser de tipo 'int', pero se recibió 'string'.
+[INFO] Array 'mezclado' declarado e inicializado correctamente.
+[INFO] Array 'a' declarado e inicializado correctamente.
+[INFO] Array 'b' declarado con tipo y tamaño correctamente.
+[INFO] Array 'x' declarado e inicializado correctamente.
+[INFO] Array 'y' declarado con tipo y tamaño correctamente.
+[SEMANTIC ERROR] Asignación incompatible: 'y' es 'array[3]int' pero se asigna 'array[2]int'
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[INFO] Variable 'cantidad' declarada con tipo 'int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y string
+[INFO] Variable 'suma' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'suma' es 'int' pero se asigna 'error'
+[SEMANTIC ERROR] Variable 'edad' redeclarada.
+[SEMANTIC ERROR] Asignación incompatible: 'edad' es 'int' pero se asigna 'string'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: float64 y int
+[INFO] Variable 'resultado' declarada con tipo 'float64'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'float64' pero se asigna 'error'
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,3 @@
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[SYNTAX ERROR] Unexpected token 'main' at line 11
+✅ Análisis semántico completado correctamente.

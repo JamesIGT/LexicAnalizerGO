@@ -1,0 +1,3 @@
+[SEMANTIC ERROR] Función 'pruebaEdad' espera 1 argumentos, pero no se proporcionaron.
+[SYNTAX ERROR] Unexpected token '(' at line 32
+✅ Análisis semántico completado correctamente.

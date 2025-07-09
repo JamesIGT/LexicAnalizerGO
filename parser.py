@@ -180,19 +180,36 @@ def p_input_stmt(p):
 
 # Función
 def p_func_def(p):
-    '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE'''
-    
+    '''func_def : func_header func_body'''
+    func_name = p[1]
+
+def p_func_header(p):
+    '''func_header : FUNC VARIABLE LPAREN param_list RPAREN type'''
     func_name = p[2]
     params = p[4]
     return_type = p[6]
-    
+
     param_types = [ptype for _, ptype in params]
     declare_function(func_name, return_type, param_types)
+    p[0] = func_name  # opcional
+
+def p_func_body(p):
+    '''func_body : LBRACE program RBRACE'''
+    pass
+
 
 # Retorno de la funcion
 def p_return_stmt(p):
     '''return_stmt : RETURN expression'''
+    print("return_stmt len:", len(p))
+    print("return_stmt slice:", p.slice)
+    print("p[2] =", p[2])
+    print("type(p[2]) =", type(p[2]))
 
+    if not function_table:
+        report_error("[SEMANTIC ERROR] 'return' fuera de una función.")
+        return
+    
     # Obtenemos la función actual (última registrada)
     current_function = list(function_table.keys())[-1]
     expected_type = function_table[current_function]['return_type']
@@ -203,7 +220,6 @@ def p_return_stmt(p):
     if expr_type != expected_type:
         report_error(f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
 
-
 #Jared Gonzalez
 # Funcion sin parametros
 def p_func_def_no_params(p):
@@ -212,12 +228,17 @@ def p_func_def_no_params(p):
     return_type = p[5]
     declare_function(func_name, return_type, [])
 
+def p_func_def_no_params_void(p):
+    '''func_no_params : FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE'''
+    func_name = p[2]
+    declare_function(func_name, 'void', [])  # o 'None', si prefieres
 
 # Llamada a función
 def p_func_call(p):
     '''func_call : VARIABLE LPAREN arg_list RPAREN
                  | VARIABLE LPAREN RPAREN'''
-    
+    print("func_call len:", len(p))
+    print("func_call slice:", p.slice)
     func_name = p[1]
 
     if func_name not in function_table:
@@ -226,13 +247,14 @@ def p_func_call(p):
         return
 
     func_info = function_table[func_name]
-    expected_params = func_info.get('params', [])  # Lista de tipos o nombres (depende cómo definiste)
-    
-    if len(p) == 5:  # Sin argumentos
+    expected_params = func_info.get('params', [])  # Lista de tipos esperados
+
+    if len(p) == 4:  # Sin argumentos
         if len(expected_params) != 0:
             report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero no se proporcionaron.")
         p[0] = (None, func_info['return_type'])
-    else:
+
+    elif len(p) == 5:  # Con argumentos
         args = p[3]  # Lista de (valor, tipo) de argumentos
         if len(args) != len(expected_params):
             report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero se recibieron {len(args)}.")
@@ -246,10 +268,13 @@ def p_func_call(p):
 
         p[0] = (None, func_info['return_type'])
 
+
 # Lista de parámetros
 def p_param_list(p):
     '''param_list : param
                   | param COMMA param_list'''
+    print("param_list len:", len(p))
+    print("param_list slice:", p.slice)
     if len(p) == 2:
         p[0] = [p[1]]
     else:
@@ -257,6 +282,8 @@ def p_param_list(p):
 
 def p_param(p):  
     '''param : VARIABLE type'''
+    print("param len:", len(p))
+    print("param slice:", p.slice)
     var_name = p[1]
     var_type = p[2]
     p[0] = (var_name, var_type)
@@ -329,31 +356,38 @@ def p_term(p):
             p[0] = (None, "error")
         else:
             p[0] = (None, left_type)
-    pass
+    
 
 def p_factor(p):
     '''factor : NUMBER
               | FLOAT
               | STRING
               | VARIABLE
+              | TRUE
+              | FALSE
               | LPAREN expression RPAREN
               | make_expr
               | struct_instance'''
-    # Diego Alay
-    if isinstance(p[1], int):
+    if p.slice[1].type == 'NUMBER':
         p[0] = (p[1], 'int')
-    elif isinstance(p[1], float):
+    elif p.slice[1].type == 'FLOAT':
         p[0] = (p[1], 'float64')
-    elif isinstance(p[1], str):
+    elif p.slice[1].type == 'STRING':
+        p[0] = (p[1], 'string')
+    elif p.slice[1].type == 'TRUE':
+        p[0] = (True, 'bool')
+    elif p.slice[1].type == 'FALSE':
+        p[0] = (False, 'bool')
+    elif p.slice[1].type == 'VARIABLE':
+        # Manejo variables, ver si declarada
         if p[1] in symbol_table:
-            var_type = symbol_table[p[1]]['type']
-            var_value = symbol_table[p[1]]['value']
-            p[0] = (var_value, var_type)
+            p[0] = (symbol_table[p[1]]['value'], symbol_table[p[1]]['type'])
         else:
-            p[0] = (p[1], 'string')
-    elif len(p) == 4:  # Para casos como ( expression )
+            raise Exception(f"[SEMANTIC ERROR] Variable '{p[1]}' usada sin declarar.")
+    elif p.slice[1].type == 'LPAREN':
         p[0] = p[2]
-    pass
+
+    
 
 # Tipos básicos de Go
 def p_type(p):
@@ -465,7 +499,13 @@ def p_make_stmt(p):
 def p_make_expr(p):
     '''make_expr : MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN
                  | MAKE LPAREN LBRACKET RBRACKET type RPAREN'''
-    pass
+    if len(p) == 9:
+        key_type = p[5]
+        value_type = p[7]
+        p[0] = (None, f"map[{key_type}]{value_type}")
+    elif len(p) == 7:
+        slice_type = p[5]
+        p[0] = (None, f"[] {slice_type}")
 
 # MAP CON VALORES
 

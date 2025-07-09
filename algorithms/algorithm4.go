@@ -1,60 +1,57 @@
 package main
-// Diego Alay
+
 import "fmt"
 
-// Función que saluda a una persona
-// func pruebaEdad(edad int) int {
-//     return edad  // ← Error semántico esperado: se retorna int, pero se espera string
-// }
+// Función que retorna un tipo incorrecto (debería retornar string, pero retorna int)
+func pruebaEdad(edad int) string {
+    return edad  // ❌ Error esperado: se retorna int, pero se espera string
+}
 
+func saludar(nombre string) string {
+ return "Hola " + nombre
+}
 
-//func mains(){
+// Función principal sin parámetros
+func mains() {
+    // Llamada correcta en cantidad de argumentos
+    pruebaEdad(12)
+
+    // Llamada a función sin parámetros
+    // mensaje := saludar("HOLA")  // ❌ Error esperado si 'saludar' no está declarada
+    // fmt.Println(mensaje)
+
+    // Declaración de arrays válidos
     
-    
-    //Declaración con tipo explícito y asignación posterior
-    // var temperaturas [2]float64
-    // temperaturas[0] = 22.5
-    // temperaturas[1] = 18.9
+    var pesso float64 = 65.5
+    var activo bool = true
+    var edades = [3]int{20, 25, 30}  // falta que funcione con :=
 
-
-    //Acceso y uso en expresión
-    //var notas = [3]int{80, 90, 100}
-    //var suma = notas[0] + notas[1] + notas[2]
-
-//   }
-
-//Llamado a la función
-mensaje := saludar( )
-fmt.Println(mensaje)
-
-   
-// //}
-
-
-// pruebas que funcionan     
-    var numeros [3]int
-    var edades = [3]int{20, 25, 30}
     fmt.Println(edades)
-    var nombres = [3]string{"Ana", "Luis", "Pedro"}
-    // error 
-    var numerosarray = [2]int{10, 20, 30}  // ❌ Error esperado: se esperaban 2, se dieron 3
-    var mezclado = [2]int{10, "hola"}  // ❌ Error: "hola" no es int
 
-    //Asignación entre arrays del mismo tipo
+    var nombres = [3]string{"Ana", "Luis", "Pedro"}
+
+    // ❌ Array con más valores que el tamaño
+    var numerosarray = [2]int{10, 20, 30}
+
+    // ❌ Array con tipos incompatibles
+    var mezclado = [2]int{10, "hola"}   //falta corregir la compatibilidad
+
+    // Asignación entre arrays válidos
     var a = [2]int{1, 2}
     var b [2]int
-    b = a 
+    b = a
 
-    //Asignación entre arrays de distinto tipo
+    // ❌ Asignación entre arrays de distinto tamaño
     var x = [2]int{1, 2}
     var y [3]int
-    y = x  // ❌ Error esperado: tipos incompatibles (array[3]int ≠ array[2]int)
+    y = x
 
-    //Verificación de tipos válidos
+    // Tipos válidos
     var nombre string = "Ana"
     var cantidad int = 2
 
-    //Ejemplos con errores de tipos (incompatibles)
-    var suma int = 3 + "texto"         // Error: int + string
-    var edad int = "veinticinco"       // Error: string asignado a int
-    var resultado float64 = 5.0 / 2    // Error: float64 / int
+    // ❌ Errores de tipo
+    var suma int = 3 + "texto"
+    var edad int = "veinticinco"
+    var resultado float64 = 5.0 / 2
+}
