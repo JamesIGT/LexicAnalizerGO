@@ -1,0 +1,2 @@
+[SYNTAX ERROR] Unexpected token 'func' at line 6
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,4 @@
+[INFO] Array 'numeros' declarado con tipo y tamaño correctamente.
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+✅ Análisis semántico completado correctamente.

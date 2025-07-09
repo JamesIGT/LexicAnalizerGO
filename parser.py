@@ -180,21 +180,13 @@ def p_input_stmt(p):
 
 # Función
 def p_func_def(p):
-    '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
-                | FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    '''func_def : FUNC VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE'''
     
     func_name = p[2]
-
-    if len(p) == 10:
-        # Con parámetros
-        params = p[4]
-        return_type = p[6]
-    else:
-        # Sin parámetros
-        params = []
-        return_type = p[5]
-
-    param_types = [ptype for _, ptype in params]  # Extrae solo los tipos
+    params = p[4]
+    return_type = p[6]
+    
+    param_types = [ptype for _, ptype in params]
     declare_function(func_name, return_type, param_types)
 
 # Retorno de la funcion
@@ -215,8 +207,10 @@ def p_return_stmt(p):
 #Jared Gonzalez
 # Funcion sin parametros
 def p_func_def_no_params(p):
-    '''func_no_params : FUNC VARIABLE LPAREN RPAREN block'''
-    pass
+    '''func_no_params : FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    func_name = p[2]
+    return_type = p[5]
+    declare_function(func_name, return_type, [])
 
 
 # Llamada a función
