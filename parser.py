@@ -62,8 +62,9 @@ def declare_function(name, return_type, params=None):
 # Programa = varias sentencias
 # Detectar 'package main'
 def p_start(p):
-    '''start : PACKAGE MAIN import_stmt program'''
-    pass
+    '''start : PACKAGE VARIABLE import_stmt program'''
+    if p[2] != 'main':
+        report_error(f"[SEMANTIC ERROR] Se esperaba 'main' como nombre del paquete, pero se recibió '{p[2]}'")
 
 
 def p_import_function(p):
@@ -142,19 +143,25 @@ def p_expression_variable(p):
     '''expression : VARIABLE'''
     name = p[1]
     if name not in symbol_table:
-        raise Exception(f"[SEMANTIC ERROR] Variable '{name}' usada sin declarar.")
-    
+        report_error(f"[SEMANTIC ERROR] Variable '{name}' usada sin declarar.")
+        p[0] = (None, 'error')  # ← necesario
+        return
     value = symbol_table[name]['value']
     var_type = symbol_table[name]['type']
-    p[0] = (value, var_type)
+    p[0] = (value, var_type)  # ← siempre se debe asignar p[0]
+
 #***********************
 
 # Asignación de valor
 def p_assignment(p):
     '''assignment : VARIABLE ASSIGN expression
                   | VARIABLE ASIG expression'''
-    # Diego Alay
     var_name = p[1]
+
+    if p[3] is None or not isinstance(p[3], tuple):
+        report_error(f"[SEMANTIC ERROR] Expresión inválida en asignación a '{var_name}'.")
+        return
+
     expr_value, expr_type = p[3]
 
     if var_name not in symbol_table:
@@ -165,13 +172,19 @@ def p_assignment(p):
             report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
         else:
             symbol_table[var_name]['value'] = expr_value
-    pass
+
 
 # Imprimir en consola
 def p_print_stmt(p):
     '''print_stmt : FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN
                   | FMT DOT PRINTLN LPAREN expression RPAREN'''
-    pass
+    if p[3] == 'Printf':
+        string_literal = p[5]
+        expr_value, expr_type = p[7]
+        print(f"[INFO] Printf con formato: {string_literal}, valor: {expr_value} (tipo: {expr_type})")
+    else:  # Println
+        expr_value, expr_type = p[5]
+        print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
 
 # Leer desde teclado
 def p_input_stmt(p):
@@ -233,12 +246,9 @@ def p_func_def_no_params_void(p):
     func_name = p[2]
     declare_function(func_name, 'void', [])  # o 'None', si prefieres
 
-# Llamada a función
 def p_func_call(p):
     '''func_call : VARIABLE LPAREN arg_list RPAREN
                  | VARIABLE LPAREN RPAREN'''
-    print("func_call len:", len(p))
-    print("func_call slice:", p.slice)
     func_name = p[1]
 
     if func_name not in function_table:
@@ -247,7 +257,7 @@ def p_func_call(p):
         return
 
     func_info = function_table[func_name]
-    expected_params = func_info.get('params', [])  # Lista de tipos esperados
+    expected_params = func_info.get('params', [])
 
     if len(p) == 4:  # Sin argumentos
         if len(expected_params) != 0:
@@ -255,18 +265,26 @@ def p_func_call(p):
         p[0] = (None, func_info['return_type'])
 
     elif len(p) == 5:  # Con argumentos
-        args = p[3]  # Lista de (valor, tipo) de argumentos
+        args = p[3]
+        if args is None:
+            report_error(f"[SEMANTIC ERROR] Argumentos inválidos en llamada a '{func_name}'.")
+            p[0] = (None, 'error')
+            return
+
         if len(args) != len(expected_params):
             report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero se recibieron {len(args)}.")
             p[0] = (None, 'error')
             return
 
-        # Verificar tipos de cada argumento
         for i, ((_, arg_type), expected_type) in enumerate(zip(args, expected_params)):
             if arg_type != expected_type:
                 report_error(f"[SEMANTIC ERROR] Argumento {i+1} de '{func_name}' tiene tipo '{arg_type}', se esperaba '{expected_type}'.")
 
         p[0] = (None, func_info['return_type'])
+    else:
+        # Protección extra: nunca dejar sin asignar p[0]
+        report_error(f"[SYNTAX ERROR] Llamada a función mal formada.")
+        p[0] = (None, 'error')
 
 
 # Lista de parámetros
@@ -318,17 +336,20 @@ def p_expression(p):
                   | expression LE expression
                   | expression GE expression'''
     
-    # Diego Alay
     if len(p) == 2:
-        p[0] = p[1]
+        # Aquí p[1] debe ser una tupla (valor, tipo)
+        if p[1] is None:
+            report_error("[SEMANTIC ERROR] Expresión inválida (None) en expresión simple")
+            p[0] = (None, 'error')
+        else:
+            p[0] = p[1]
+
     else:
         left_value, left_type = p[1]
         right_value, right_type = p[3]
-
         op = p[2]
 
         if left_type != right_type:
-            # Excepción especial para concatenar strings
             if op == '+' and left_type == 'string' and right_type == 'string':
                 p[0] = (None, 'string')
                 return
@@ -337,8 +358,10 @@ def p_expression(p):
                 p[0] = (None, "error")
                 return
 
+        # Si es operador lógico o comparación, el resultado es booleano
         result_type = 'bool' if op in ('==', '!=', '<', '>', '<=', '>=', '&&', '||') else left_type
         p[0] = (None, result_type)
+
 
 def p_term(p):
     '''term : factor
@@ -357,6 +380,16 @@ def p_term(p):
         else:
             p[0] = (None, left_type)
     
+def p_term_variable(p):
+    'term : VARIABLE'
+    var_name = p[1]
+    if var_name not in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
+        p[0] = (None, 'error')
+    else:
+        var_info = symbol_table[var_name]
+        p[0] = (var_info.get('value', None), var_info['type'])
+
 
 def p_factor(p):
     '''factor : NUMBER
@@ -367,7 +400,8 @@ def p_factor(p):
               | FALSE
               | LPAREN expression RPAREN
               | make_expr
-              | struct_instance'''
+              | struct_instance
+              | func_call'''
     if p.slice[1].type == 'NUMBER':
         p[0] = (p[1], 'int')
     elif p.slice[1].type == 'FLOAT':

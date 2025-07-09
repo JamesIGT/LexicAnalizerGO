@@ -1,0 +1,3 @@
+[INFO] Variable 'edad' declarada con tipo 'int'
+[INFO] Variable 'i' declarada con tipo 'int'
+✅ Análisis semántico completado correctamente.

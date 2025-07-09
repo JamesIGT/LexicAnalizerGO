@@ -1,0 +1,2 @@
+[INFO] Variable 'mensaje' declarada con tipo 'string'
+[ERROR GENERAL] cannot unpack non-iterable NoneType object

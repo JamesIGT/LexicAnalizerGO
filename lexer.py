@@ -40,7 +40,6 @@ tokens = [
 # Palabras clave de Go
 reserved = {
     'package': 'PACKAGE',
-    'main': 'MAIN',
     'import': 'IMPORT',
     'continue': 'CONTINUE',
     'func': 'FUNC',

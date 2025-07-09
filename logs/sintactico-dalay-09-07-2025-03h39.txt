@@ -1,0 +1,2 @@
+[SEMANTIC ERROR] Expresión inválida en asignación a 'mensaje'.
+[ERROR GENERAL] [SEMANTIC ERROR] Variable 'mensaje' usada sin declarar.
