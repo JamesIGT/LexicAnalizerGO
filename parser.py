@@ -47,13 +47,6 @@ def assign_variable(name, value, value_type):
 # Pila para controlar el contexto (por ejemplo, si estamos dentro de un bucle)
 context_stack = []
 
-# Tabla para almacenar funciones declaradas
-function_table = {}
-def declare_function(name, return_type, params=None):
-    if name in function_table:
-        raise Exception(f"[SEMANTIC ERROR] Función '{name}' redeclarada.")
-    function_table[name] = {'return_type': return_type, 'params': params or [], 'has_return': False}
-
 
 
 # Reglas gramaticales
@@ -87,6 +80,7 @@ def p_statement(p):
                  | struct_method
                  | func_def
                  | func_no_params
+                 | func_no_params_void
                  | func_with_map
                  | func_call
                  | if_stmt
@@ -241,7 +235,6 @@ def p_func_header(p):
     return_type = p[6]
 
     param_types = [ptype for _, ptype in params]
-    declare_function(func_name, return_type, param_types)
     p[0] = func_name  # opcional
 
 def p_func_body(p):
@@ -252,19 +245,7 @@ def p_func_body(p):
 # Retorno de la funcion
 def p_return_stmt(p):
     '''return_stmt : RETURN expression'''
-    if not function_table:
-        report_error("[SEMANTIC ERROR] 'return' fuera de una función.")
-        return
-
-    # Obtenemos la función actual (última registrada)
-    current_function = list(function_table.keys())[-1]
-    expected_type = function_table[current_function]['return_type']
-
-    expr_value, expr_type = p[2]
-    function_table[current_function]['has_return'] = True
-
-    if expr_type != expected_type:
-        report_error(f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
+    pass
 
 #Jared Gonzalez
 # Funcion con map
@@ -277,52 +258,19 @@ def p_func_def_no_params(p):
     '''func_no_params : FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
     func_name = p[2]
     return_type = p[5]
-    declare_function(func_name, return_type, [])
+    pass
 
 def p_func_def_no_params_void(p):
-    '''func_no_params : FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE'''
+    '''func_no_params_void : FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE'''
     func_name = p[2]
-    declare_function(func_name, 'void', [])  # o 'None', si prefieres
+    pass
 
 def p_func_call(p):
     '''func_call : VARIABLE LPAREN arg_list RPAREN
                  | VARIABLE LPAREN RPAREN'''
     func_name = p[1]
 
-    if func_name not in function_table:
-        report_error(f"[SEMANTIC ERROR] Función '{func_name}' no declarada.")
-        p[0] = (None, 'error')
-        return
-
-    func_info = function_table[func_name]
-    expected_params = func_info.get('params', [])
-
-    if len(p) == 4:  # Sin argumentos
-        if len(expected_params) != 0:
-            report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero no se proporcionaron.")
-        p[0] = (None, func_info['return_type'])
-
-    elif len(p) == 5:  # Con argumentos
-        args = p[3]
-        if args is None:
-            report_error(f"[SEMANTIC ERROR] Argumentos inválidos en llamada a '{func_name}'.")
-            p[0] = (None, 'error')
-            return
-
-        if len(args) != len(expected_params):
-            report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero se recibieron {len(args)}.")
-            p[0] = (None, 'error')
-            return
-
-        for i, ((_, arg_type), expected_type) in enumerate(zip(args, expected_params)):
-            if arg_type != expected_type:
-                report_error(f"[SEMANTIC ERROR] Argumento {i+1} de '{func_name}' tiene tipo '{arg_type}', se esperaba '{expected_type}'.")
-
-        p[0] = (None, func_info['return_type'])
-    else:
-        # Protección extra: nunca dejar sin asignar p[0]
-        report_error(f"[SYNTAX ERROR] Llamada a función mal formada.")
-        p[0] = (None, 'error')
+    pass
 
 
 # Lista de parámetros
@@ -481,11 +429,22 @@ def p_if_stmt(p):
 
 # FOR Loop (Go tiene varias formas, empezamos con la básica tipo while)
 def p_for_stmt(p):
-    '''for_stmt : FOR expression block
-                | FOR assignment SEMICOLON expression SEMICOLON for_update block'''
-    context_stack.append("loop") # Estamos dentro de un bucle for
-    context_stack.pop() #
+    '''for_stmt : FOR expression for_block
+                | FOR assignment SEMICOLON expression SEMICOLON for_update for_block'''
     pass
+
+def p_for_block(p):
+    '''for_block : begin_loop block end_loop'''
+    p[0] = p[2]  # devolver el contenido del bloque
+
+def p_begin_lop(p):
+    'begin_loop :'
+    context_stack.append("loop")
+
+def p_end_loop(p):
+    'end_loop :'
+    context_stack.pop()
+
 
 def p_continue_stmt(p):
     '''continue_stmt : CONTINUE'''

@@ -18,7 +18,9 @@ func imprimirNumeros() {
             break
         }
         fmt.Println(i)
+        break
     }
+    break
 }
 
 func obtenerSaludo() string {
