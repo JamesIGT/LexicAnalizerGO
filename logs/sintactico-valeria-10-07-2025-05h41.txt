@@ -1,0 +1,6 @@
+[SYNTAX ERROR] Unexpected token 'func' at line 2
+[SYNTAX ERROR] Unexpected token '=' at line 4
+[SYNTAX ERROR] Unexpected token '25' at line 5
+[SYNTAX ERROR] Unexpected token 'case' at line 10
+
+
