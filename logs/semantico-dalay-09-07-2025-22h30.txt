@@ -1,0 +1,52 @@
+[INFO] Variable '_edad' declarada con tipo 'int'
+[INFO] Variable 'activo' declarada con tipo 'bool'
+[INFO] Variable 'peso' declarada con tipo 'float64'
+[INFO] Variable 'iF' declarada con tipo 'float64'
+[INFO] Parámetro declarado: nombre de tipo string
+[INFO] Lista de parámetros actual: (nombre:string)
+[INFO] Encabezado de función detectado: 'saludar' con parámetros ['string'] y tipo de retorno 'string'.
+[INFO] Cuerpo de función procesado.
+[INFO] Función 'saludar' definida.
+[INFO] Println: "Dentro de main" (tipo: string)
+[INFO] Variable 'name' declarada (tipo inferido 'string').
+[INFO] Variable 'age' declarada (tipo inferido 'int').
+[INFO] Variable 'count' declarada con tipo 'int'
+[INFO] Variable '_peso' declarada con tipo 'float64'
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+[INFO] Println: [(20, 'int'), (25, 'int'), (30, 'int')] (tipo: array[3]int)
+[INFO] Println: [('"Ana"', 'string'), ('"Luis"', 'string'), ('"Pedro"', 'string')] (tipo: array[3]string)
+[INFO] Array 'a' declarado e inicializado correctamente.
+[INFO] Array 'b' declarado con tipo y tamaño correctamente.
+[DEBUG] Llamando a función: saludar
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'saludo' declarada con tipo 'error' mediante declaración corta
+[INFO] Println: None (tipo: error)
+[SEMANTIC ERROR] Variable 'edad' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[INFO] Println: "Eres mayor de edad" (tipo: string)
+[INFO] Println: "Eres menor de edad" (tipo: string)
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[INFO] Parámetro declarado: edad de tipo int
+[INFO] Lista de parámetros actual: (edad:int)
+[INFO] Encabezado de función detectado: 'pruebaEdad' con parámetros ['int'] y tipo de retorno 'string'.
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[INFO] Cuerpo de función procesado.
+[INFO] Función 'pruebaEdad' definida.
+[DEBUG] Llamando a función: pruebaEdad
+[SEMANTIC ERROR] Se esperaban 2 elementos, pero se proporcionaron 3.
+[INFO] Array 'numerosarray' declarado e inicializado correctamente.
+[SEMANTIC ERROR] Elemento 1 debe ser de tipo 'int', pero se recibió 'string'.
+[INFO] Array 'mezclado' declarado e inicializado correctamente.
+[INFO] Array 'x' declarado e inicializado correctamente.
+[INFO] Array 'y' declarado con tipo y tamaño correctamente.
+[SEMANTIC ERROR] Asignación incompatible: 'y' es 'array[3]int' pero se asigna 'array[2]int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y string
+[INFO] Variable 'suma' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'suma' es 'int' pero se asigna 'error'
+[INFO] Variable 'edadTexto' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'edadTexto' es 'int' pero se asigna 'string'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: float64 y int
+[INFO] Variable 'resultado' declarada con tipo 'float64'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'float64' pero se asigna 'error'
+✅ Análisis semántico completado correctamente.
