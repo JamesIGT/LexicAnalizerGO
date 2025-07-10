@@ -26,6 +26,7 @@ func obtenerSaludo() string {
 }
 
 func main() {
+
     //datos := obtenerDatos()
     fmt.Println("Datos:", datos)
 
