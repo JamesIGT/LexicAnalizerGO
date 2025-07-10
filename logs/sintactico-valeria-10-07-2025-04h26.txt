@@ -1,0 +1,5 @@
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[INFO] Variable 'edad' declarada implícitamente con tipo 'int'
+[INFO] Variable 'acceso' declarada implícitamente con tipo 'bool'
+[INFO] Variable 'dia' declarada implícitamente con tipo 'int'
+[ERROR GENERAL] too many values to unpack (expected 2)

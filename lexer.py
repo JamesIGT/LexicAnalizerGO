@@ -3,23 +3,25 @@ import os
 import logging
 from datetime import datetime
 
+from datetime import datetime
 
-# usuario_git = "dalay"  # Cambia esto por tu usuario de GitHub
 
-# os.makedirs("logs", exist_ok=True)
+usuario_git = "valeria"  # Cambia esto por tu usuario de GitHub
 
-# now = datetime.now()
-# nombre_log = f"lexico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
-# ruta_log = os.path.join("logs", nombre_log)
+os.makedirs("logs", exist_ok=True)
+
+now = datetime.now()
+nombre_log = f"lexico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
+ruta_log = os.path.join("logs", nombre_log)
 
 # #Configurar logger
-# logging.basicConfig(
-#     filename=ruta_log,
-#     filemode='w',
-#     format='%(message)s',
-#     level=logging.INFO,
-#     encoding='utf-8'
-# )
+logging.basicConfig(
+     filename=ruta_log,
+     filemode='w',
+     format='%(message)s',
+     level=logging.INFO,
+     encoding='utf-8'
+ )
 
 # APORTE HECHO POR JARED GONZALEZ
 # Lista de tokens
@@ -192,9 +194,11 @@ lexer = lex.lex()
 # Fin de expresiones regulares
 
 # Prueba con el codigo del algorithm1.go proporcionado
+# Prueba con el codigo del algorithm2.go proporcionado
 # DIEGO ALAY
+# VALERIA GUTIERREZ
 if __name__ == "__main__":
-    with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
+    with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
         data = f.read()
 
     lexer.input(data)
