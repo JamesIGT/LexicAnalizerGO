@@ -1,0 +1,12 @@
+[SEMANTIC ERROR] Variable 'datos' usada sin declarar.
+[SEMANTIC ERROR] Variable 'i' no declarada.
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[ERROR GENERAL] name 'params' is not defined

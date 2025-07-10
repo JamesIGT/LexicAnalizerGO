@@ -1,0 +1,10 @@
+[SEMANTIC ERROR] Variable 'datos' usada sin declarar.
+[SEMANTIC ERROR] Variable 'i' no declarada.
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'datos' no declarada.
+[INFO] Variable 'datos' declarada implícitamente con tipo 'error'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'saludo' no declarada.
+[INFO] Variable 'saludo' declarada implícitamente con tipo 'error'
+✅ Análisis semántico completado correctamente.

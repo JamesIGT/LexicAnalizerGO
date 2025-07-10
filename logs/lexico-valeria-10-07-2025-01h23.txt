@@ -1,0 +1,11 @@
+[INFO] Variable 'datos' declarada como map
+[SEMANTIC ERROR] Variable 'datos' redeclarada.
+[SEMANTIC ERROR] Variable 'i' no declarada.
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Asignación incompatible: 'datos' es 'map' pero se asigna 'error'
+[SEMANTIC ERROR] Asignación incompatible: 'datos' es 'map' pero se asigna 'error'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'saludo' no declarada.
+[INFO] Variable 'saludo' declarada implícitamente con tipo 'error'
+✅ Análisis semántico completado correctamente.

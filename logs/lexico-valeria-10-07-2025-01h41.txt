@@ -1,0 +1,11 @@
+[INFO] Variable 'datos' declarada como map
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[INFO] Variable 'obtenerDatos' declarada llamando a funcion
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Asignación incompatible: 'datos' es 'map' pero se asigna 'error'
+[SEMANTIC ERROR] Asignación incompatible: 'datos' es 'map' pero se asigna 'error'
+[INFO] Variable 'obtenerSaludo' declarada llamando a funcion
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'saludo' declarada implícitamente con tipo 'error'
+[INFO] Variable 'imprimirNumeros' declarada llamando a funcion
+✅ Análisis semántico completado correctamente.

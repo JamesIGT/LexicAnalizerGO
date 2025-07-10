@@ -1,0 +1,2 @@
+[SYNTAX ERROR] Unexpected token 'strinsg' at line 3
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,4 @@
+[SEMANTIC ERROR] Variable 'datos' usada sin declarar.
+[SEMANTIC ERROR] Variable 'i' no declarada.
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[ERROR GENERAL] name 'func_name' is not defined

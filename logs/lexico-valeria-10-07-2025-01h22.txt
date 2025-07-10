@@ -1,0 +1,2 @@
+[INFO] Variable 'datos' declarada como map
+[ERROR GENERAL] [SEMANTIC ERROR] Variable 'datos' redeclarada.

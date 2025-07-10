@@ -1,0 +1,19 @@
+[SEMANTIC ERROR] Variable 'datos' usada sin declarar.
+[SEMANTIC ERROR] 'return' fuera de una función.
+[SEMANTIC ERROR] Variable 'i' no declarada.
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] 'continue' fuera de un bucle.
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] 'break' fuera de un bucle.
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Retorno incompatible en función 'imprimirNumeros': se espera 'void' pero se retorna 'string'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'datos' no declarada.
+[SYNTAX ERROR] Unexpected token ',' at line 32
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,4 @@
+[INFO] Variable 'datos' declarada como map
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SYNTAX ERROR] Unexpected token '"Hola"' at line 33
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,17 @@
+[SEMANTIC ERROR] Variable 'datos' usada sin declarar.
+[SEMANTIC ERROR] Variable 'i' no declarada.
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[SEMANTIC ERROR] Variable 'i' usada sin declarar.
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'datos' no declarada.
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'saludo' no declarada.
+[SEMANTIC ERROR] Variable 'saludo' usada sin declarar.
+✅ Análisis semántico completado correctamente.
