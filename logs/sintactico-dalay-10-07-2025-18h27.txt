@@ -1,0 +1,2 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[ERROR GENERAL] name '_match_lists' is not defined

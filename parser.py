@@ -4,7 +4,7 @@ import os
 import logging
 from datetime import datetime
 
-usuario_git = "jamesigt"
+usuario_git = "dalay"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
 nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
@@ -53,11 +53,23 @@ function_table = {}
 # Nombre de la función actual en análisis
 current_function = None
 
-def declare_function(name, return_type):
-    function_table[name] = {
-        'return_type': return_type
-    }
+# def declare_function(name, return_type):
+#     function_table[name] = {
+#         'return_type': return_type
+#     }
 
+def declare_function(name, return_type, param_types=None):
+    """
+    Registra la función en function_table.
+    param_types → lista con los tipos de los parámetros, p. ej. ['string', 'int'].
+    """
+    if name in function_table:
+        raise Exception(f"[SEMANTIC ERROR] Función '{name}' redeclarada.")
+
+    function_table[name] = {
+        'return_type': return_type,
+        'params': param_types or []   # guarda [] si no hay parámetros
+    }
 
 
 
@@ -69,7 +81,6 @@ def p_start(p):
     '''start : PACKAGE VARIABLE import_stmt program'''
     if p[2] != 'main':
         report_error(f"[SEMANTIC ERROR] Se esperaba 'main' como nombre del paquete, pero se recibió '{p[2]}'")
-
 
 def p_import_function(p):
     '''import_stmt : IMPORT LPAREN STRING RPAREN
@@ -110,7 +121,6 @@ def p_statement(p):
                  | return_stmt'''
     p[0] = p[1]
 
-
 # Declaración de variable 
 def p_declaration(p):
     '''declaration : VAR VARIABLE type 
@@ -134,29 +144,64 @@ def p_declaration(p):
             symbol_table[var_name]['value'] = expr_value
     pass
 
-#*****************
+def p_declaration_multiple_typed(p):
+    '''declaration : VAR id_list type ASSIGN expr_list
+                   | VAR id_list type ASIG expr_list'''
+    ids = p[2]
+    var_type = p[3]
+    exprs = p[5]
 
-# Expresiones (retornan valor y tipo)
-def p_expression_number(p):
-    '''expression : NUMBER'''
-    p[0] = (p[1], 'int')
-
-def p_expression_float(p):
-    '''expression : FLOAT'''
-    p[0] = (p[1], 'float64')
-
-def p_expression_variable(p):
-    '''expression : VARIABLE'''
-    name = p[1]
-    if name not in symbol_table:
-        report_error(f"[SEMANTIC ERROR] Variable '{name}' usada sin declarar.")
-        p[0] = (None, 'error')  # ← necesario
+    if len(ids) != len(exprs):
+        report_error(f"[SEMANTIC ERROR] Se esperaban {len(ids)} valores, pero se proporcionaron {len(exprs)}.")
         return
-    value = symbol_table[name]['value']
-    var_type = symbol_table[name]['type']
-    p[0] = (value, var_type)  # ← siempre se debe asignar p[0]
 
-#***********************
+    for i in range(len(ids)):
+        var_name = ids[i]
+        value, value_type = exprs[i]
+
+        if var_name in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        elif value_type != var_type:
+            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{var_type}' pero se asigna '{value_type}'")
+        else:
+            symbol_table[var_name] = {'type': var_type, 'value': value}
+            report_error(f"[INFO] Variable '{var_name}' declarada con tipo '{var_type}' y valor inicial.")
+
+def p_declaration_multiple_infer(p):
+    '''declaration : VAR id_list ASSIGN expr_list
+                   | VAR id_list ASIG expr_list'''
+    ids = p[2]
+    exprs = p[4]
+
+    if len(ids) != len(exprs):
+        report_error(f"[SEMANTIC ERROR] Se esperaban {len(ids)} valores, pero se proporcionaron {len(exprs)}.")
+        return
+
+    for i in range(len(ids)):
+        var_name = ids[i]
+        value, value_type = exprs[i]
+
+        if var_name in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        else:
+            symbol_table[var_name] = {'type': value_type, 'value': value}
+            report_error(f"[INFO] Variable '{var_name}' declarada (tipo inferido '{value_type}').")
+
+def p_id_list(p):
+    '''id_list : VARIABLE
+               | VARIABLE COMMA id_list'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
+
+def p_expr_list(p):
+    '''expr_list : expression
+                 | expression COMMA expr_list'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
 
 # Asignación de valor
 def p_assignment(p):
@@ -211,7 +256,7 @@ def p_print_stmt(p):
             expr_value, expr_type = p[7]
         else:
             expr_value, expr_type = (p[7], 'unknown')
-        print(f"[INFO] Printf con formato: {string_literal}, valor: {expr_value} (tipo: {expr_type})")
+        report_error(f"[INFO] Printf con formato: {string_literal}, valor: {expr_value} (tipo: {expr_type})")
 
     elif p[3] == 'Println':
         if len(p) == 6:  # fmt.Println(expression)
@@ -219,20 +264,34 @@ def p_print_stmt(p):
                 expr_value, expr_type = p[5]
             else:
                 expr_value, expr_type = (p[5], 'unknown')
-            print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
+            report_error(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
 
         elif len(p) == 8:  # fmt.Println("Texto", variable)
             var_name = p[6]
             if var_name in symbol_table:
                 expr_value = symbol_table[var_name]['value']
                 expr_type = symbol_table[var_name]['type']
-                print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
+                report_error(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
             else:
                 report_error(f"[SEMANTIC ERROR] Variable '{var_name}' usada sin declarar.")
+
 # Leer desde teclado
 def p_input_stmt(p):
     '''input_stmt : FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN'''
-    pass
+    var_name = p[6]  # El nombre de la variable
+
+    if var_name not in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' usada sin declarar para entrada.")
+        return
+
+    var_type = symbol_table[var_name]['type']
+    allowed_types = ['string', 'int', 'float64', 'bool']
+    if var_type not in allowed_types:
+        report_error(f"[SEMANTIC ERROR] No se puede leer en variable '{var_name}' de tipo '{var_type}'.")
+    else:
+        report_error(f"[INFO] Scanln: lectura de variable '{var_name}' (tipo: {var_type})")
+
+    p[0] = None
 
 # Función
 def p_func_def(p):
@@ -248,13 +307,10 @@ def p_func_header(p):
     current_function = func_name  # ← Guardamos el nombre de la función actual
     p[0] = func_name
 
-
 def p_func_body(p):
     '''func_body : LBRACE program RBRACE'''
     global current_function
     current_function = None  # ← Terminamos de analizar esta función
-
-
 
 # Retorno de la funcion
 def p_return_stmt(p):
@@ -287,7 +343,6 @@ def p_func_def_no_params(p):
     # El encabezado ya asignó current_function antes de que se analizara el bloque
     current_function = None
 pass
-
 
 def p_func_header_no_params(p):
     '''func_header_no_params : FUNC VARIABLE LPAREN RPAREN type'''
@@ -648,7 +703,6 @@ def p_array_literal(p):
 
     p[0] = (values, f'array[{array_size}]{element_type}')
 
-
 def p_array_values(p):
     '''array_values : expression
                     | expression COMMA array_values'''
@@ -718,7 +772,7 @@ def report_error(mensaje):
 
 if __name__ == "__main__":
     try:
-        with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
+        with open("algorithms/algorithm4.go", "r", encoding="utf-8") as f:
             data = f.read()
         result = parser.parse(data)
         if result is None:

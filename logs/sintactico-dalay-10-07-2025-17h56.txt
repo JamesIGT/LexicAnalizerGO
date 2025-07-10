@@ -1,0 +1,4 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'mensaje' declarada con tipo 'string'
+[SEMANTIC ERROR] Asignación incompatible: 'mensaje' es 'string' pero se asigna 'error'
+✅ Análisis semántico completado correctamente.
