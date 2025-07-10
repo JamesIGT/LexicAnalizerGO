@@ -1,0 +1,6 @@
+[INFO] Variable 'datos' declarada como map
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] 'continue' fuera de un bucle.
+[SEMANTIC ERROR] 'break' fuera de un bucle.
+[INFO] Variable 'saludo' declarada con tipo 'string'
+✅ Análisis semántico completado correctamente.

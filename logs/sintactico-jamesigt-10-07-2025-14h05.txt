@@ -1,0 +1,4 @@
+[INFO] Variable 'datos' declarada como map
+[SEMANTIC ERROR] 'return' fuera de una función.
+[SYNTAX ERROR] Unexpected token 'func' at line 13
+✅ Análisis semántico completado correctamente.

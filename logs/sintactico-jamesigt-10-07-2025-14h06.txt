@@ -1,0 +1,9 @@
+[INFO] Variable 'datos' declarada como map
+[SEMANTIC ERROR] 'return' fuera de una función.
+[SEMANTIC ERROR] 'return' fuera de una función.
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] 'continue' fuera de un bucle.
+[SEMANTIC ERROR] 'break' fuera de un bucle.
+[SEMANTIC ERROR] Retorno incompatible en función 'imprimirNumeros': se espera 'void' pero se retorna 'string'
+[INFO] Variable 'saludo' declarada con tipo 'string'
+✅ Análisis semántico completado correctamente.
