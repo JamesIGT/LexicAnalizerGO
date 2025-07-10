@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from lexer import tokens, reserved  # Asegúrate de que el lexer esté completo
+from lexer import tokens, reserved  
 import os
 import logging
 from datetime import datetime
