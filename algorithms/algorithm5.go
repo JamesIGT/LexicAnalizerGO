@@ -2,7 +2,8 @@ package main
 import "fmt"
 
 type Persona struct {
-  Nombre string Edad	int
+  Nombre string
+  Edad	int
 }
 func calcularPromedio(personas []Persona) float64 { 
   var suma int
