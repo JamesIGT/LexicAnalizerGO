@@ -26,10 +26,11 @@ func obtenerSaludo() string {
 }
 
 func main() {
-    datos := obtenerDatos()
+    //datos := obtenerDatos()
     fmt.Println("Datos:", datos)
 
-    saludo := obtenerSaludo()
+    //saludo := obtenerSaludo()
+    var saludo string = "Hola"
     fmt.Println(saludo)
 
     imprimirNumeros()

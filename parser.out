@@ -54,10 +54,10 @@ Rule 40    print_stmt -> FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE RPAREN
 Rule 41    input_stmt -> FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN
 Rule 42    func_def -> func_header func_body
 Rule 43    func_header -> FUNC VARIABLE LPAREN param_list RPAREN type
-Rule 44    func_header -> FUNC VARIABLE LPAREN RPAREN type
-Rule 45    func_body -> LBRACE program RBRACE
-Rule 46    return_stmt -> RETURN expression
-Rule 47    func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+Rule 44    func_body -> LBRACE program RBRACE
+Rule 45    return_stmt -> RETURN expression
+Rule 46    func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+Rule 47    func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
 Rule 48    func_no_params -> FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
 Rule 49    func_call -> VARIABLE LPAREN arg_list RPAREN
 Rule 50    func_call -> VARIABLE LPAREN RPAREN
@@ -171,20 +171,20 @@ FLOAT                : 34 72
 FLOAT64_TYPE         : 82
 FMT                  : 38 39 40 41
 FOR                  : 87 88
-FUNC                 : 43 44 47 48 93 94
+FUNC                 : 43 46 47 48 93 94
 GE                   : 66
 GT                   : 64
 IF                   : 85 86
 IMPORT               : 2 3
 INCREMENT            : 135
 INT_TYPE             : 81
-LBRACE               : 45 48 92 93 94 95 100 104 105 112 120 126 130
-LBRACKET             : 47 110 111 112 116 117 118 119 120 124 126 129 130
+LBRACE               : 44 47 48 92 93 94 95 100 104 105 112 120 126 130
+LBRACKET             : 46 110 111 112 116 117 118 119 120 124 126 129 130
 LE                   : 65
-LPAREN               : 2 38 39 40 41 43 44 47 48 49 50 77 93 93 94 94 116 117 118 119 133
+LPAREN               : 2 38 39 40 41 43 46 47 48 49 50 77 93 93 94 94 116 117 118 119 133
 LT                   : 63
 MAKE                 : 116 117 118 119
-MAP                  : 47 110 111 112 116 118 120
+MAP                  : 46 110 111 112 116 118 120
 MINUS                : 58
 MOD                  : 
 NE                   : 62
@@ -198,10 +198,10 @@ PRINT                :
 PRINTF               : 38
 PRINTLN              : 39 40
 RANGE                : 
-RBRACE               : 45 48 92 93 94 95 100 104 105 112 120 126 130
-RBRACKET             : 47 110 111 112 116 117 118 119 120 124 126 129 130
-RETURN               : 46
-RPAREN               : 2 38 39 40 41 43 44 47 48 49 50 77 93 93 94 94 116 117 118 119 133
+RBRACE               : 44 47 48 92 93 94 95 100 104 105 112 120 126 130
+RBRACKET             : 46 110 111 112 116 117 118 119 120 124 126 129 130
+RETURN               : 45
+RPAREN               : 2 38 39 40 41 43 46 47 48 49 50 77 93 93 94 94 116 117 118 119 133
 SCANLN               : 41
 SEMICOLON            : 88 88
 STRING               : 2 3 38 40 73 115 123
@@ -213,7 +213,7 @@ TRUE                 : 75
 TYPE                 : 95
 UINT                 : 
 VAR                  : 30 31 32 110 124 125 129
-VARIABLE             : 1 30 31 32 35 36 37 40 41 43 44 47 48 49 50 53 70 74 93 93 93 94 94 94 95 98 100 103 110 111 112 116 117 120 124 125 129 130 133 133 135 136
+VARIABLE             : 1 30 31 32 35 36 37 40 41 43 46 47 48 49 50 53 70 74 93 93 93 94 94 94 95 98 100 103 110 111 112 116 117 120 124 125 129 130 133 133 135 136
 error                : 
 
 Nonterminals, with rules where they appear
@@ -229,12 +229,12 @@ case_clause          : 106 107
 case_list            : 104 105 107
 continue_stmt        : 10
 declaration          : 6
-expression           : 31 32 36 37 38 39 46 54 55 57 58 59 59 60 60 61 61 62 62 63 63 64 64 65 65 66 66 77 85 86 87 88 103 104 108 123 127 128 131 132
+expression           : 31 32 36 37 38 39 45 54 55 57 58 59 59 60 60 61 61 62 62 63 63 64 64 65 65 66 66 77 85 86 87 88 103 104 108 123 127 128 131 132
 factor               : 67 68 69 115
 field_value          : 101 102
 for_stmt             : 17
 for_update           : 88
-func_body            : 42 47
+func_body            : 42 46
 func_call            : 15 80
 func_def             : 12
 func_header          : 42
@@ -256,7 +256,7 @@ new_stmt             : 26
 param                : 51 52
 param_list           : 43 52 93
 print_stmt           : 8
-program              : 1 5 45 48 92 93 94 108 109
+program              : 1 5 44 47 48 92 93 94 108 109
 return_stmt          : 29
 slice_declaration    : 24
 slice_values         : 130 132
@@ -270,7 +270,7 @@ struct_instance      : 79
 struct_method        : 11
 switch_stmt          : 19
 term                 : 56 57 58 68 69
-type                 : 30 31 32 43 44 47 47 53 93 94 98 99 110 110 111 111 112 112 116 116 117 118 118 119 120 120 124 126 129 130
+type                 : 30 31 32 43 46 46 47 53 93 94 98 99 110 110 111 111 112 112 116 116 117 118 118 119 120 120 124 126 129 130
 
 Parsing method: LALR
 
@@ -348,8 +348,9 @@ state 4
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -374,9 +375,8 @@ state 4
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -501,8 +501,9 @@ state 8
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -527,9 +528,8 @@ state 8
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     $end            reduce using rule 4 (program -> statement .)
     RBRACE          reduce using rule 4 (program -> statement .)
@@ -1153,10 +1153,10 @@ state 36
 
     (93) struct_method -> FUNC . LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> FUNC . LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
+    (47) func_no_params -> FUNC . VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> FUNC . VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> FUNC . VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> FUNC . VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (43) func_header -> FUNC . VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> FUNC . VARIABLE LPAREN RPAREN type
 
     LPAREN          shift and go to state 55
     VARIABLE        shift and go to state 56
@@ -1165,7 +1165,7 @@ state 36
 state 37
 
     (42) func_def -> func_header . func_body
-    (45) func_body -> . LBRACE program RBRACE
+    (44) func_body -> . LBRACE program RBRACE
 
     LBRACE          shift and go to state 58
 
@@ -1375,7 +1375,7 @@ state 43
 
 state 44
 
-    (46) return_stmt -> RETURN . expression
+    (45) return_stmt -> RETURN . expression
     (33) expression -> . NUMBER
     (34) expression -> . FLOAT
     (35) expression -> . VARIABLE
@@ -1727,10 +1727,10 @@ state 55
 
 state 56
 
+    (47) func_no_params -> FUNC VARIABLE . LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> FUNC VARIABLE . LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> FUNC VARIABLE . LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> FUNC VARIABLE . LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (43) func_header -> FUNC VARIABLE . LPAREN param_list RPAREN type
-    (44) func_header -> FUNC VARIABLE . LPAREN RPAREN type
 
     LPAREN          shift and go to state 103
 
@@ -1759,7 +1759,7 @@ state 57
 
 state 58
 
-    (45) func_body -> LBRACE . program RBRACE
+    (44) func_body -> LBRACE . program RBRACE
     (4) program -> . statement
     (5) program -> . statement program
     (6) statement -> . declaration
@@ -1799,8 +1799,9 @@ state 58
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -1825,9 +1826,8 @@ state 58
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -2830,7 +2830,7 @@ state 79
 
 state 80
 
-    (46) return_stmt -> RETURN expression .
+    (45) return_stmt -> RETURN expression .
     (57) expression -> expression . PLUS term
     (58) expression -> expression . MINUS term
     (59) expression -> expression . AND expression
@@ -2842,22 +2842,22 @@ state 80
     (65) expression -> expression . LE expression
     (66) expression -> expression . GE expression
 
-    VAR             reduce using rule 46 (return_stmt -> RETURN expression .)
-    VARIABLE        reduce using rule 46 (return_stmt -> RETURN expression .)
-    FMT             reduce using rule 46 (return_stmt -> RETURN expression .)
-    CONTINUE        reduce using rule 46 (return_stmt -> RETURN expression .)
-    FUNC            reduce using rule 46 (return_stmt -> RETURN expression .)
-    IF              reduce using rule 46 (return_stmt -> RETURN expression .)
-    FOR             reduce using rule 46 (return_stmt -> RETURN expression .)
-    TYPE            reduce using rule 46 (return_stmt -> RETURN expression .)
-    SWITCH          reduce using rule 46 (return_stmt -> RETURN expression .)
-    LBRACKET        reduce using rule 46 (return_stmt -> RETURN expression .)
-    BREAK           reduce using rule 46 (return_stmt -> RETURN expression .)
-    RETURN          reduce using rule 46 (return_stmt -> RETURN expression .)
-    $end            reduce using rule 46 (return_stmt -> RETURN expression .)
-    RBRACE          reduce using rule 46 (return_stmt -> RETURN expression .)
-    CASE            reduce using rule 46 (return_stmt -> RETURN expression .)
-    DEFAULT         reduce using rule 46 (return_stmt -> RETURN expression .)
+    VAR             reduce using rule 45 (return_stmt -> RETURN expression .)
+    VARIABLE        reduce using rule 45 (return_stmt -> RETURN expression .)
+    FMT             reduce using rule 45 (return_stmt -> RETURN expression .)
+    CONTINUE        reduce using rule 45 (return_stmt -> RETURN expression .)
+    FUNC            reduce using rule 45 (return_stmt -> RETURN expression .)
+    IF              reduce using rule 45 (return_stmt -> RETURN expression .)
+    FOR             reduce using rule 45 (return_stmt -> RETURN expression .)
+    TYPE            reduce using rule 45 (return_stmt -> RETURN expression .)
+    SWITCH          reduce using rule 45 (return_stmt -> RETURN expression .)
+    LBRACKET        reduce using rule 45 (return_stmt -> RETURN expression .)
+    BREAK           reduce using rule 45 (return_stmt -> RETURN expression .)
+    RETURN          reduce using rule 45 (return_stmt -> RETURN expression .)
+    $end            reduce using rule 45 (return_stmt -> RETURN expression .)
+    RBRACE          reduce using rule 45 (return_stmt -> RETURN expression .)
+    CASE            reduce using rule 45 (return_stmt -> RETURN expression .)
+    DEFAULT         reduce using rule 45 (return_stmt -> RETURN expression .)
     PLUS            shift and go to state 107
     MINUS           shift and go to state 108
     AND             shift and go to state 109
@@ -3284,10 +3284,10 @@ state 102
 
 state 103
 
+    (47) func_no_params -> FUNC VARIABLE LPAREN . RPAREN type LBRACE program RBRACE
     (48) func_no_params -> FUNC VARIABLE LPAREN . RPAREN LBRACE program RBRACE
-    (47) func_with_map -> FUNC VARIABLE LPAREN . RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> FUNC VARIABLE LPAREN . RPAREN MAP LBRACKET type RBRACKET type func_body
     (43) func_header -> FUNC VARIABLE LPAREN . param_list RPAREN type
-    (44) func_header -> FUNC VARIABLE LPAREN . RPAREN type
     (51) param_list -> . param
     (52) param_list -> . param COMMA param_list
     (53) param -> . VARIABLE type
@@ -3300,7 +3300,7 @@ state 103
 
 state 104
 
-    (45) func_body -> LBRACE program . RBRACE
+    (44) func_body -> LBRACE program . RBRACE
 
     RBRACE          shift and go to state 153
 
@@ -3886,8 +3886,9 @@ state 117
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -3912,9 +3913,8 @@ state 117
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -4724,22 +4724,22 @@ state 149
 
 state 150
 
+    (47) func_no_params -> FUNC VARIABLE LPAREN RPAREN . type LBRACE program RBRACE
     (48) func_no_params -> FUNC VARIABLE LPAREN RPAREN . LBRACE program RBRACE
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN . MAP LBRACKET type RBRACKET type func_body
-    (44) func_header -> FUNC VARIABLE LPAREN RPAREN . type
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN . MAP LBRACKET type RBRACKET type func_body
     (81) type -> . INT_TYPE
     (82) type -> . FLOAT64_TYPE
     (83) type -> . STRING_TYPE
     (84) type -> . BOOL_TYPE
 
-    LBRACE          shift and go to state 203
-    MAP             shift and go to state 204
+    LBRACE          shift and go to state 204
+    MAP             shift and go to state 205
     INT_TYPE        shift and go to state 95
     FLOAT64_TYPE    shift and go to state 96
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 205
+    type                           shift and go to state 203
 
 state 151
 
@@ -4759,24 +4759,24 @@ state 152
 
 state 153
 
-    (45) func_body -> LBRACE program RBRACE .
+    (44) func_body -> LBRACE program RBRACE .
 
-    VAR             reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    VARIABLE        reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    FMT             reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    CONTINUE        reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    FUNC            reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    IF              reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    FOR             reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    TYPE            reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    SWITCH          reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    LBRACKET        reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    BREAK           reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    RETURN          reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    $end            reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    RBRACE          reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    CASE            reduce using rule 45 (func_body -> LBRACE program RBRACE .)
-    DEFAULT         reduce using rule 45 (func_body -> LBRACE program RBRACE .)
+    VAR             reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    VARIABLE        reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    FMT             reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    CONTINUE        reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    FUNC            reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    IF              reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    FOR             reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    TYPE            reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    SWITCH          reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    LBRACKET        reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    BREAK           reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    RETURN          reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    $end            reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    RBRACE          reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    CASE            reduce using rule 44 (func_body -> LBRACE program RBRACE .)
+    DEFAULT         reduce using rule 44 (func_body -> LBRACE program RBRACE .)
 
 
 state 154
@@ -5973,8 +5973,9 @@ state 185
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -5999,9 +6000,8 @@ state 185
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -6298,6 +6298,13 @@ state 202
 
 state 203
 
+    (47) func_no_params -> FUNC VARIABLE LPAREN RPAREN type . LBRACE program RBRACE
+
+    LBRACE          shift and go to state 236
+
+
+state 204
+
     (48) func_no_params -> FUNC VARIABLE LPAREN RPAREN LBRACE . program RBRACE
     (4) program -> . statement
     (5) program -> . statement program
@@ -6338,8 +6345,9 @@ state 203
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -6364,9 +6372,8 @@ state 203
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -6381,7 +6388,7 @@ state 203
     BREAK           shift and go to state 43
     RETURN          shift and go to state 44
 
-    program                        shift and go to state 236
+    program                        shift and go to state 237
     statement                      shift and go to state 8
     declaration                    shift and go to state 9
     assignment                     shift and go to state 10
@@ -6409,18 +6416,11 @@ state 203
     return_stmt                    shift and go to state 32
     func_header                    shift and go to state 37
 
-state 204
-
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP . LBRACKET type RBRACKET type func_body
-
-    LBRACKET        shift and go to state 237
-
-
 state 205
 
-    (44) func_header -> FUNC VARIABLE LPAREN RPAREN type .
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP . LBRACKET type RBRACKET type func_body
 
-    LBRACE          reduce using rule 44 (func_header -> FUNC VARIABLE LPAREN RPAREN type .)
+    LBRACKET        shift and go to state 238
 
 
 state 206
@@ -6436,7 +6436,7 @@ state 206
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 238
+    type                           shift and go to state 239
 
 state 207
 
@@ -6448,7 +6448,7 @@ state 207
     VARIABLE        shift and go to state 149
 
     param                          shift and go to state 152
-    param_list                     shift and go to state 239
+    param_list                     shift and go to state 240
 
 state 208
 
@@ -6498,8 +6498,8 @@ state 208
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    array_values                   shift and go to state 240
-    expression                     shift and go to state 241
+    array_values                   shift and go to state 241
+    expression                     shift and go to state 242
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
@@ -6597,7 +6597,7 @@ state 211
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    expression                     shift and go to state 242
+    expression                     shift and go to state 243
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
@@ -6653,7 +6653,7 @@ state 213
     VARIABLE        shift and go to state 170
 
     field_value                    shift and go to state 172
-    struct_fields_values           shift and go to state 243
+    struct_fields_values           shift and go to state 244
 
 state 214
 
@@ -6668,7 +6668,7 @@ state 214
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 244
+    type                           shift and go to state 245
 
 state 215
 
@@ -6683,7 +6683,7 @@ state 215
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 245
+    type                           shift and go to state 246
 
 state 216
 
@@ -6695,11 +6695,11 @@ state 216
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
 
-    VARIABLE        shift and go to state 249
+    VARIABLE        shift and go to state 250
 
-    assignment                     shift and go to state 246
-    for_update                     shift and go to state 247
-    increment_stmt                 shift and go to state 248
+    assignment                     shift and go to state 247
+    for_update                     shift and go to state 248
+    increment_stmt                 shift and go to state 249
 
 state 217
 
@@ -6714,13 +6714,13 @@ state 217
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 250
+    type                           shift and go to state 251
 
 state 218
 
     (95) struct_def -> TYPE VARIABLE STRUCT LBRACE struct_fields . RBRACE
 
-    RBRACE          shift and go to state 251
+    RBRACE          shift and go to state 252
 
 
 state 219
@@ -6744,7 +6744,7 @@ state 219
     BOOL_TYPE       shift and go to state 98
 
     struct_field                   shift and go to state 219
-    struct_fields                  shift and go to state 252
+    struct_fields                  shift and go to state 253
     type                           shift and go to state 220
 
 state 220
@@ -6823,8 +6823,9 @@ state 222
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -6849,9 +6850,8 @@ state 222
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -6866,7 +6866,7 @@ state 222
     BREAK           shift and go to state 43
     RETURN          shift and go to state 44
 
-    program                        shift and go to state 253
+    program                        shift and go to state 254
     statement                      shift and go to state 8
     declaration                    shift and go to state 9
     assignment                     shift and go to state 10
@@ -6918,7 +6918,7 @@ state 224
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 254
+    type                           shift and go to state 255
 
 state 225
 
@@ -6968,8 +6968,8 @@ state 225
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    slice_values                   shift and go to state 255
-    expression                     shift and go to state 256
+    slice_values                   shift and go to state 256
+    expression                     shift and go to state 257
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
@@ -6990,7 +6990,7 @@ state 226
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 257
+    type                           shift and go to state 258
 
 state 227
 
@@ -7006,7 +7006,7 @@ state 227
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 258
+    type                           shift and go to state 259
 
 state 228
 
@@ -7043,7 +7043,7 @@ state 229
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 259
+    type                           shift and go to state 260
 
 state 230
 
@@ -7113,7 +7113,7 @@ state 231
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    expression                     shift and go to state 260
+    expression                     shift and go to state 261
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
@@ -7146,14 +7146,14 @@ state 233
 
     (40) print_stmt -> FMT DOT PRINTLN LPAREN STRING COMMA . VARIABLE RPAREN
 
-    VARIABLE        shift and go to state 261
+    VARIABLE        shift and go to state 262
 
 
 state 234
 
     (41) input_stmt -> FMT DOT SCANLN LPAREN AMPER VARIABLE . RPAREN
 
-    RPAREN          shift and go to state 262
+    RPAREN          shift and go to state 263
 
 
 state 235
@@ -7161,19 +7161,132 @@ state 235
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE . LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE . LPAREN RPAREN type LBRACE program RBRACE
 
-    LPAREN          shift and go to state 263
+    LPAREN          shift and go to state 264
 
 
 state 236
 
-    (48) func_no_params -> FUNC VARIABLE LPAREN RPAREN LBRACE program . RBRACE
+    (47) func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE . program RBRACE
+    (4) program -> . statement
+    (5) program -> . statement program
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . print_stmt
+    (9) statement -> . input_stmt
+    (10) statement -> . continue_stmt
+    (11) statement -> . struct_method
+    (12) statement -> . func_def
+    (13) statement -> . func_no_params
+    (14) statement -> . func_with_map
+    (15) statement -> . func_call
+    (16) statement -> . if_stmt
+    (17) statement -> . for_stmt
+    (18) statement -> . struct_def
+    (19) statement -> . switch_stmt
+    (20) statement -> . map_declaration
+    (21) statement -> . map_declaration_values
+    (22) statement -> . array_declaration
+    (23) statement -> . array_literal
+    (24) statement -> . slice_declaration
+    (25) statement -> . make_stmt
+    (26) statement -> . new_stmt
+    (27) statement -> . break_stmt
+    (28) statement -> . increment_stmt
+    (29) statement -> . return_stmt
+    (30) declaration -> . VAR VARIABLE type
+    (31) declaration -> . VAR VARIABLE type ASIG expression
+    (32) declaration -> . VAR VARIABLE type ASSIGN expression
+    (36) assignment -> . VARIABLE ASSIGN expression
+    (37) assignment -> . VARIABLE ASIG expression
+    (38) print_stmt -> . FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN
+    (39) print_stmt -> . FMT DOT PRINTLN LPAREN expression RPAREN
+    (40) print_stmt -> . FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE RPAREN
+    (41) input_stmt -> . FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN
+    (89) continue_stmt -> . CONTINUE
+    (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
+    (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
+    (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
+    (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
+    (50) func_call -> . VARIABLE LPAREN RPAREN
+    (85) if_stmt -> . IF expression block
+    (86) if_stmt -> . IF expression block ELSE block
+    (87) for_stmt -> . FOR expression block
+    (88) for_stmt -> . FOR assignment SEMICOLON expression SEMICOLON for_update block
+    (95) struct_def -> . TYPE VARIABLE STRUCT LBRACE struct_fields RBRACE
+    (104) switch_stmt -> . SWITCH expression LBRACE case_list RBRACE
+    (105) switch_stmt -> . SWITCH LBRACE case_list RBRACE
+    (110) map_declaration -> . VAR VARIABLE MAP LBRACKET type RBRACKET type
+    (111) map_declaration -> . VARIABLE ASIG MAP LBRACKET type RBRACKET type
+    (112) map_declaration -> . VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_params RBRACE
+    (120) map_declaration_values -> . VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_kv_pairs RBRACE
+    (124) array_declaration -> . VAR VARIABLE LBRACKET NUMBER RBRACKET type
+    (125) array_declaration -> . VAR VARIABLE ASSIGN array_literal
+    (126) array_literal -> . LBRACKET NUMBER RBRACKET type LBRACE array_values RBRACE
+    (129) slice_declaration -> . VAR VARIABLE LBRACKET RBRACKET type
+    (130) slice_declaration -> . VARIABLE ASIG LBRACKET RBRACKET type LBRACE slice_values RBRACE
+    (116) make_stmt -> . VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN
+    (117) make_stmt -> . VARIABLE ASIG MAKE LPAREN LBRACKET RBRACKET type RPAREN
+    (133) new_stmt -> . VARIABLE ASIG NEW LPAREN VARIABLE RPAREN
+    (134) break_stmt -> . BREAK
+    (135) increment_stmt -> . VARIABLE INCREMENT
+    (136) increment_stmt -> . VARIABLE DECREMENT
+    (45) return_stmt -> . RETURN expression
+    (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
 
-    RBRACE          shift and go to state 264
+    VAR             shift and go to state 33
+    VARIABLE        shift and go to state 6
+    FMT             shift and go to state 34
+    CONTINUE        shift and go to state 35
+    FUNC            shift and go to state 36
+    IF              shift and go to state 39
+    FOR             shift and go to state 40
+    TYPE            shift and go to state 41
+    SWITCH          shift and go to state 42
+    LBRACKET        shift and go to state 38
+    BREAK           shift and go to state 43
+    RETURN          shift and go to state 44
 
+    program                        shift and go to state 265
+    statement                      shift and go to state 8
+    declaration                    shift and go to state 9
+    assignment                     shift and go to state 10
+    print_stmt                     shift and go to state 11
+    input_stmt                     shift and go to state 12
+    continue_stmt                  shift and go to state 13
+    struct_method                  shift and go to state 14
+    func_def                       shift and go to state 15
+    func_no_params                 shift and go to state 16
+    func_with_map                  shift and go to state 17
+    func_call                      shift and go to state 18
+    if_stmt                        shift and go to state 19
+    for_stmt                       shift and go to state 20
+    struct_def                     shift and go to state 21
+    switch_stmt                    shift and go to state 22
+    map_declaration                shift and go to state 23
+    map_declaration_values         shift and go to state 24
+    array_declaration              shift and go to state 25
+    array_literal                  shift and go to state 26
+    slice_declaration              shift and go to state 27
+    make_stmt                      shift and go to state 28
+    new_stmt                       shift and go to state 29
+    break_stmt                     shift and go to state 30
+    increment_stmt                 shift and go to state 31
+    return_stmt                    shift and go to state 32
+    func_header                    shift and go to state 37
 
 state 237
 
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET . type RBRACKET type func_body
+    (48) func_no_params -> FUNC VARIABLE LPAREN RPAREN LBRACE program . RBRACE
+
+    RBRACE          shift and go to state 266
+
+
+state 238
+
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET . type RBRACKET type func_body
     (81) type -> . INT_TYPE
     (82) type -> . FLOAT64_TYPE
     (83) type -> . STRING_TYPE
@@ -7184,30 +7297,30 @@ state 237
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 265
+    type                           shift and go to state 267
 
-state 238
+state 239
 
     (43) func_header -> FUNC VARIABLE LPAREN param_list RPAREN type .
 
     LBRACE          reduce using rule 43 (func_header -> FUNC VARIABLE LPAREN param_list RPAREN type .)
 
 
-state 239
+state 240
 
     (52) param_list -> param COMMA param_list .
 
     RPAREN          reduce using rule 52 (param_list -> param COMMA param_list .)
 
 
-state 240
+state 241
 
     (126) array_literal -> LBRACKET NUMBER RBRACKET type LBRACE array_values . RBRACE
 
-    RBRACE          shift and go to state 266
+    RBRACE          shift and go to state 268
 
 
-state 241
+state 242
 
     (127) array_values -> expression .
     (128) array_values -> expression . COMMA array_values
@@ -7223,7 +7336,7 @@ state 241
     (66) expression -> expression . GE expression
 
     RBRACE          reduce using rule 127 (array_values -> expression .)
-    COMMA           shift and go to state 267
+    COMMA           shift and go to state 269
     PLUS            shift and go to state 107
     MINUS           shift and go to state 108
     AND             shift and go to state 109
@@ -7236,7 +7349,7 @@ state 241
     GE              shift and go to state 116
 
 
-state 242
+state 243
 
     (103) field_value -> VARIABLE COLON expression .
     (57) expression -> expression . PLUS term
@@ -7264,51 +7377,51 @@ state 242
     GE              shift and go to state 116
 
 
-state 243
+state 244
 
     (102) struct_fields_values -> field_value COMMA struct_fields_values .
 
     RBRACE          reduce using rule 102 (struct_fields_values -> field_value COMMA struct_fields_values .)
 
 
-state 244
+state 245
 
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type . RBRACKET type RPAREN
 
-    RBRACKET        shift and go to state 268
-
-
-state 245
-
-    (119) make_expr -> MAKE LPAREN LBRACKET RBRACKET type . RPAREN
-
-    RPAREN          shift and go to state 269
+    RBRACKET        shift and go to state 270
 
 
 state 246
+
+    (119) make_expr -> MAKE LPAREN LBRACKET RBRACKET type . RPAREN
+
+    RPAREN          shift and go to state 271
+
+
+state 247
 
     (90) for_update -> assignment .
 
     LBRACE          reduce using rule 90 (for_update -> assignment .)
 
 
-state 247
+state 248
 
     (88) for_stmt -> FOR assignment SEMICOLON expression SEMICOLON for_update . block
     (92) block -> . LBRACE program RBRACE
 
     LBRACE          shift and go to state 117
 
-    block                          shift and go to state 270
+    block                          shift and go to state 272
 
-state 248
+state 249
 
     (91) for_update -> increment_stmt .
 
     LBRACE          reduce using rule 91 (for_update -> increment_stmt .)
 
 
-state 249
+state 250
 
     (36) assignment -> VARIABLE . ASSIGN expression
     (37) assignment -> VARIABLE . ASIG expression
@@ -7321,7 +7434,7 @@ state 249
     DECREMENT       shift and go to state 51
 
 
-state 250
+state 251
 
     (98) struct_field -> VARIABLE type .
 
@@ -7333,7 +7446,7 @@ state 250
     RBRACE          reduce using rule 98 (struct_field -> VARIABLE type .)
 
 
-state 251
+state 252
 
     (95) struct_def -> TYPE VARIABLE STRUCT LBRACE struct_fields RBRACE .
 
@@ -7355,14 +7468,14 @@ state 251
     DEFAULT         reduce using rule 95 (struct_def -> TYPE VARIABLE STRUCT LBRACE struct_fields RBRACE .)
 
 
-state 252
+state 253
 
     (97) struct_fields -> struct_field struct_fields .
 
     RBRACE          reduce using rule 97 (struct_fields -> struct_field struct_fields .)
 
 
-state 253
+state 254
 
     (108) case_clause -> CASE expression COLON program .
 
@@ -7371,7 +7484,7 @@ state 253
     RBRACE          reduce using rule 108 (case_clause -> CASE expression COLON program .)
 
 
-state 254
+state 255
 
     (111) map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type .
     (112) map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type . LBRACE map_params RBRACE
@@ -7393,17 +7506,17 @@ state 254
     RBRACE          reduce using rule 111 (map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type .)
     CASE            reduce using rule 111 (map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type .)
     DEFAULT         reduce using rule 111 (map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type .)
-    LBRACE          shift and go to state 271
-
-
-state 255
-
-    (130) slice_declaration -> VARIABLE ASIG LBRACKET RBRACKET type LBRACE slice_values . RBRACE
-
-    RBRACE          shift and go to state 272
+    LBRACE          shift and go to state 273
 
 
 state 256
+
+    (130) slice_declaration -> VARIABLE ASIG LBRACKET RBRACKET type LBRACE slice_values . RBRACE
+
+    RBRACE          shift and go to state 274
+
+
+state 257
 
     (131) slice_values -> expression .
     (132) slice_values -> expression . COMMA slice_values
@@ -7419,7 +7532,7 @@ state 256
     (66) expression -> expression . GE expression
 
     RBRACE          reduce using rule 131 (slice_values -> expression .)
-    COMMA           shift and go to state 273
+    COMMA           shift and go to state 275
     PLUS            shift and go to state 107
     MINUS           shift and go to state 108
     AND             shift and go to state 109
@@ -7432,23 +7545,23 @@ state 256
     GE              shift and go to state 116
 
 
-state 257
+state 258
 
     (116) make_stmt -> VARIABLE ASIG MAKE LPAREN MAP LBRACKET type . RBRACKET type RPAREN
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type . RBRACKET type RPAREN
 
-    RBRACKET        shift and go to state 274
+    RBRACKET        shift and go to state 276
 
 
-state 258
+state 259
 
     (117) make_stmt -> VARIABLE ASIG MAKE LPAREN LBRACKET RBRACKET type . RPAREN
     (119) make_expr -> MAKE LPAREN LBRACKET RBRACKET type . RPAREN
 
-    RPAREN          shift and go to state 275
+    RPAREN          shift and go to state 277
 
 
-state 259
+state 260
 
     (110) map_declaration -> VAR VARIABLE MAP LBRACKET type RBRACKET type .
 
@@ -7470,7 +7583,7 @@ state 259
     DEFAULT         reduce using rule 110 (map_declaration -> VAR VARIABLE MAP LBRACKET type RBRACKET type .)
 
 
-state 260
+state 261
 
     (38) print_stmt -> FMT DOT PRINTF LPAREN STRING COMMA expression . RPAREN
     (57) expression -> expression . PLUS term
@@ -7484,7 +7597,7 @@ state 260
     (65) expression -> expression . LE expression
     (66) expression -> expression . GE expression
 
-    RPAREN          shift and go to state 276
+    RPAREN          shift and go to state 278
     PLUS            shift and go to state 107
     MINUS           shift and go to state 108
     AND             shift and go to state 109
@@ -7497,14 +7610,14 @@ state 260
     GE              shift and go to state 116
 
 
-state 261
+state 262
 
     (40) print_stmt -> FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE . RPAREN
 
-    RPAREN          shift and go to state 277
+    RPAREN          shift and go to state 279
 
 
-state 262
+state 263
 
     (41) input_stmt -> FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN .
 
@@ -7526,7 +7639,7 @@ state 262
     DEFAULT         reduce using rule 41 (input_stmt -> FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN .)
 
 
-state 263
+state 264
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN . param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN . RPAREN type LBRACE program RBRACE
@@ -7534,13 +7647,20 @@ state 263
     (52) param_list -> . param COMMA param_list
     (53) param -> . VARIABLE type
 
-    RPAREN          shift and go to state 278
+    RPAREN          shift and go to state 280
     VARIABLE        shift and go to state 149
 
-    param_list                     shift and go to state 279
+    param_list                     shift and go to state 281
     param                          shift and go to state 152
 
-state 264
+state 265
+
+    (47) func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program . RBRACE
+
+    RBRACE          shift and go to state 282
+
+
+state 266
 
     (48) func_no_params -> FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE .
 
@@ -7562,14 +7682,14 @@ state 264
     DEFAULT         reduce using rule 48 (func_no_params -> FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE .)
 
 
-state 265
+state 267
 
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type . RBRACKET type func_body
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type . RBRACKET type func_body
 
-    RBRACKET        shift and go to state 280
+    RBRACKET        shift and go to state 283
 
 
-state 266
+state 268
 
     (126) array_literal -> LBRACKET NUMBER RBRACKET type LBRACE array_values RBRACE .
 
@@ -7591,7 +7711,7 @@ state 266
     DEFAULT         reduce using rule 126 (array_literal -> LBRACKET NUMBER RBRACKET type LBRACE array_values RBRACE .)
 
 
-state 267
+state 269
 
     (128) array_values -> expression COMMA . array_values
     (127) array_values -> . expression
@@ -7639,15 +7759,15 @@ state 267
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    expression                     shift and go to state 241
-    array_values                   shift and go to state 281
+    expression                     shift and go to state 242
+    array_values                   shift and go to state 284
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
     struct_instance                shift and go to state 71
     func_call                      shift and go to state 72
 
-state 268
+state 270
 
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET . type RPAREN
     (81) type -> . INT_TYPE
@@ -7660,9 +7780,9 @@ state 268
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 282
+    type                           shift and go to state 285
 
-state 269
+state 271
 
     (119) make_expr -> MAKE LPAREN LBRACKET RBRACKET type RPAREN .
 
@@ -7701,7 +7821,7 @@ state 269
     COLON           reduce using rule 119 (make_expr -> MAKE LPAREN LBRACKET RBRACKET type RPAREN .)
 
 
-state 270
+state 272
 
     (88) for_stmt -> FOR assignment SEMICOLON expression SEMICOLON for_update block .
 
@@ -7723,7 +7843,7 @@ state 270
     DEFAULT         reduce using rule 88 (for_stmt -> FOR assignment SEMICOLON expression SEMICOLON for_update block .)
 
 
-state 271
+state 273
 
     (112) map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE . map_params RBRACE
     (120) map_declaration_values -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE . map_kv_pairs RBRACE
@@ -7734,14 +7854,14 @@ state 271
     (115) map_param -> . STRING COLON factor
     (123) map_kv_pair -> . STRING COLON expression
 
-    STRING          shift and go to state 287
+    STRING          shift and go to state 290
 
-    map_params                     shift and go to state 283
-    map_kv_pairs                   shift and go to state 284
-    map_param                      shift and go to state 285
-    map_kv_pair                    shift and go to state 286
+    map_params                     shift and go to state 286
+    map_kv_pairs                   shift and go to state 287
+    map_param                      shift and go to state 288
+    map_kv_pair                    shift and go to state 289
 
-state 272
+state 274
 
     (130) slice_declaration -> VARIABLE ASIG LBRACKET RBRACKET type LBRACE slice_values RBRACE .
 
@@ -7763,7 +7883,7 @@ state 272
     DEFAULT         reduce using rule 130 (slice_declaration -> VARIABLE ASIG LBRACKET RBRACKET type LBRACE slice_values RBRACE .)
 
 
-state 273
+state 275
 
     (132) slice_values -> expression COMMA . slice_values
     (131) slice_values -> . expression
@@ -7811,15 +7931,15 @@ state 273
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    expression                     shift and go to state 256
-    slice_values                   shift and go to state 288
+    expression                     shift and go to state 257
+    slice_values                   shift and go to state 291
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
     struct_instance                shift and go to state 71
     func_call                      shift and go to state 72
 
-state 274
+state 276
 
     (116) make_stmt -> VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET . type RPAREN
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET . type RPAREN
@@ -7833,9 +7953,9 @@ state 274
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 289
+    type                           shift and go to state 292
 
-state 275
+state 277
 
     (117) make_stmt -> VARIABLE ASIG MAKE LPAREN LBRACKET RBRACKET type RPAREN .
     (119) make_expr -> MAKE LPAREN LBRACKET RBRACKET type RPAREN .
@@ -7903,7 +8023,7 @@ state 275
   ! DEFAULT         [ reduce using rule 119 (make_expr -> MAKE LPAREN LBRACKET RBRACKET type RPAREN .) ]
 
 
-state 276
+state 278
 
     (38) print_stmt -> FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN .
 
@@ -7925,7 +8045,7 @@ state 276
     DEFAULT         reduce using rule 38 (print_stmt -> FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN .)
 
 
-state 277
+state 279
 
     (40) print_stmt -> FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE RPAREN .
 
@@ -7947,7 +8067,7 @@ state 277
     DEFAULT         reduce using rule 40 (print_stmt -> FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE RPAREN .)
 
 
-state 278
+state 280
 
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN . type LBRACE program RBRACE
     (81) type -> . INT_TYPE
@@ -7960,18 +8080,40 @@ state 278
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 290
+    type                           shift and go to state 293
 
-state 279
+state 281
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list . RPAREN type LBRACE program RBRACE
 
-    RPAREN          shift and go to state 291
+    RPAREN          shift and go to state 294
 
 
-state 280
+state 282
 
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET . type func_body
+    (47) func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .
+
+    VAR             reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    VARIABLE        reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    FMT             reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    CONTINUE        reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    FUNC            reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    IF              reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    FOR             reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    TYPE            reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    SWITCH          reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    LBRACKET        reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    BREAK           reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    RETURN          reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    $end            reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    RBRACE          reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    CASE            reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+    DEFAULT         reduce using rule 47 (func_no_params -> FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
+
+
+state 283
+
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET . type func_body
     (81) type -> . INT_TYPE
     (82) type -> . FLOAT64_TYPE
     (83) type -> . STRING_TYPE
@@ -7982,85 +8124,85 @@ state 280
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 292
+    type                           shift and go to state 295
 
-state 281
+state 284
 
     (128) array_values -> expression COMMA array_values .
 
     RBRACE          reduce using rule 128 (array_values -> expression COMMA array_values .)
 
 
-state 282
+state 285
 
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type . RPAREN
 
-    RPAREN          shift and go to state 293
+    RPAREN          shift and go to state 296
 
 
-state 283
+state 286
 
     (112) map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_params . RBRACE
 
-    RBRACE          shift and go to state 294
+    RBRACE          shift and go to state 297
 
 
-state 284
+state 287
 
     (120) map_declaration_values -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_kv_pairs . RBRACE
 
-    RBRACE          shift and go to state 295
+    RBRACE          shift and go to state 298
 
 
-state 285
+state 288
 
     (113) map_params -> map_param .
     (114) map_params -> map_param . COMMA map_params
 
     RBRACE          reduce using rule 113 (map_params -> map_param .)
-    COMMA           shift and go to state 296
+    COMMA           shift and go to state 299
 
 
-state 286
+state 289
 
     (121) map_kv_pairs -> map_kv_pair .
     (122) map_kv_pairs -> map_kv_pair . COMMA map_kv_pairs
 
     RBRACE          reduce using rule 121 (map_kv_pairs -> map_kv_pair .)
-    COMMA           shift and go to state 297
+    COMMA           shift and go to state 300
 
 
-state 287
+state 290
 
     (115) map_param -> STRING . COLON factor
     (123) map_kv_pair -> STRING . COLON expression
 
-    COLON           shift and go to state 298
+    COLON           shift and go to state 301
 
 
-state 288
+state 291
 
     (132) slice_values -> expression COMMA slice_values .
 
     RBRACE          reduce using rule 132 (slice_values -> expression COMMA slice_values .)
 
 
-state 289
+state 292
 
     (116) make_stmt -> VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET type . RPAREN
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type . RPAREN
 
-    RPAREN          shift and go to state 299
+    RPAREN          shift and go to state 302
 
 
-state 290
+state 293
 
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type . LBRACE program RBRACE
 
-    LBRACE          shift and go to state 300
+    LBRACE          shift and go to state 303
 
 
-state 291
+state 294
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN . type LBRACE program RBRACE
     (81) type -> . INT_TYPE
@@ -8073,18 +8215,18 @@ state 291
     STRING_TYPE     shift and go to state 97
     BOOL_TYPE       shift and go to state 98
 
-    type                           shift and go to state 301
+    type                           shift and go to state 304
 
-state 292
+state 295
 
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type . func_body
-    (45) func_body -> . LBRACE program RBRACE
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type . func_body
+    (44) func_body -> . LBRACE program RBRACE
 
     LBRACE          shift and go to state 58
 
-    func_body                      shift and go to state 302
+    func_body                      shift and go to state 305
 
-state 293
+state 296
 
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN .
 
@@ -8123,7 +8265,7 @@ state 293
     COLON           reduce using rule 118 (make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN .)
 
 
-state 294
+state 297
 
     (112) map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_params RBRACE .
 
@@ -8145,7 +8287,7 @@ state 294
     DEFAULT         reduce using rule 112 (map_declaration -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_params RBRACE .)
 
 
-state 295
+state 298
 
     (120) map_declaration_values -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_kv_pairs RBRACE .
 
@@ -8167,31 +8309,31 @@ state 295
     DEFAULT         reduce using rule 120 (map_declaration_values -> VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_kv_pairs RBRACE .)
 
 
-state 296
+state 299
 
     (114) map_params -> map_param COMMA . map_params
     (113) map_params -> . map_param
     (114) map_params -> . map_param COMMA map_params
     (115) map_param -> . STRING COLON factor
 
-    STRING          shift and go to state 304
+    STRING          shift and go to state 307
 
-    map_param                      shift and go to state 285
-    map_params                     shift and go to state 303
+    map_param                      shift and go to state 288
+    map_params                     shift and go to state 306
 
-state 297
+state 300
 
     (122) map_kv_pairs -> map_kv_pair COMMA . map_kv_pairs
     (121) map_kv_pairs -> . map_kv_pair
     (122) map_kv_pairs -> . map_kv_pair COMMA map_kv_pairs
     (123) map_kv_pair -> . STRING COLON expression
 
-    STRING          shift and go to state 306
+    STRING          shift and go to state 309
 
-    map_kv_pair                    shift and go to state 286
-    map_kv_pairs                   shift and go to state 305
+    map_kv_pair                    shift and go to state 289
+    map_kv_pairs                   shift and go to state 308
 
-state 298
+state 301
 
     (115) map_param -> STRING COLON . factor
     (123) map_kv_pair -> STRING COLON . expression
@@ -8229,23 +8371,23 @@ state 298
     (69) term -> . term DIVIDE factor
     (70) term -> . VARIABLE
 
-    NUMBER          shift and go to state 309
-    FLOAT           shift and go to state 310
+    NUMBER          shift and go to state 312
+    FLOAT           shift and go to state 313
     STRING          shift and go to state 66
-    VARIABLE        shift and go to state 311
+    VARIABLE        shift and go to state 314
     TRUE            shift and go to state 67
     FALSE           shift and go to state 68
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    factor                         shift and go to state 307
-    expression                     shift and go to state 308
+    factor                         shift and go to state 310
+    expression                     shift and go to state 311
     make_expr                      shift and go to state 70
     struct_instance                shift and go to state 71
     func_call                      shift and go to state 72
     term                           shift and go to state 64
 
-state 299
+state 302
 
     (116) make_stmt -> VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN .
     (118) make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN .
@@ -8313,7 +8455,7 @@ state 299
   ! DEFAULT         [ reduce using rule 118 (make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN .) ]
 
 
-state 300
+state 303
 
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE . program RBRACE
     (4) program -> . statement
@@ -8355,8 +8497,9 @@ state 300
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -8381,9 +8524,8 @@ state 300
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -8398,7 +8540,7 @@ state 300
     BREAK           shift and go to state 43
     RETURN          shift and go to state 44
 
-    program                        shift and go to state 312
+    program                        shift and go to state 315
     statement                      shift and go to state 8
     declaration                    shift and go to state 9
     assignment                     shift and go to state 10
@@ -8426,64 +8568,64 @@ state 300
     return_stmt                    shift and go to state 32
     func_header                    shift and go to state 37
 
-state 301
+state 304
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type . LBRACE program RBRACE
 
-    LBRACE          shift and go to state 313
+    LBRACE          shift and go to state 316
 
 
-state 302
+state 305
 
-    (47) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .
+    (46) func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .
 
-    VAR             reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    VARIABLE        reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    FMT             reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    CONTINUE        reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    FUNC            reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    IF              reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    FOR             reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    TYPE            reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    SWITCH          reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    LBRACKET        reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    BREAK           reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    RETURN          reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    $end            reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    RBRACE          reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    CASE            reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
-    DEFAULT         reduce using rule 47 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    VAR             reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    VARIABLE        reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    FMT             reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    CONTINUE        reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    FUNC            reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    IF              reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    FOR             reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    TYPE            reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    SWITCH          reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    LBRACKET        reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    BREAK           reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    RETURN          reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    $end            reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    RBRACE          reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    CASE            reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
+    DEFAULT         reduce using rule 46 (func_with_map -> FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body .)
 
 
-state 303
+state 306
 
     (114) map_params -> map_param COMMA map_params .
 
     RBRACE          reduce using rule 114 (map_params -> map_param COMMA map_params .)
 
 
-state 304
+state 307
 
     (115) map_param -> STRING . COLON factor
 
-    COLON           shift and go to state 314
+    COLON           shift and go to state 317
 
 
-state 305
+state 308
 
     (122) map_kv_pairs -> map_kv_pair COMMA map_kv_pairs .
 
     RBRACE          reduce using rule 122 (map_kv_pairs -> map_kv_pair COMMA map_kv_pairs .)
 
 
-state 306
+state 309
 
     (123) map_kv_pair -> STRING . COLON expression
 
-    COLON           shift and go to state 315
+    COLON           shift and go to state 318
 
 
-state 307
+state 310
 
     (115) map_param -> STRING COLON factor .
     (67) term -> factor .
@@ -8509,7 +8651,7 @@ state 307
   ! RBRACE          [ reduce using rule 115 (map_param -> STRING COLON factor .) ]
 
 
-state 308
+state 311
 
     (123) map_kv_pair -> STRING COLON expression .
     (57) expression -> expression . PLUS term
@@ -8537,7 +8679,7 @@ state 308
     GE              shift and go to state 116
 
 
-state 309
+state 312
 
     (71) factor -> NUMBER .
     (33) expression -> NUMBER .
@@ -8583,7 +8725,7 @@ state 309
   ! GE              [ reduce using rule 71 (factor -> NUMBER .) ]
 
 
-state 310
+state 313
 
     (72) factor -> FLOAT .
     (34) expression -> FLOAT .
@@ -8629,7 +8771,7 @@ state 310
   ! GE              [ reduce using rule 72 (factor -> FLOAT .) ]
 
 
-state 311
+state 314
 
     (74) factor -> VARIABLE .
     (35) expression -> VARIABLE .
@@ -8709,14 +8851,14 @@ state 311
   ! RBRACE          [ reduce using rule 70 (term -> VARIABLE .) ]
 
 
-state 312
+state 315
 
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program . RBRACE
 
-    RBRACE          shift and go to state 316
+    RBRACE          shift and go to state 319
 
 
-state 313
+state 316
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE . program RBRACE
     (4) program -> . statement
@@ -8758,8 +8900,9 @@ state 313
     (93) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE
     (94) struct_method -> . FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (42) func_def -> . func_header func_body
+    (47) func_no_params -> . FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE
     (48) func_no_params -> . FUNC VARIABLE LPAREN RPAREN LBRACE program RBRACE
-    (47) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
+    (46) func_with_map -> . FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type func_body
     (49) func_call -> . VARIABLE LPAREN arg_list RPAREN
     (50) func_call -> . VARIABLE LPAREN RPAREN
     (85) if_stmt -> . IF expression block
@@ -8784,9 +8927,8 @@ state 313
     (134) break_stmt -> . BREAK
     (135) increment_stmt -> . VARIABLE INCREMENT
     (136) increment_stmt -> . VARIABLE DECREMENT
-    (46) return_stmt -> . RETURN expression
+    (45) return_stmt -> . RETURN expression
     (43) func_header -> . FUNC VARIABLE LPAREN param_list RPAREN type
-    (44) func_header -> . FUNC VARIABLE LPAREN RPAREN type
 
     VAR             shift and go to state 33
     VARIABLE        shift and go to state 6
@@ -8801,7 +8943,7 @@ state 313
     BREAK           shift and go to state 43
     RETURN          shift and go to state 44
 
-    program                        shift and go to state 317
+    program                        shift and go to state 320
     statement                      shift and go to state 8
     declaration                    shift and go to state 9
     assignment                     shift and go to state 10
@@ -8829,7 +8971,7 @@ state 313
     return_stmt                    shift and go to state 32
     func_header                    shift and go to state 37
 
-state 314
+state 317
 
     (115) map_param -> STRING COLON . factor
     (71) factor -> . NUMBER
@@ -8857,12 +8999,12 @@ state 314
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    factor                         shift and go to state 318
+    factor                         shift and go to state 321
     make_expr                      shift and go to state 70
     struct_instance                shift and go to state 71
     func_call                      shift and go to state 72
 
-state 315
+state 318
 
     (123) map_kv_pair -> STRING COLON . expression
     (33) expression -> . NUMBER
@@ -8908,14 +9050,14 @@ state 315
     LPAREN          shift and go to state 69
     MAKE            shift and go to state 73
 
-    expression                     shift and go to state 308
+    expression                     shift and go to state 311
     term                           shift and go to state 64
     factor                         shift and go to state 65
     make_expr                      shift and go to state 70
     struct_instance                shift and go to state 71
     func_call                      shift and go to state 72
 
-state 316
+state 319
 
     (94) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE .
 
@@ -8937,14 +9079,14 @@ state 316
     DEFAULT         reduce using rule 94 (struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN RPAREN type LBRACE program RBRACE .)
 
 
-state 317
+state 320
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program . RBRACE
 
-    RBRACE          shift and go to state 319
+    RBRACE          shift and go to state 322
 
 
-state 318
+state 321
 
     (115) map_param -> STRING COLON factor .
 
@@ -8952,7 +9094,7 @@ state 318
     RBRACE          reduce using rule 115 (map_param -> STRING COLON factor .)
 
 
-state 319
+state 322
 
     (93) struct_method -> FUNC LPAREN VARIABLE VARIABLE RPAREN VARIABLE LPAREN param_list RPAREN type LBRACE program RBRACE .
 
@@ -9078,19 +9220,19 @@ WARNING: reduce/reduce conflict in state 76 resolved using rule (expression -> V
 WARNING: rejected rule (factor -> VARIABLE) in state 76
 WARNING: reduce/reduce conflict in state 157 resolved using rule (term -> VARIABLE)
 WARNING: rejected rule (factor -> VARIABLE) in state 157
-WARNING: reduce/reduce conflict in state 275 resolved using rule (make_stmt -> VARIABLE ASIG MAKE LPAREN LBRACKET RBRACKET type RPAREN)
-WARNING: rejected rule (make_expr -> MAKE LPAREN LBRACKET RBRACKET type RPAREN) in state 275
-WARNING: reduce/reduce conflict in state 299 resolved using rule (make_stmt -> VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN)
-WARNING: rejected rule (make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN) in state 299
-WARNING: reduce/reduce conflict in state 307 resolved using rule (term -> factor)
-WARNING: rejected rule (map_param -> STRING COLON factor) in state 307
-WARNING: reduce/reduce conflict in state 309 resolved using rule (expression -> NUMBER)
-WARNING: rejected rule (factor -> NUMBER) in state 309
-WARNING: reduce/reduce conflict in state 310 resolved using rule (expression -> FLOAT)
-WARNING: rejected rule (factor -> FLOAT) in state 310
-WARNING: reduce/reduce conflict in state 311 resolved using rule (expression -> VARIABLE)
-WARNING: rejected rule (factor -> VARIABLE) in state 311
-WARNING: reduce/reduce conflict in state 311 resolved using rule (term -> VARIABLE)
-WARNING: rejected rule (factor -> VARIABLE) in state 311
-WARNING: reduce/reduce conflict in state 311 resolved using rule (expression -> VARIABLE)
-WARNING: rejected rule (term -> VARIABLE) in state 311
+WARNING: reduce/reduce conflict in state 277 resolved using rule (make_stmt -> VARIABLE ASIG MAKE LPAREN LBRACKET RBRACKET type RPAREN)
+WARNING: rejected rule (make_expr -> MAKE LPAREN LBRACKET RBRACKET type RPAREN) in state 277
+WARNING: reduce/reduce conflict in state 302 resolved using rule (make_stmt -> VARIABLE ASIG MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN)
+WARNING: rejected rule (make_expr -> MAKE LPAREN MAP LBRACKET type RBRACKET type RPAREN) in state 302
+WARNING: reduce/reduce conflict in state 310 resolved using rule (term -> factor)
+WARNING: rejected rule (map_param -> STRING COLON factor) in state 310
+WARNING: reduce/reduce conflict in state 312 resolved using rule (expression -> NUMBER)
+WARNING: rejected rule (factor -> NUMBER) in state 312
+WARNING: reduce/reduce conflict in state 313 resolved using rule (expression -> FLOAT)
+WARNING: rejected rule (factor -> FLOAT) in state 313
+WARNING: reduce/reduce conflict in state 314 resolved using rule (expression -> VARIABLE)
+WARNING: rejected rule (factor -> VARIABLE) in state 314
+WARNING: reduce/reduce conflict in state 314 resolved using rule (term -> VARIABLE)
+WARNING: rejected rule (factor -> VARIABLE) in state 314
+WARNING: reduce/reduce conflict in state 314 resolved using rule (expression -> VARIABLE)
+WARNING: rejected rule (term -> VARIABLE) in state 314

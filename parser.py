@@ -4,7 +4,7 @@ import os
 import logging
 from datetime import datetime
 
-usuario_git = "dalay"
+usuario_git = "jamesigt"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
 nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
@@ -87,6 +87,7 @@ def p_statement(p):
                  | struct_method
                  | func_def
                  | func_no_params
+                 | func_with_map
                  | func_call
                  | if_stmt
                  | for_stmt
@@ -155,7 +156,8 @@ def p_expression_variable(p):
 # Asignación de valor
 def p_assignment(p):
     '''assignment : VARIABLE ASSIGN expression
-                  | VARIABLE ASIG expression'''
+                  | VARIABLE ASIG expression
+                  '''
     var_name = p[1]
 
     if p[3] is None or not isinstance(p[3], tuple):
@@ -163,18 +165,6 @@ def p_assignment(p):
         return
 
     expr_value, expr_type = p[3]
-
-    if var_name not in symbol_table:
-        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
-    else:
-        expected_type = symbol_table[var_name]['type']
-        if expr_type != expected_type:
-            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
-        else:
-            symbol_table[var_name]['value'] = expr_value
-
-
-
     if p.slice[2].type == 'ASIG':
         # := declara si no existe
         if var_name not in symbol_table:
@@ -186,7 +176,6 @@ def p_assignment(p):
                 report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
             else:
                 symbol_table[var_name]['value'] = expr_value
-
     elif p.slice[2].type == 'ASSIGN':
         if var_name not in symbol_table:
             report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
@@ -196,6 +185,15 @@ def p_assignment(p):
                 report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
             else:
                 symbol_table[var_name]['value'] = expr_value
+    if var_name not in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
+    else:
+        expected_type = symbol_table[var_name]['type']
+        if expr_type != expected_type:
+            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
+        else:
+            symbol_table[var_name]['value'] = expr_value
+
 # Imprimir en consola
 def p_print_stmt(p):
     '''print_stmt : FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN
@@ -274,6 +272,11 @@ def p_return_stmt(p):
         report_error(f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
 
 #Jared Gonzalez
+# Funcion con map
+def p_func_def_with_map(p):
+    '''func_with_map : FUNC VARIABLE LPAREN RPAREN MAP LBRACKET type RBRACKET type  func_body  '''
+    pass
+
 # Funcion sin parametros
 def p_func_def_no_params(p):
     '''func_no_params : FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
@@ -375,7 +378,7 @@ def p_expression(p):
                   | expression GT expression
                   | expression LE expression
                   | expression GE expression'''
-    
+
     if len(p) == 2:
         # Aquí p[1] debe ser una tupla (valor, tipo)
         if p[1] is None:
@@ -595,6 +598,12 @@ def p_make_expr(p):
 
 def p_map_literal_declaration(p):
     '''map_declaration_values : VARIABLE ASIG MAP LBRACKET type RBRACKET type LBRACE map_kv_pairs RBRACE'''
+    var_name = p[1]
+    if var_name in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+    else:
+        declare_variable(var_name, 'map')
+        report_error(f"[INFO] Variable '{var_name}' declarada como map")
     pass
 
 def p_map_kv_pairs(p):
