@@ -47,10 +47,21 @@ def assign_variable(name, value, value_type):
 # Pila para controlar el contexto (por ejemplo, si estamos dentro de un bucle)
 context_stack = []
 
+# Tabla de funciones declaradas
+function_table = {}
+
+# Nombre de la función actual en análisis
+current_function = None
+
+def declare_function(name, return_type):
+    function_table[name] = {
+        'return_type': return_type
+    }
+
+
 
 
 # Reglas gramaticales
-
 
 # Programa = varias sentencias
 # Detectar 'package main'
@@ -226,25 +237,41 @@ def p_input_stmt(p):
 # Función
 def p_func_def(p):
     '''func_def : func_header func_body'''
-    func_name = p[1]
+    pass
 
 def p_func_header(p):
-    '''func_header : FUNC VARIABLE LPAREN param_list RPAREN type'''
+    '''func_header : FUNC VARIABLE LPAREN param_list RPAREN type '''
+    global current_function
     func_name = p[2]
-    params = p[4]
     return_type = p[6]
+    declare_function(func_name, return_type, [ptype for _, ptype in p[4]])
+    current_function = func_name  # ← Guardamos el nombre de la función actual
+    p[0] = func_name
 
-    param_types = [ptype for _, ptype in params]
-    p[0] = func_name  # opcional
 
 def p_func_body(p):
     '''func_body : LBRACE program RBRACE'''
-    pass
+    global current_function
+    current_function = None  # ← Terminamos de analizar esta función
+
 
 
 # Retorno de la funcion
 def p_return_stmt(p):
     '''return_stmt : RETURN expression'''
+    global current_function
+
+    print(">> Entrando a return_stmt con current_function =", current_function)
+
+    if not current_function:
+        report_error("[SEMANTIC ERROR] 'return' fuera de una función.")
+        return
+
+    expected_type = function_table[current_function]['return_type']
+    _, expr_type = p[2]
+
+    if expr_type != expected_type:
+        report_error(f"[SEMANTIC ERROR] Retorno incompatible en función '{current_function}': se espera '{expected_type}' pero se retorna '{expr_type}'")
     pass
 
 #Jared Gonzalez
@@ -255,9 +282,21 @@ def p_func_def_with_map(p):
 
 # Funcion sin parametros
 def p_func_def_no_params(p):
-    '''func_no_params : FUNC VARIABLE LPAREN RPAREN type LBRACE program RBRACE'''
+    '''func_no_params : func_header_no_params block'''
+    global current_function
+    # El encabezado ya asignó current_function antes de que se analizara el bloque
+    current_function = None
+pass
+
+
+def p_func_header_no_params(p):
+    '''func_header_no_params : FUNC VARIABLE LPAREN RPAREN type'''
+    global current_function
     func_name = p[2]
     return_type = p[5]
+    current_function = func_name
+    declare_function(func_name, return_type)
+    print("[INFO] Funcion", func_name, " declarada de tipo", return_type)
     pass
 
 def p_func_def_no_params_void(p):
@@ -444,7 +483,6 @@ def p_begin_lop(p):
 def p_end_loop(p):
     'end_loop :'
     context_stack.pop()
-
 
 def p_continue_stmt(p):
     '''continue_stmt : CONTINUE'''

@@ -1,12 +1,12 @@
 package main
 import "fmt"
 
-func obtenerDatos() map[string]int {
+func obtenerDatos() string {
     datos := map[string]int {
         "edad": 25,
         "anio": 2025
     }
-    return datos
+    return "Datos obtenidos"
 }
 
 func imprimirNumeros() {
@@ -20,21 +20,15 @@ func imprimirNumeros() {
         fmt.Println(i)
         break
     }
-    break
 }
 
 func obtenerSaludo() string {
-    return "hola"
+    return 123
 }
 
 func main() {
-
-    //datos := obtenerDatos()
     fmt.Println("Datos:", datos)
-
-    //saludo := obtenerSaludo()
     var saludo string = "Hola"
     fmt.Println(saludo)
-
     imprimirNumeros()
 }
