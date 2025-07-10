@@ -3,13 +3,19 @@ from tkinter import scrolledtext, messagebox
 import lexer
 import parser  # Este es tu parser.py que ya importa el lexer
 
+def mostrar_error_en_gui(mensaje):
+    output_area.insert(tk.END, mensaje + "\n")
+    output_area.see(tk.END)  # hace scroll automático al final
+
 def analizar_codigo():
     codigo = input_area.get("1.0", tk.END)
-
     output_area.delete("1.0", tk.END)
 
     try:
-        # Reiniciar tablas para nuevo análisis
+        # Configurar el callback del parser para que los errores salgan en el GUI
+        parser.set_error_callback(mostrar_error_en_gui)
+
+        # Limpiar estructuras internas
         parser.symbol_table.clear()
         parser.function_table.clear()
         parser.context_stack.clear()

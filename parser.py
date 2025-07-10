@@ -252,15 +252,10 @@ def p_func_body(p):
 # Retorno de la funcion
 def p_return_stmt(p):
     '''return_stmt : RETURN expression'''
-    print("return_stmt len:", len(p))
-    print("return_stmt slice:", p.slice)
-    print("p[2] =", p[2])
-    print("type(p[2]) =", type(p[2]))
-
     if not function_table:
         report_error("[SEMANTIC ERROR] 'return' fuera de una función.")
         return
-    
+
     # Obtenemos la función actual (última registrada)
     current_function = list(function_table.keys())[-1]
     expected_type = function_table[current_function]['return_type']
@@ -709,6 +704,19 @@ def p_error(p):
 
 # Construir el parser
 parser = yacc.yacc(start='start')
+
+# === Callback para errores (GUI puede definirlo) ===
+error_callback = None
+
+def set_error_callback(callback_func):
+    global error_callback
+    error_callback = callback_func
+
+def report_error(mensaje):
+    print(mensaje)
+    logging.error(mensaje)
+    if error_callback:
+        error_callback(mensaje)  # Redirige al GUI si está definido
 
 
 if __name__ == "__main__":
