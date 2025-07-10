@@ -1,0 +1,5 @@
+[INFO] Variable 'x' declarada con tipo 'int' y valor inicial.
+[INFO] Variable 'y' declarada con tipo 'int' y valor inicial.
+[INFO] Variable 'name' declarada (tipo inferido 'string').
+[INFO] Variable 'ok' declarada (tipo inferido 'bool').
+✅ Análisis semántico completado correctamente.

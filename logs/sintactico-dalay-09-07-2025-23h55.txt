@@ -1,0 +1,4 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'mensaje' no declarada.
+[SEMANTIC ERROR] Variable 'mensaje' usada sin declarar.
+✅ Análisis semántico completado correctamente.

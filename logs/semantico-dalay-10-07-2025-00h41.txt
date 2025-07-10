@@ -1,0 +1,4 @@
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[INFO] Print: "Ingresa tu nombre: " (tipo: string)
+[SYNTAX ERROR] Unexpected token ',' at line 9
+✅ Análisis semántico completado correctamente.

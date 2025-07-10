@@ -1,0 +1,2 @@
+[INFO] Variable 'mensaje' declarada con tipo 'int'
+✅ Análisis semántico completado correctamente.

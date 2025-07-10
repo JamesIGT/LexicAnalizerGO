@@ -1,0 +1,3 @@
+[INFO] Variable 'Nombre' declarada con tipo 'string'
+[INFO] Println: "Ingresa tu nombre: " (tipo: string)
+✅ Análisis semántico completado correctamente.

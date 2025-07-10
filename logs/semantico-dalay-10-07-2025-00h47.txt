@@ -1,0 +1,3 @@
+[INFO] Variable 'nombre' declarada con tipo 'string'
+[SYNTAX ERROR] Unexpected token ')' at line 7
+✅ Análisis semántico completado correctamente.

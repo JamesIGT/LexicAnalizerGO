@@ -1,0 +1,25 @@
+[INFO] Variable 'edad' declarada con tipo 'int'
+[INFO] Variable 'activo' declarada con tipo 'bool'
+[INFO] Variable 'peso' declarada con tipo 'float64'
+[INFO] Variable 'iF' declarada con tipo 'float64'
+[SEMANTIC ERROR] Parámetro 'edad' ya fue declarado.
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[DEBUG] Llamando a función: pruebaEdad
+[INFO] Println: "Dentro de mains" (tipo: string)
+[INFO] Variable 'name' declarada (tipo inferido 'string').
+[INFO] Variable 'age' declarada (tipo inferido 'int').
+[INFO] Variable 'count' declarada con tipo 'int'
+[INFO] Variable '_peso' declarada con tipo 'float64'
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+[INFO] Println: [(20, 'int'), (25, 'int'), (30, 'int')] (tipo: array[3]int)
+[INFO] Println: [('"Ana"', 'string'), ('"Luis"', 'string'), ('"Pedro"', 'string')] (tipo: array[3]string)
+[INFO] Array 'a' declarado e inicializado correctamente.
+[INFO] Array 'b' declarado con tipo y tamaño correctamente.
+[INFO] Array 'x' declarado e inicializado correctamente.
+[INFO] Array 'y' declarado con tipo y tamaño correctamente.
+[INFO] Println: "Hola mundo" (tipo: string)
+[INFO] Printf con formato: "Edad: %d\n", valor: 10 (tipo: int)
+[SEMANTIC ERROR] Variable 'nombre' redeclarada.
+[SYNTAX ERROR] Unexpected token 'Print' at line 90
+✅ Análisis semántico completado correctamente.

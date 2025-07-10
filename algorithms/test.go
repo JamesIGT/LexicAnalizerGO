@@ -26,8 +26,7 @@ func mains() {
     // ❌ Error: llamada correcta en número de argumentos, pero tipo devuelto no coincide
     pruebaEdad(12)
 
-    // ✅ Llamada correcta
-    mensaje := saludar("Go")
+
     fmt.Println(mensaje)
 
     // Declaraciones combinadas
@@ -68,3 +67,10 @@ func mains() {
     var edadTexto int = "veinticinco"
     var resultado float64 = 5.0 / 2  // ← ¿tu compilador permite dividir float entre int?
 }
+/*
+func main() {
+    var nombre string
+    fmt.Println("Ingresa tu nombre: ")
+    fmt.Scanln(&nombre)
+    fmt.Printf("Hola", nombre)
+}*/

@@ -1,0 +1,2 @@
+[INFO] Variable 'Nombre' declarada con tipo 'string'
+✅ Análisis semántico completado correctamente.

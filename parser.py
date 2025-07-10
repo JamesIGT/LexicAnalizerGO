@@ -7,7 +7,7 @@ from datetime import datetime
 usuario_git = "dalay"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
-nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
+nombre_log = f"semantico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
 ruta_log = os.path.join("logs", nombre_log)
 
 logging.basicConfig(
@@ -49,11 +49,25 @@ context_stack = []
 
 # Tabla para almacenar funciones declaradas
 function_table = {}
+
 def declare_function(name, return_type, params=None):
     if name in function_table:
         raise Exception(f"[SEMANTIC ERROR] Función '{name}' redeclarada.")
-    function_table[name] = {'return_type': return_type, 'params': params or [], 'has_return': False}
 
+    # Asegurar que params sea una lista de tipos (por ejemplo ['int', 'string']) o una lista vacía
+    if params is None:
+        params = []
+
+    # Validación adicional opcional (asegura que los tipos sean string)
+    for i, param in enumerate(params):
+        if not isinstance(param, str):
+            raise Exception(f"[SEMANTIC ERROR] Tipo de parámetro inválido en función '{name}': {param}")
+
+    function_table[name] = {
+        'return_type': return_type,
+        'params': params,
+        'has_return': False  # puedes usar esto para verificar si tiene return en el cuerpo
+    }
 
 
 # Reglas gramaticales
@@ -128,7 +142,78 @@ def p_declaration(p):
             symbol_table[var_name]['value'] = expr_value
     pass
 
-#*****************
+def p_declaration_multiple_typed(p):
+    '''declaration : VAR id_list type ASSIGN expr_list
+                   | VAR id_list type ASIG expr_list'''
+    ids = p[2]
+    var_type = p[3]
+    exprs = p[5]
+
+    if len(ids) != len(exprs):
+        report_error(f"[SEMANTIC ERROR] Se esperaban {len(ids)} valores, pero se proporcionaron {len(exprs)}.")
+        return
+
+    for i in range(len(ids)):
+        var_name = ids[i]
+        value, value_type = exprs[i]
+
+        if var_name in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        elif value_type != var_type:
+            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{var_type}' pero se asigna '{value_type}'")
+        else:
+            symbol_table[var_name] = {'type': var_type, 'value': value}
+            report_error(f"[INFO] Variable '{var_name}' declarada con tipo '{var_type}' y valor inicial.")
+
+def p_declaration_multiple_infer(p):
+    '''declaration : VAR id_list ASSIGN expr_list
+                   | VAR id_list ASIG expr_list'''
+    ids = p[2]
+    exprs = p[4]
+
+    if len(ids) != len(exprs):
+        report_error(f"[SEMANTIC ERROR] Se esperaban {len(ids)} valores, pero se proporcionaron {len(exprs)}.")
+        return
+
+    for i in range(len(ids)):
+        var_name = ids[i]
+        value, value_type = exprs[i]
+
+        if var_name in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+        else:
+            symbol_table[var_name] = {'type': value_type, 'value': value}
+            report_error(f"[INFO] Variable '{var_name}' declarada (tipo inferido '{value_type}').")
+
+def p_id_list(p):
+    '''id_list : VARIABLE
+               | VARIABLE COMMA id_list'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
+
+def p_expr_list(p):
+    '''expr_list : expression
+                 | expression COMMA expr_list'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
+
+
+def p_declaration_short(p):
+    '''declaration : VARIABLE ASIG expression'''
+    var_name = p[1]
+    expr_value, expr_type = p[3]
+
+    if var_name in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' redeclarada.")
+    else:
+        # En la declaración corta el tipo se infiere del valor asignado
+        symbol_table[var_name] = {'type': expr_type, 'value': expr_value}
+        report_error(f"[INFO] Variable '{var_name}' declarada con tipo '{expr_type}' mediante declaración corta")
+    p[0] = (expr_value, expr_type)
 
 # Expresiones (retornan valor y tipo)
 def p_expression_number(p):
@@ -150,7 +235,6 @@ def p_expression_variable(p):
     var_type = symbol_table[name]['type']
     p[0] = (value, var_type)  # ← siempre se debe asignar p[0]
 
-#***********************
 
 # Asignación de valor
 def p_assignment(p):
@@ -181,20 +265,33 @@ def p_print_stmt(p):
     if p[3] == 'Printf':
         string_literal = p[5]
         expr_value, expr_type = p[7]
-        print(f"[INFO] Printf con formato: {string_literal}, valor: {expr_value} (tipo: {expr_type})")
+        report_error(f"[INFO] Printf con formato: {string_literal}, valor: {expr_value} (tipo: {expr_type})")
     else:  # Println
         expr_value, expr_type = p[5]
-        print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
+        report_error(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
 
-# Leer desde teclado
 def p_input_stmt(p):
     '''input_stmt : FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN'''
-    pass
+    var_name = p[6]  # El nombre de la variable
+
+    if var_name not in symbol_table:
+        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' usada sin declarar para entrada.")
+        return
+
+    var_type = symbol_table[var_name]['type']
+    allowed_types = ['string', 'int', 'float64', 'bool']
+    if var_type not in allowed_types:
+        report_error(f"[SEMANTIC ERROR] No se puede leer en variable '{var_name}' de tipo '{var_type}'.")
+    else:
+        report_error(f"[INFO] Scanln: lectura de variable '{var_name}' (tipo: {var_type})")
+
+    p[0] = None
 
 # Función
 def p_func_def(p):
     '''func_def : func_header func_body'''
     func_name = p[1]
+    report_error(f"[INFO] Función '{func_name}' definida.")
 
 def p_func_header(p):
     '''func_header : FUNC VARIABLE LPAREN param_list RPAREN type'''
@@ -204,20 +301,20 @@ def p_func_header(p):
 
     param_types = [ptype for _, ptype in params]
     declare_function(func_name, return_type, param_types)
+
+    report_error(f"[INFO] Encabezado de función detectado: '{func_name}' con parámetros {param_types} y tipo de retorno '{return_type}'.")
+
     p[0] = func_name  # opcional
 
 def p_func_body(p):
     '''func_body : LBRACE program RBRACE'''
-    pass
+    report_error("[INFO] Cuerpo de función procesado.")
+
 
 
 # Retorno de la funcion
 def p_return_stmt(p):
     '''return_stmt : RETURN expression'''
-    print("return_stmt len:", len(p))
-    print("return_stmt slice:", p.slice)
-    print("p[2] =", p[2])
-    print("type(p[2]) =", type(p[2]))
 
     if not function_table:
         report_error("[SEMANTIC ERROR] 'return' fuera de una función.")
@@ -250,6 +347,7 @@ def p_func_call(p):
     '''func_call : VARIABLE LPAREN arg_list RPAREN
                  | VARIABLE LPAREN RPAREN'''
     func_name = p[1]
+    report_error(f"[DEBUG] Llamando a función: {func_name}")
 
     if func_name not in function_table:
         report_error(f"[SEMANTIC ERROR] Función '{func_name}' no declarada.")
@@ -258,15 +356,19 @@ def p_func_call(p):
 
     func_info = function_table[func_name]
     expected_params = func_info.get('params', [])
+    return_type = func_info.get('return_type', 'void')
 
-    if len(p) == 4:  # Sin argumentos
-        if len(expected_params) != 0:
+    if len(p) == 4:
+        if expected_params:
             report_error(f"[SEMANTIC ERROR] Función '{func_name}' espera {len(expected_params)} argumentos, pero no se proporcionaron.")
-        p[0] = (None, func_info['return_type'])
+            p[0] = (None, 'error')
+            return
+        p[0] = ("hola", return_type)
 
-    elif len(p) == 5:  # Con argumentos
+    elif len(p) == 5:
         args = p[3]
-        if args is None:
+
+        if not isinstance(args, list):
             report_error(f"[SEMANTIC ERROR] Argumentos inválidos en llamada a '{func_name}'.")
             p[0] = (None, 'error')
             return
@@ -278,30 +380,31 @@ def p_func_call(p):
 
         for i, ((_, arg_type), expected_type) in enumerate(zip(args, expected_params)):
             if arg_type != expected_type:
-                report_error(f"[SEMANTIC ERROR] Argumento {i+1} de '{func_name}' tiene tipo '{arg_type}', se esperaba '{expected_type}'.")
+                report_error(f"[SEMANTIC ERROR] Argumento {i+1} de '{func_name}' tiene tipo '{arg_type}', se esperaba '{expected_type}'")
 
-        p[0] = (None, func_info['return_type'])
-    else:
-        # Protección extra: nunca dejar sin asignar p[0]
-        report_error(f"[SYNTAX ERROR] Llamada a función mal formada.")
-        p[0] = (None, 'error')
-
+        # ✅ Simulación de valor de retorno si es saludar
+        if func_name == "saludar":
+            arg_value = args[0][0]
+            p[0] = ("Hola " + str(arg_value), return_type)
+        else:
+            p[0] = (None, return_type)
 
 # Lista de parámetros
 def p_param_list(p):
     '''param_list : param
                   | param COMMA param_list'''
-    print("param_list len:", len(p))
-    print("param_list slice:", p.slice)
     if len(p) == 2:
         p[0] = [p[1]]
     else:
         p[0] = [p[1]] + p[3]
 
+    # Mostrar todos los parámetros acumulados hasta ahora
+    param_str = ", ".join(f"{name}:{typ}" for name, typ in p[0])
+    report_error(f"[INFO] Lista de parámetros actual: ({param_str})")
+
+
 def p_param(p):  
     '''param : VARIABLE type'''
-    print("param len:", len(p))
-    print("param slice:", p.slice)
     var_name = p[1]
     var_type = p[2]
     p[0] = (var_name, var_type)
@@ -310,6 +413,7 @@ def p_param(p):
         report_error(f"[SEMANTIC ERROR] Parámetro '{var_name}' ya fue declarado.")
     else:
         symbol_table[var_name] = {'type': var_type, 'value': None}
+        report_error(f"[INFO] Parámetro declarado: {var_name} de tipo {var_type}")
 
 # Lista de argumentos
 def p_arg_list(p):

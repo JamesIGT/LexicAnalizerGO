@@ -1,0 +1,10 @@
+[INFO] Variable 'edad' declarada con tipo 'int'
+[INFO] Variable 'activo' declarada con tipo 'bool'
+[INFO] Variable 'peso' declarada con tipo 'float64'
+[INFO] Variable 'iF' declarada con tipo 'float64'
+[SEMANTIC ERROR] Parámetro 'edad' ya fue declarado.
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[DEBUG] Llamando a función: pruebaEdad
+[INFO] Println: "Dentro de mains" (tipo: string)
+[SYNTAX ERROR] Unexpected token ',' at line 43
+✅ Análisis semántico completado correctamente.

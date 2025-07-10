@@ -1,0 +1,5 @@
+[INFO] Variable '_edad' declarada con tipo 'int'
+[INFO] Variable 'activo' declarada con tipo 'bool'
+[INFO] Variable 'peso' declarada con tipo 'float64'
+[SYNTAX ERROR] Unexpected token '1' at line 15
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,3 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'mensaje' declarada con tipo 'error' mediante declaración corta
+✅ Análisis semántico completado correctamente.
