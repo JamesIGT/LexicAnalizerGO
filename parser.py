@@ -4,10 +4,10 @@ import os
 import logging
 from datetime import datetime
 
-usuario_git = "dalay"
+usuario_git = "valeria"
 os.makedirs("logs", exist_ok=True)
 now = datetime.now()
-nombre_log = f"sintactico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
+nombre_log = f"semantico-{usuario_git}-{now.day:02d}-{now.month:02d}-{now.year}-{now.hour:02d}h{now.minute:02d}.txt"
 ruta_log = os.path.join("logs", nombre_log)
 
 logging.basicConfig(
@@ -164,29 +164,59 @@ def p_assignment(p):
 
     expr_value, expr_type = p[3]
 
-    if var_name not in symbol_table:
-        report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
-    else:
-        expected_type = symbol_table[var_name]['type']
-        if expr_type != expected_type:
-            report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
+    
+
+    if p.slice[2].type == 'ASIG':
+        # := declara si no existe
+        if var_name not in symbol_table:
+            symbol_table[var_name] = {'type': expr_type, 'value': expr_value}
+            report_error(f"[INFO] Variable '{var_name}' declarada implícitamente con tipo '{expr_type}'")
         else:
-            symbol_table[var_name]['value'] = expr_value
+            expected_type = symbol_table[var_name]['type']
+            if expr_type != expected_type:
+                report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
+            else:
+                symbol_table[var_name]['value'] = expr_value
 
-
+    elif p.slice[2].type == 'ASSIGN':
+        if var_name not in symbol_table:
+            report_error(f"[SEMANTIC ERROR] Variable '{var_name}' no declarada.")
+        else:
+            expected_type = symbol_table[var_name]['type']
+            if expr_type != expected_type:
+                report_error(f"[SEMANTIC ERROR] Asignación incompatible: '{var_name}' es '{expected_type}' pero se asigna '{expr_type}'")
+            else:
+                symbol_table[var_name]['value'] = expr_value
 # Imprimir en consola
 def p_print_stmt(p):
     '''print_stmt : FMT DOT PRINTF LPAREN STRING COMMA expression RPAREN
                   | FMT DOT PRINTLN LPAREN expression RPAREN
                   | FMT DOT PRINTLN LPAREN STRING COMMA VARIABLE RPAREN'''
+    
     if p[3] == 'Printf':
         string_literal = p[5]
-        expr_value, expr_type = p[7]
+        if isinstance(p[7], tuple):
+            expr_value, expr_type = p[7]
+        else:
+            expr_value, expr_type = (p[7], 'unknown')
         print(f"[INFO] Printf con formato: {string_literal}, valor: {expr_value} (tipo: {expr_type})")
-    else:  # Println
-        expr_value, expr_type = p[5]
-        print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
 
+    elif p[3] == 'Println':
+        if len(p) == 6:  # fmt.Println(expression)
+            if isinstance(p[5], tuple):
+                expr_value, expr_type = p[5]
+            else:
+                expr_value, expr_type = (p[5], 'unknown')
+            print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
+
+        elif len(p) == 8:  # fmt.Println("Texto", variable)
+            var_name = p[6]
+            if var_name in symbol_table:
+                expr_value = symbol_table[var_name]['value']
+                expr_type = symbol_table[var_name]['type']
+                print(f"[INFO] Println: {expr_value} (tipo: {expr_type})")
+            else:
+                report_error(f"[SEMANTIC ERROR] Variable '{var_name}' usada sin declarar.")
 # Leer desde teclado
 def p_input_stmt(p):
     '''input_stmt : FMT DOT SCANLN LPAREN AMPER VARIABLE RPAREN'''
@@ -658,14 +688,13 @@ def p_error(p):
 
 
 
-
 # Construir el parser
 parser = yacc.yacc(start='start')
 
 
 if __name__ == "__main__":
     try:
-        with open("algorithms/algorithm3.go", "r", encoding="utf-8") as f:
+        with open("algorithms/algorithm2.go", "r", encoding="utf-8") as f:
             data = f.read()
         result = parser.parse(data)
         if result is None:
