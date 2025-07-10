@@ -1,0 +1,5 @@
+[SYNTAX ERROR] Unexpected token 'func' at line 2
+[SYNTAX ERROR] Unexpected token 'func' at line 7
+[SYNTAX ERROR] Unexpected token 'func' at line 12
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[SEMANTIC ERROR] Retorno incompatible en función 'saludar': se espera 'int' pero se retorna 'string'

@@ -1,0 +1,39 @@
+[INFO] Variable '_edad' declarada con tipo 'int'
+[INFO] Variable 'activo' declarada con tipo 'bool'
+[INFO] Variable 'peso' declarada con tipo 'float64'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'saludo' declarada implícitamente con tipo 'error'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Variable 'saludo' no declarada.
+[SEMANTIC ERROR] Variable 'saludo' no declarada.
+[SEMANTIC ERROR] Variable 'saludo' usada sin declarar.
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'saludo' declarada con tipo 'string'
+[SEMANTIC ERROR] Asignación incompatible: 'saludo' es 'string' pero se asigna 'error'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+[INFO] Array 'a' declarado e inicializado correctamente.
+[INFO] Array 'b' declarado con tipo y tamaño correctamente.
+[SEMANTIC ERROR] Variable 'edad' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[INFO] Variable 'edad' declarada con tipo 'int'
+[SEMANTIC ERROR] Retorno incompatible en función 'pruebaEdad': se espera 'string' pero se retorna 'int'
+[SEMANTIC ERROR] Se esperaban 2 elementos, pero se proporcionaron 3.
+[INFO] Array 'numerosarray' declarado e inicializado correctamente.
+[SEMANTIC ERROR] Elemento 1 debe ser de tipo 'int', pero se recibió 'string'.
+[INFO] Array 'mezclado' declarado e inicializado correctamente.
+[INFO] Array 'x' declarado e inicializado correctamente.
+[INFO] Array 'y' declarado con tipo y tamaño correctamente.
+[SEMANTIC ERROR] Asignación incompatible: 'y' es 'array[3]int' pero se asigna 'array[2]int'
+[SEMANTIC ERROR] Asignación incompatible: 'y' es 'array[3]int' pero se asigna 'array[2]int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y string
+[INFO] Variable 'suma' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'suma' es 'int' pero se asigna 'error'
+[INFO] Variable 'edadTexto' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'edadTexto' es 'int' pero se asigna 'string'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: float64 y int
+[INFO] Variable 'resultado' declarada con tipo 'float64'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'float64' pero se asigna 'error'
+[SYNTAX ERROR] Unexpected token ',' at line 176

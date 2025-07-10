@@ -1,0 +1,6 @@
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'

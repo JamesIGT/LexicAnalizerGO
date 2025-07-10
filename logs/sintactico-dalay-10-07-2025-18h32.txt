@@ -1,0 +1,26 @@
+[INFO] Variable 'x' declarada con tipo 'int' y valor inicial.
+[INFO] Variable 'y' declarada con tipo 'int' y valor inicial.
+[INFO] Variable 'name' declarada (tipo inferido 'string').
+[INFO] Variable 'ok' declarada (tipo inferido 'bool').
+[INFO] Variable 'm' declarada con tipo 'int' y valor inicial.
+[INFO] Variable 'n' declarada con tipo 'int' y valor inicial.
+[INFO] Variable 'lenguaje' declarada (tipo inferido 'string').
+[INFO] Variable 'ok' declarada (tipo inferido 'bool').
+[INFO] Variable '_cantidad' declarada con tipo 'int'
+[INFO] Variable 'ACTIVO' declarada con tipo 'bool'
+[INFO] Variable 'peso_normal' declarada con tipo 'float64'
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'
+[INFO] Variable 'x' declarada con tipo 'int'
+[INFO] Variable 'y' declarada con tipo 'bool'
+[INFO] Variable 'z' declarada con tipo 'float64'

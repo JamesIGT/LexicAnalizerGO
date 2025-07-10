@@ -1,0 +1,44 @@
+[SYNTAX ERROR] Unexpected token 'if' at line 3
+[SYNTAX ERROR] Unexpected token 'if' at line 9
+[SYNTAX ERROR] Unexpected token 'if' at line 15
+[SYNTAX ERROR] Unexpected token 'if' at line 21
+[SYNTAX ERROR] Unexpected token 'func' at line 27
+[SEMANTIC ERROR] Variable 'edad' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[INFO] Variable 'edad' declarada con tipo 'int'
+[SEMANTIC ERROR] Variable 'edad' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SEMANTIC ERROR] Condición en 'if' debe ser de tipo 'bool', pero se recibió 'error'
+[INFO] Variable 'edad' declarada con tipo 'int'
+[INFO] Array 'a' declarado e inicializado correctamente.
+[INFO] Array 'b' declarado con tipo y tamaño correctamente.
+[INFO] Array 'edades' declarado e inicializado correctamente.
+[INFO] Array 'nombres' declarado e inicializado correctamente.
+[SYNTAX ERROR] Unexpected token 'var' at line 100
+[SYNTAX ERROR] Unexpected token ',' at line 112
+[INFO] Variable 'count' declarada con tipo 'int'
+[INFO] Variable '_peso' declarada con tipo 'float64'
+[SYNTAX ERROR] Unexpected token '1' at line 141
+[SEMANTIC ERROR] Se esperaban 2 elementos, pero se proporcionaron 3.
+[INFO] Array 'numerosarray' declarado e inicializado correctamente.
+[SEMANTIC ERROR] Elemento 1 debe ser de tipo 'int', pero se recibió 'string'.
+[INFO] Array 'mezclado' declarado e inicializado correctamente.
+[INFO] Array 'x' declarado e inicializado correctamente.
+[INFO] Array 'y' declarado con tipo y tamaño correctamente.
+[SEMANTIC ERROR] Asignación incompatible: 'y' es 'array[3]int' pero se asigna 'array[2]int'
+[SEMANTIC ERROR] Asignación incompatible: 'y' es 'array[3]int' pero se asigna 'array[2]int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y string
+[INFO] Variable 'suma' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'suma' es 'int' pero se asigna 'error'
+[INFO] Variable 'edadTexto' declarada con tipo 'int'
+[SEMANTIC ERROR] Asignación incompatible: 'edadTexto' es 'int' pero se asigna 'string'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: float64 y int
+[INFO] Variable 'resultado' declarada con tipo 'float64'
+[SEMANTIC ERROR] Asignación incompatible: 'resultado' es 'float64' pero se asigna 'error'
+[SEMANTIC ERROR] Variable 'edad' usada sin declarar.
+[SEMANTIC ERROR] Operación entre tipos incompatibles: error y int
+[SYNTAX ERROR] Unexpected token 'fmt' at line 178
+[INFO] Variable 'edad' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'fmt' at line 187
+[INFO] Variable 'edad' declarada con tipo 'int'
