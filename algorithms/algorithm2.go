@@ -5,7 +5,7 @@ import "fmt"
 func main() {
     var nombre string = "Valeria"
     edad := 22
-    acceso := false
+    acceso := true
     dia := 2 // número del día elegido  (1, 2 o 3)
 
     if edad >= 18 {
