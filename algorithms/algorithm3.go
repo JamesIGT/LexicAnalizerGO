@@ -1,9 +1,7 @@
 package main
-
 import "fmt"
 
-
-func obtenerDatos() {
+func obtenerDatos() map[string]int {
     datos := map[string]int {
         "edad": 25,
         "anio": 2025
@@ -24,7 +22,7 @@ func imprimirNumeros() {
 }
 
 func obtenerSaludo() string {
-    return "Hola!"
+    return "hola"
 }
 
 func main() {
