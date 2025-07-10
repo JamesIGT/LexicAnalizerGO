@@ -1,0 +1,6 @@
+[INFO] Variable 'datos' declarada como map
+[SEMANTIC ERROR] 'return' fuera de una función.
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] 'return' fuera de una función.
+[INFO] Variable 'saludo' declarada con tipo 'string'
+✅ Análisis semántico completado correctamente.

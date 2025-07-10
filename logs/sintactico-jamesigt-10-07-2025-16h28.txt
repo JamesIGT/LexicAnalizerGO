@@ -1,0 +1,10 @@
+[INFO] Variable 'datos' declarada como map
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Retorno incompatible en función 'obtenerSaludo': se espera 'string' pero se retorna 'int'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[SEMANTIC ERROR] Asignación incompatible: 'datos' es 'map' pero se asigna 'error'
+[SEMANTIC ERROR] Asignación incompatible: 'datos' es 'map' pero se asigna 'error'
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'saludo' declarada implícitamente con tipo 'error'
+[SEMANTIC ERROR] Variable 'saludo' redeclarada.
+✅ Análisis semántico completado correctamente.

@@ -1,0 +1,4 @@
+[INFO] Variable 'datos' declarada como map
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[INFO] Variable 'saludo' declarada con tipo 'string'
+✅ Análisis semántico completado correctamente.

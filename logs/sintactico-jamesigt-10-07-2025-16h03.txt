@@ -1,0 +1,2 @@
+[INFO] Variable 'datos' declarada como map
+[ERROR GENERAL] list index out of range

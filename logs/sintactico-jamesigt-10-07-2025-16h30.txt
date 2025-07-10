@@ -1,0 +1,4 @@
+[INFO] Variable 'datos' declarada como map
+[INFO] Variable 'i' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Retorno incompatible en función 'obtenerSaludo': se espera 'string' pero se retorna 'int'
+[INFO] Variable 'saludo' declarada con tipo 'string'
