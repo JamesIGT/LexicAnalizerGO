@@ -1,61 +1,89 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
-/* ---------- Struct ---------- */
+// Definir el struct
 type Persona struct {
-	nombre string
-	edad   int
+	edad int
 }
 
-/* ---------- Función con múltiples retornos ---------- */
-func dividir(dividendo, divisor int) (int, int) {
-	cociente := dividendo / divisor
-	resto    := dividendo % divisor
-	return cociente, resto
+
+//✅ VALIDO 
+
+func operar() {
+    x := 5      // int
+    y := 3    // int
+    result := x + y 
+    fmt.Println("Resultado válido:", result)
 }
 
-func main() int {
-
-	/* -----------------------------------
-	   1. Conversiones explícitas correctas
-	   ----------------------------------- */
-	var numero int     = int(3.14)        // ✅ float64 → int (trunca a 3)
-	//var texto  string  = strconv.Itoa(42) // ✅ int → string  ("42")
-
-	/* -----------------------------------
-	   2. Conversión implícita (debe fallar)
-	   ----------------------------------- */
-	// var falla int = 3.14      // ❌ ERROR: asignación implícita float64 → int
-
-	/* -----------------------------------
-	   3. Operaciones mixtas
-	   ----------------------------------- */
-	var resultado = float64(5) + 2.5 // ✅ 5 → 5.0, tipos compatibles (float64)
-	// var suma      = 5 + 2.5        // ❌ ERROR: mezcla int + float64 sin conversión
-
-	/* -----------------------------------
-	   4. Uso de la función con múltiples retornos
-	   ----------------------------------- */
-	coc, res := dividir(17, 5) // coc=3, res=2
-
-	/* -----------------------------------
-	   5. Instancia de struct
-	   ----------------------------------- */
-	var p = Persona{nombre: "Valeria", edad: 30}
-
-	/* -----------------------------------
-	   Salida para ver en ejecución real
-	   (tu analizador solo necesita parsear)
-	   ----------------------------------- */
-	fmt.Println("numero:", numero)
-	fmt.Println("texto :", texto)
-	fmt.Println("resultado (5.0+2.5):", resultado)
-	fmt.Println("división 17/5 →", coc, "resto", res)
-	fmt.Println("Persona:", p)
-
-	return 0
+func main() {
+    operar()  // Esto imprimirá Resultado válido
 }
+
+
+//❌INVALIDO
+package main
+
+import "fmt"
+
+func operar() {
+    x := "Hello"  // string
+    y := 5        // int
+    result := x + y // Error: no se puede sumar un string con un int
+    fmt.Println("Resultado con error:", result)
+}
+
+func main() {
+    operar()  // Esto generará un error semántico en tiempo de compilación
+}
+
+
+
+// ✅ VALIDACION Función para realizar operaciones y conversión de tipos
+func operar() {
+    x := 5       // int
+    y := 3.2     // float64
+
+    // Convertir implícitamente el int a float64 para realizar la operación
+    result := float64(x) + y  // Conversión explícita de int a float64
+
+    fmt.Println("Resultado con conversión explícita:", result)
+}
+
+func main() {
+    operar()  // Esto generará la salida con la conversión explícita de tipos
+}
+
+//❌// Función para realizar operaciones con tipos incompatibles
+func operar() {
+    x := "Hello"  // string
+    y := 5        // int
+
+    // Intentar sumar un string con un int (esto dará un error)
+    result := x + y  // Error: no se puede sumar un string con un int
+
+    fmt.Println("Resultado con error:", result)
+}
+
+func main() {
+    operar()  // Esto generará un error semántico en tiempo de compilación
+}
+
+
+//✅VALIDACION DE SWITCH
+func main() {
+    // Crear una instancia de Persona
+    p := Persona{edad: 25}
+
+    // Usar un switch con la edad
+    switch p.edad {
+    case 25:
+        fmt.Println("Edad es 25")
+    case 30:
+        fmt.Println("Edad es 30")
+    default:
+        fmt.Println("Edad no coincidente")
+    }
+}
+
