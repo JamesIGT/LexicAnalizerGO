@@ -1,0 +1,3 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 15

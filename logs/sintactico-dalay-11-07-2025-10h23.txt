@@ -1,0 +1,33 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 12
+[INFO] Variable 'x' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'float64' at line 31
+[INFO] Variable 'x' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'float64' at line 48
+[INFO] Variable 'x' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'float64' at line 65
+[INFO] Variable 'x' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'float64' at line 82
+[INFO] Variable 'x' declarada con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'float64' at line 99
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'float64'
+[SYNTAX ERROR] Unexpected token 'float64' at line 118
+[SYNTAX ERROR] Unexpected token 'operar' at line 130
+[INFO] Variable 'x' declarada implícitamente con tipo 'string'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: string y int
+[INFO] Variable 'result' declarada implícitamente con tipo 'error'
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[INFO] Variable 'result' declarada implícitamente con tipo 'int'
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[INFO] Variable 'result' declarada implícitamente con tipo 'int'
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'float64'
+[SYNTAX ERROR] Unexpected token 'float64' at line 200
+[SYNTAX ERROR] Unexpected token 'int' at line 212
+[SYNTAX ERROR] Unexpected token 'int' at line 219
+[SYNTAX ERROR] Unexpected token 'int' at line 233

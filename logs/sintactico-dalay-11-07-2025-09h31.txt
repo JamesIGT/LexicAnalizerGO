@@ -1,0 +1,82 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 15
+[SYNTAX ERROR] Unexpected token 'case' at line 35
+[SYNTAX ERROR] Unexpected end of input
+[SYNTAX ERROR] Unexpected end of input
+[SYNTAX ERROR] Unexpected token '.' at line 66
+[SYNTAX ERROR] Unexpected token '.' at line 73
+[SYNTAX ERROR] Unexpected token '.' at line 80
+[SYNTAX ERROR] Unexpected token '.' at line 87
+[SYNTAX ERROR] Unexpected token '.' at line 94
+[SYNTAX ERROR] Unexpected token 'case' at line 101
+[INFO] Variable 's' declarada implícitamente con tipo 'string'
+[SYNTAX ERROR] Unexpected token 'float64' at line 107
+[SYNTAX ERROR] Unexpected token 'string' at line 112
+[SYNTAX ERROR] Unexpected token '{' at line 124
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[INFO] Variable 'result' declarada implícitamente con tipo 'int'
+[INFO] Variable 'x' declarada implícitamente con tipo 'string'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: string y int
+[INFO] Variable 'result' declarada implícitamente con tipo 'error'
+[INFO] Variable 'x' declarada implícitamente con tipo 'bool'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: bool y int
+[INFO] Variable 'result' declarada implícitamente con tipo 'error'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y string
+[SEMANTIC ERROR] Variable 'x' no declarada.
+[SEMANTIC ERROR] Variable 'x' no declarada.
+[SYNTAX ERROR] Unexpected token 'float64' at line 161
+[SYNTAX ERROR] Unexpected token '.' at line 166
+[SEMANTIC ERROR] Variable 'edad' no declarada.
+[SEMANTIC ERROR] Variable 'edad' no declarada.
+[SYNTAX ERROR] Unexpected token '.' at line 181
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'float64'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: int y float64
+[INFO] Variable 'result' declarada implícitamente con tipo 'error'
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[INFO] Variable 'result' declarada implícitamente con tipo 'int'
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[INFO] Variable 'result' declarada implícitamente con tipo 'int'
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[INFO] Variable 'result' declarada implícitamente con tipo 'int'
+[INFO] Variable 'x' declarada implícitamente con tipo 'string'
+[INFO] Variable 'y' declarada implícitamente con tipo 'int'
+[SEMANTIC ERROR] Operación entre tipos incompatibles: string y int
+[INFO] Variable 'result' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token 'struct' at line 259
+[SYNTAX ERROR] Unexpected token 'struct' at line 281
+[SYNTAX ERROR] Unexpected token 'struct' at line 304
+[SYNTAX ERROR] Unexpected token '{' at line 327
+[SEMANTIC ERROR] Variable 'edad' no declarada.
+[SYNTAX ERROR] Unexpected token ':' at line 349
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 375
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 398
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 421
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 445
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 470
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 495
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 520
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 545
