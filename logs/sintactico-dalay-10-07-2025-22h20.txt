@@ -1,0 +1,4 @@
+[INFO] Variable 'x' declarada implícitamente con tipo 'int'
+[SYNTAX ERROR] Unexpected token 'case' at line 8
+[SYNTAX ERROR] Unexpected token 'case' at line 21
+[SYNTAX ERROR] Unexpected token 'case' at line 34

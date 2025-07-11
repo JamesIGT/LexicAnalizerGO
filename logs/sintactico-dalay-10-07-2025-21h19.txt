@@ -1,0 +1,11 @@
+[SYNTAX ERROR] Unexpected token 'int' at line 7
+[SYNTAX ERROR] Unexpected token 'int' at line 17
+[SYNTAX ERROR] Unexpected token 'int' at line 27
+[SYNTAX ERROR] Unexpected token 'int' at line 37
+[SYNTAX ERROR] Unexpected token 'int' at line 47
+[SYNTAX ERROR] Unexpected token 'int' at line 57
+[SYNTAX ERROR] Unexpected token 'int' at line 67
+[SYNTAX ERROR] Unexpected token 'int' at line 77
+[SYNTAX ERROR] Unexpected token 'int' at line 87
+[SYNTAX ERROR] Unexpected token 'int' at line 97
+[SYNTAX ERROR] Unexpected token 'int' at line 107

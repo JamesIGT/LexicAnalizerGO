@@ -1,0 +1,9 @@
+[SYNTAX ERROR] Unexpected token 'int' at line 10
+[ERROR] Línea 31: Caracter ilegal ' '
+[ERROR] Línea 33: Caracter ilegal ' '
+[SYNTAX ERROR] Unexpected token 'int' at line 45
+[SYNTAX ERROR] Unexpected token 'int' at line 55
+[SYNTAX ERROR] Unexpected token 'int' at line 65
+[SYNTAX ERROR] Unexpected token 'int' at line 75
+[SYNTAX ERROR] Unexpected token 'int' at line 85
+[SYNTAX ERROR] Unexpected token 'int' at line 95

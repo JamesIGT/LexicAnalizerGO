@@ -132,6 +132,7 @@ t_COLON      = r':'
 t_COMMA      = r','
 t_DOT        = r'\.'
 t_AMPER      = r'\&'
+t_CASE       = r'case'
 
 # Regla para identificar identificadores y palabras clave
 

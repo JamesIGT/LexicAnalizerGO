@@ -1,0 +1,8 @@
+[INFO] Variable 'dia' declarada implícitamente con tipo 'string'
+[SYNTAX ERROR] Unexpected token 'case' at line 5
+[INFO] Variable 'dia' declarada implícitamente con tipo 'string'
+[SYNTAX ERROR] Unexpected token 'case' at line 19
+[INFO] Variable 'dia' declarada implícitamente con tipo 'string'
+[SYNTAX ERROR] Unexpected token 'case' at line 35
+[INFO] Variable 'dia' declarada implícitamente con tipo 'string'
+[SYNTAX ERROR] Unexpected token 'case' at line 51

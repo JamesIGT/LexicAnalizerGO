@@ -1,0 +1,6 @@
+[SYNTAX ERROR] Unexpected token 'var' at line 1
+[SYNTAX ERROR] Unexpected token 'int' at line 9
+[SYNTAX ERROR] Unexpected token 'int' at line 17
+[SYNTAX ERROR] Unexpected token 'int' at line 28
+[ERROR] Línea 49: Caracter ilegal ' '
+[ERROR] Línea 51: Caracter ilegal ' '

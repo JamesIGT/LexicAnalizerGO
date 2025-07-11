@@ -1,0 +1,3 @@
+[SYNTAX ERROR] Unexpected token 'float64' at line 7
+[SYNTAX ERROR] Unexpected token 'case' at line 27
+[SYNTAX ERROR] Unexpected token 'case' at line 43
