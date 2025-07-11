@@ -34,29 +34,28 @@ pip install pillow
     En Debian/Ubuntu puedes instalarlo con:
     sudo apt install python3-tk
 
-Archivos principales
+# Archivos principales
 
-    lexer.py: Define el lexer con tokens para Go.
+- lexer.py: Define el lexer con tokens para Go.
 
-    parser.py: Define el parser con reglas gramaticales y análisis semántico.
+- parser.py: Define el parser con reglas gramaticales y análisis semántico.
 
-    gui.py: Interfaz gráfica para ingresar código y mostrar resultados.
+- gui.py: Interfaz gráfica para ingresar código y mostrar resultados.
 
-Uso
+# Uso
 
-    Ejecuta la interfaz gráfica con:
-
+Ejecuta la interfaz gráfica con:
+```
 python gui.py
+```
 
-    Escribe o pega código Go en el área de entrada.
+- Escribe o pega código Go en el área de entrada.
 
-    Haz clic en Run para analizar el código.
+- Haz clic en Run para analizar el código.
 
-    Los errores o el resultado del análisis aparecerán en el área de salida.
+- Los errores o el resultado del análisis aparecerán en el área de salida.
 
-Notas
-
-    El proyecto está pensado como una herramienta educativa para entender análisis sintáctico y semántico.
-
-    La implementación actual no ejecuta código Go, solo lo analiza y valida.
+# Notas
+- El proyecto está pensado como una herramienta educativa para entender análisis sintáctico y semántico.
+- La implementación actual no ejecuta código Go, solo lo analiza y valida.
 
