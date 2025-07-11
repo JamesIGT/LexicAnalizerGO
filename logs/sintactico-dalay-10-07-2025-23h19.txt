@@ -1,0 +1,9 @@
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 28
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 53
+[SEMANTIC ERROR] Expresión inválida (None) en expresión simple
+[INFO] Variable 'p' declarada implícitamente con tipo 'error'
+[SYNTAX ERROR] Unexpected token '.' at line 78

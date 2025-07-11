@@ -1,0 +1,12 @@
+[SYNTAX ERROR] Unexpected token 'float64' at line 7
+[SYNTAX ERROR] Unexpected token 'case' at line 27
+[SYNTAX ERROR] Unexpected token 'case' at line 42
+[SYNTAX ERROR] Unexpected token 'case' at line 56
+[SYNTAX ERROR] Unexpected token 'case' at line 70
+[SYNTAX ERROR] Unexpected token 'case' at line 84
+[SYNTAX ERROR] Unexpected token 'case' at line 98
+[SYNTAX ERROR] Unexpected token 'case' at line 112
+[SYNTAX ERROR] Unexpected token 'case' at line 126
+[SYNTAX ERROR] Unexpected token 'case' at line 140
+[SYNTAX ERROR] Unexpected token 'case' at line 154
+[SYNTAX ERROR] Unexpected token 'case' at line 168

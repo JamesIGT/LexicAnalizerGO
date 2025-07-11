@@ -1,0 +1,10 @@
+[SYNTAX ERROR] Unexpected token 'case' at line 7
+[SYNTAX ERROR] Unexpected token 'case' at line 22
+[SYNTAX ERROR] Unexpected token 'case' at line 35
+[SYNTAX ERROR] Unexpected token 'case' at line 48
+[SYNTAX ERROR] Unexpected token 'case' at line 61
+[SYNTAX ERROR] Unexpected token 'case' at line 74
+[SYNTAX ERROR] Unexpected token 'case' at line 87
+[SYNTAX ERROR] Unexpected token 'case' at line 100
+[SYNTAX ERROR] Unexpected token 'case' at line 113
+[SYNTAX ERROR] Unexpected token 'case' at line 127
