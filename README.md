@@ -30,9 +30,11 @@ pip install ply
 pip install pillow
 ```
 
->> Nota: Tkinter generalmente viene instalado con Python.
-   En Debian/Ubuntu puedes instalarlo con:
+- Nota: Tkinter generalmente viene instalado con Python.
+- En Debian/Ubuntu puedes instalarlo con:
+```
    sudo apt install python3-tk
+```
 
 # Archivos principales
 
